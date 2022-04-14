@@ -1,0 +1,14 @@
+<div class="wrapper">
+    <div class="logo"> <img src="https://idrok.net/logo.png" alt=""> </div>
+    <div class="text-center mt-4 name"> Tester </div>
+    <form [formGroup]="loginForm" class="p-3 mt-3" (ngSubmit)="login()">
+        <div class="form-field d-flex align-items-center"> <span class="far fa-user"></span>
+             <input type="text" formControlName="username"
+                name="userName" id="userName" placeholder="Username"> </div>
+        <div class="form-field d-flex align-items-center"> <span class="fas fa-key"></span>
+             <input type="password" formControlName="password"
+                name="password" id="pwd" placeholder="Password"> </div> <button class="btn mt-3">Kirish</button>
+    </form>
+    <div class="text-center fs-6"> <a href="#">Ro'yxatdan o'tish</a> &nbsp;&nbsp; <a href="#">Parolni unutdingizmi?</a>
+    </div>
+</div>
