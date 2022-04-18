@@ -52,11 +52,27 @@
                     </mat-form-field>
 
                     <mat-form-field appearance="outline">
+                        <mat-label>Baholar</mat-label>
+                        <mat-hint>Baho kiriting</mat-hint>
+                        <input formControlName="ball" matInput placeholder="Baho..." autocomplete="off">
+                    </mat-form-field>
+
+               
+
+                    <mat-form-field appearance="outline">
                         <mat-label>Guruh</mat-label>
                         <mat-select name="guruh" id="guruh" formControlName="guruh" placeholder="">
                           <mat-option *ngFor="let k of guruhlar" [value]="k.id">{{k.nom}}</mat-option>
                         </mat-select>
                         <mat-hint>Guruhni tanlang</mat-hint>
+                      </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Loyiha</mat-label>
+                        <mat-select name="loyiha" id="loyiha" formControlName="loyiha" placeholder="">
+                          <mat-option *ngFor="let l of loyihalar" [value]="l.id">{{l.nom}}</mat-option>
+                        </mat-select>
+                        <mat-hint>Loyiha tanlang</mat-hint>
                       </mat-form-field>
 
                     <mat-form-field appearance="outline">
@@ -66,6 +82,7 @@
                         </mat-select>
                         <mat-hint>Xarakter tanlang</mat-hint>
                       </mat-form-field>
+
 
                       <mat-form-field appearance="outline">
                         <mat-label>Talabaning O'quv shakli </mat-label>
@@ -84,7 +101,7 @@
                         <mat-label>Info</mat-label>
                         <textarea formControlName="info" matInput placeholder="info...">
                     </textarea>
-                        <mat-hint>info</mat-hint>
+                        <mat-hint>Info</mat-hint>
                     </mat-form-field>
 
                     
@@ -120,6 +137,8 @@
                       <th>Sharif </th>
                       <th>Yosh</th>
                       <th>Hudud</th>
+                      <th>Ball</th>
+                      <th>Loyiha</th>
                       <th>Guruh</th>
                       <th>Xarakter</th>
                       <th>Oquv Shakl</th>
@@ -135,6 +154,8 @@
                       <td>{{x?.sharif}}</td>
                       <td>{{x?.yosh}}</td>
                       <td>{{x?.hudud}}</td>
+                      <td>{{x?.ball}}</td>
+                      <td>{{x?.loyiha?.nom}}</td>
                       <td>{{x?.guruh?.nom}}</td>
                       <td>{{x?.xarakter?.nom}}</td>
                       <td>

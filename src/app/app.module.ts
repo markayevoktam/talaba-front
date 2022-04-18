@@ -11,11 +11,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { DeleteDialog } from './shared/delete-dialog.component';
 import { MyFilterService } from './core/my-filter.service';
+import { InfoComponent } from './public/info/info.component';
 @NgModule({
   declarations: [
     AppComponent,
     DeleteDialog,
     HomeComponent,
+    InfoComponent,
     
     
   ],

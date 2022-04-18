@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Talaba } from 'src/app/model/talaba';
+import { PublicService } from 'src/app/service/public.service';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  talabalar: Talaba[] = [];
+  constructor(private publicService: PublicService) { }
+
+  filter = new FormControl('filter')
 
   ngOnInit(): void {
+    this.publicService.getAll(null).subscribe(data=>{
+      this.talabalar = data.content;
+    })
   }
+  
 
 }
 

@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { GuruhService } from 'src/app/service/guruh.service';
+import { LoyihaService } from 'src/app/service/loyiha.service';
 import { TalabaService } from 'src/app/service/talaba.service';
 import { XarakterService } from 'src/app/service/xarakter.service';
 
@@ -21,10 +22,11 @@ export class TalabaComponent implements OnInit {
     formOchiq = false;
     guruhlar: any;
     xarakterlar:any;
+    loyihalar: any;
     
     surovBajarilmoqda = false;
     
-    displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif','yosh','hudud','guruh','oquvShakl','xarakter','info','amal'];
+    displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif','yosh','hudud','guruh','ball','oquvShakl','loyiha','xarakter','info','amal'];
     dataSource: any;
     filter = new FormControl('filter')
     
@@ -37,6 +39,7 @@ export class TalabaComponent implements OnInit {
       private guruhService: GuruhService,
       private talabaService: TalabaService,
       private xarakterService: XarakterService,
+      private loyihaService: LoyihaService,
       private snakBar: MatSnackBar) { }
     ngAfterViewInit(): void {
   
@@ -56,6 +59,8 @@ export class TalabaComponent implements OnInit {
         guruh:['', Validators.required],
         xarakter:['',Validators.required],
         oquvShakl:['',Validators.required],
+        loyiha:['',Validators.required],
+        ball:['',Validators.required],
         info: [''],
         amal: ['']
       });
@@ -65,6 +70,9 @@ export class TalabaComponent implements OnInit {
       })
       this.xarakterService.getAll('').subscribe(data =>{
         this.xarakterlar=data.content;
+      })
+      this.loyihaService.getAll('').subscribe(data =>{
+        this.loyihalar=data.content;
       })
       
     }
@@ -103,6 +111,9 @@ export class TalabaComponent implements OnInit {
         }
         talaba.xarakter={
           id: talaba.xarakter
+        }
+        talaba.loyiha={
+          id: talaba.loyiha
         }
 
         let surov;
