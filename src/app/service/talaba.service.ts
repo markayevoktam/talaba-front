@@ -18,6 +18,7 @@ export class TalabaService {
       params: params
     });
   }
+  
 
   getById(id: number): Observable<any>{
     return this.http.get<any>(this.api + "/" + id);

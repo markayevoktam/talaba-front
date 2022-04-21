@@ -1,22 +1,21 @@
-<nav class="navbar navbar-expand-sm navbar-dark"> 
-  <img src="https://static10.tgstat.ru/channels/_0/0c/0c8cceaffdb83ce07230e847feb482d2.jpg" width="50" height="50" class="d-inline-block align-top rounded-circle" alt="">
-   <a class="navbar-brand ml-2" style="color: black; font-size: 25px;" href="#" data-abc="true">TATU Qarshi filiali</a> 
-   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span> 
-      </button>
-  <div class="end">
-      <div class="collapse navbar-collapse" id="navbarColor02">
-          <ul class="navbar-nav">
-             
+<nav class="navbar navbar-expand-sm navbar-dark  "> 
+  <div class="container">
+    <img src="https://static10.tgstat.ru/channels/_0/0c/0c8cceaffdb83ce07230e847feb482d2.jpg" width="50" height="50" class="d-inline-block align-top rounded-circle" alt="">
+ <a class="navbar-brand ml-2" style="color: black; font-size: 25px;" href="#" data-abc="true">TATU Qarshi filiali</a> 
+ <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span> 
+    </button>
+<div class="end">
+    <div class="collapse navbar-collapse" id="navbarColor02">
+       
 
-          </ul>
-
-      </div>
-  </div>
+    </div>
+</div>
+</div>
 </nav>
 <mat-card>
    <div>
-    <mat-card-header>
+    <mat-card-header class="container">
         <mat-card-title>{{talaba?.ism}} {{talaba?.familya}}</mat-card-title>
         <mat-card-subtitle>Yo'nalish: {{talaba?.guruh?.yunalish?.nom}}</mat-card-subtitle>
     </mat-card-header>
@@ -24,7 +23,7 @@
     <!-- <img matCardImage src="Card wide image source"> -->
 
 
-    <div class="card mb-12">
+    <div class="card mb-12 container">
         <div class="row no-gutters">
           <div class="col-md-8">
             <div class="card-body">
@@ -36,21 +35,22 @@
                 <h3>O'quv shakli:   {{talaba?.oquvShakl}}</h3>
                 <h3>Fakulteti:  {{talaba?.guruh?.yunalish?.fakultet?.nom}}</h3>
                 <h3>Xarakter:  {{talaba?.xarakter?.nom}}</h3>
-                <h3>Ball:   {{talaba?.ball}}</h3>
+                <h3>Ball:   {{talaba?.info}}</h3>
                 <!-- <h3>Yutuqlar:    {{talaba?.yutuq?.nom}}</h3> -->
               </div>
           </div>
           <div class="col-md-4">
-           <img src="../../../assets/img/photo_2021-06-25_19-21-55.jpg" alt="..." style="width: 100%;">
+           <img src="./assets/img/photo_2021-06-25_19-21-55.jpg" alt="..." style="width: 100%;">
           </div>
         </div>
+        <button [routerLink]="['/']"  class="btn btn-light">        
+          <a style="text-decoration: none; font-size: 15px; font-family: Arial, Helvetica, sans-serif; color: black ;"> Bosh sahifa</a>
+     </button>
       </div>
 
 
     
     <mat-card-footer>
-        <button class="btn btn-light">        
-             <a [routerLink]="['/']" style="text-decoration: none; font-size: 15px; font-family: Arial, Helvetica, sans-serif; color: black ;"> Bosh sahifa</a>
-        </button>
+       
     </mat-card-footer>
 </mat-card>

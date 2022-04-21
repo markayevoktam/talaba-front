@@ -1,7 +1,8 @@
 
 
-    <nav class="navbar navbar-expand-sm navbar-dark"> 
-        <img src="https://static10.tgstat.ru/channels/_0/0c/0c8cceaffdb83ce07230e847feb482d2.jpg" width="50" height="50" class="d-inline-block align-top rounded-circle" alt="">
+    <nav class="navbar navbar-expand-sm navbar-dark" > 
+        <div class="container">
+            <img src="https://static10.tgstat.ru/channels/_0/0c/0c8cceaffdb83ce07230e847feb482d2.jpg" width="50" height="50" class="d-inline-block align-top rounded-circle" alt="">
          <a class="navbar-brand ml-2" style="color: black; font-size: 25px;" href="#" data-abc="true">TATU Qarshi filiali</a> 
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span> 
@@ -11,6 +12,7 @@
                
 
             </div>
+        </div>
         </div>
     </nav>
     <!-- Main Body -->
@@ -22,14 +24,22 @@
             </div>
             <div class="row">
                 <div class="col-sm-5 col-md-12 col-12 pb-4">
-                    <h1 style="color: black;">Talabalar</h1>
+                    <div style="display: flex;">
+                        <div style="width: 74.9%;">
+                            <h1 style="color: black;">Talabalar</h1>
+                        </div>
+                        
+            
+                            
+                    </div>
+                    
 
 
                     <div *ngFor="let t of talabalar" class="text-justify darker col-12 mt-4 float-left" id="main123" style="background-color: white; color: black; cursor: pointer;" [routerLink]="['info', t.id]">
                         <div>
                             
-                        <img src="https://i.imgur.com/CFpa3nK.jpg" alt="" class="rounded-circle" width="70" height="70">
-                        <h4 style="color: black;">{{t.ism}} {{t.familya}}</h4> <span>{{t.sharif}}</span> <br>
+                        <img src="https://i.imgur.com/CFpa3nK.jpg" alt=""  width="70" height="70">
+                        <h4 style="color: black;">{{t.ism}} {{t.familya}}</h4>&nbsp; <span>{{t.sharif}}</span> <br>
                         <p>{{t?.guruh?.yunalish?.fakultet?.nom}}</p>
                         
                         </div>
@@ -37,5 +47,7 @@
                     </div>
                     
                 </div>  
+                <mat-paginator (page)="load()" #paginator  [length]="length" [pageSize]="5" [pageSizeOptions]="[3, 7, 10, 12]" aria-label="Select page">
+                </mat-paginator>
             </div>
         </div>

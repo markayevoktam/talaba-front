@@ -95,14 +95,7 @@
                     
               
                       
-                      
-  
-                    <mat-form-field appearance="outline">
-                        <mat-label>Info</mat-label>
-                        <textarea formControlName="info" matInput placeholder="info...">
-                    </textarea>
-                        <mat-hint>Info</mat-hint>
-                    </mat-form-field>
+        
 
                     
 
@@ -142,7 +135,7 @@
                       <th>Guruh</th>
                       <th>Xarakter</th>
                       <th>Oquv Shakl</th>
-                      <th>Info</th>
+                      <!-- <th>Info</th> -->
                       <th>Amal</th> 
                   </tr>
               </thead>
@@ -154,7 +147,7 @@
                       <td>{{x?.sharif}}</td>
                       <td>{{x?.yosh}}</td>
                       <td>{{x?.hudud}}</td>
-                      <td>{{x?.ball}}</td>
+                      <td>{{x?.info}}</td>
                       <td>{{x?.loyiha?.nom}}</td>
                       <td>{{x?.guruh?.nom}}</td>
                       <td>{{x?.xarakter?.nom}}</td>
@@ -171,7 +164,7 @@
                             </span>
                         </span>                       
                       </td>
-                      <td>{{x?.info}}</td>
+                      <!-- <td>{{x?.info}}</td> -->
                       <td>
                           <button mat-button color="primary" (click)="tahrirlash(x)">
                               <mat-icon diametr=5>edit</mat-icon>
