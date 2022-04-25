@@ -1,37 +1,60 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Talaba } from 'src/app/model/talaba';
+import { FakultetService } from 'src/app/service/fakultet.service';
+import { GuruhService } from 'src/app/service/guruh.service';
 import { PublicService } from 'src/app/service/public.service';
 import { TalabaService } from 'src/app/service/talaba.service';
+import { YunalishService } from 'src/app/service/yunalish.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
 
   talabalar: Talaba[] = [];
   key: any;
   filter = new FormControl('filter')
+  fakultetlar: any;
+  yunalishlar: any;
+  guruhlar: any;
 
   length = 100;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  tanlanganFakultet: any;
+  tanlanganYunalish: any;
+  tanlanganGuruh: any;
 
 
   constructor(private publicService: PublicService,
-    private talabaService:TalabaService
+    private talabaService:TalabaService,
+    private fakultetService: FakultetService,
+    private yunalishService:YunalishService,
+    private guruhService:GuruhService,
+
+
     ) { }
+  ngAfterViewInit(): void {
+    this.load(); 
+      this.fakultetService.getAll('').subscribe(data => {
+      this.fakultetlar = data.content;
+    })
+    this.yunalishService.getAll('').subscribe(data => {
+      this.yunalishlar = data.content;
+    })
+    this.guruhService.getAll('').subscribe(data => {
+      this.guruhlar = data.content;
+    })
+  }
 
   ngOnInit(): void {
-    this.publicService.getAll(null).subscribe(data=>{
-      this.talabalar = data.content;
-
-     
-    })
+ 
+ 
   }
 
   load(key?: any) {
@@ -41,22 +64,59 @@ export class HomeComponent implements OnInit {
       if (typeof (key) == 'object') {
         key = key.value;
       }
-      console.log(key);
-  
-  
     }
-    this.talabaService.getAll({
+
+    this.talabalar = [];
+    let params: any = {
       key: key,
+     
       page: this.paginator.pageIndex,
       size: this.paginator.pageSize,
       sort: 'id'
-    }).subscribe(royxat => {
+    };
+
+    if(this.tanlanganGuruh){
+      params.guruh = this.tanlanganGuruh.id;
+    }
+
+    if(this.tanlanganYunalish){
+      params.yunalish = this.tanlanganYunalish.id;
+    }
+
+ 
+
+    this.publicService.getAll(params).subscribe(royxat => {
   
       console.log(royxat);
       this.talabalar = royxat.content;
       this.length = royxat.totalElements;
     });
   }
+  fakultetTanlash(event: any){
+    this.tanlanganFakultet = event.value;
+    this.tanlanganYunalish = null;
+    this.tanlanganGuruh = null;
+    console.log(this.tanlanganFakultet);
+    this.paginator.pageIndex = 0;
+    this.load();
+    
+  }
+  
+  yunalishTanlash(event: any){
+    this.tanlanganYunalish = event.value;
+    this.tanlanganGuruh= null;
+    console.log(this.tanlanganYunalish);
+    this.paginator.pageIndex=0;
+    this.load()
+  }
+
+
+  
+   guruhTanlash(event:any){
+     this.guruhTanlash = event.value;
+     this.paginator.pageIndex=0;
+     this.load();
+   }
 
 
 }

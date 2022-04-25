@@ -12,6 +12,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { DeleteDialog } from './shared/delete-dialog.component';
 import { MyFilterService } from './core/my-filter.service';
 import { InfoComponent } from './public/info/info.component';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,7 @@ import { InfoComponent } from './public/info/info.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+
    
    
     ...material_imports

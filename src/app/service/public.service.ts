@@ -24,5 +24,6 @@ export class PublicService {
     return this.http.get<any>(this.api + "/talaba/" + id);
   }
 
+  
 
 }

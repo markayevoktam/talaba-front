@@ -1,53 +1,94 @@
-
-
-    <nav class="navbar navbar-expand-sm navbar-dark" > 
-        <div class="container">
-            <img src="https://static10.tgstat.ru/channels/_0/0c/0c8cceaffdb83ce07230e847feb482d2.jpg" width="50" height="50" class="d-inline-block align-top rounded-circle" alt="">
-         <a class="navbar-brand ml-2" style="color: black; font-size: 25px;" href="#" data-abc="true">TATU Qarshi filiali</a> 
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span> 
-            </button>
+<nav class="navbar navbar-expand-sm navbar-dark">
+    <div class="container">
+        <img src="https://static10.tgstat.ru/channels/_0/0c/0c8cceaffdb83ce07230e847feb482d2.jpg" width="50" height="50"
+            class="d-inline-block align-top rounded-circle" alt="">
+        <a class="navbar-brand ml-2" style="color: black; font-size: 25px;" href="#" data-abc="true">TATU Qarshi
+            filiali</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+            aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="end">
             <div class="collapse navbar-collapse" id="navbarColor02">
-               
+
 
             </div>
         </div>
-        </div>
-    </nav>
-    <!-- Main Body -->
-        <div class="container">
-            <div class="row" style="margin-top: 2%;">
-                <h2 style="text-align: center; font-size: 25px; text-transform: uppercase; font-weight: 900; font-family: 'Times New Roman', Times, serif;">Muhammad al-Xorazmiy nomidagi Toshkent axborot texnologiyalari universiteti 
-                <h2 style="text-align: center; font-size: 25px;  text-transform: uppercase; font-weight: 900; font-family: 'Times New Roman', Times, serif;"> Qarshi filiali</h2>
-                </h2>
-            </div>
-            <div class="row">
-                <div class="col-sm-5 col-md-12 col-12 pb-4">
-                    <div style="display: flex;">
-                        <div style="width: 74.9%;">
-                            <h1 style="color: black;">Talabalar</h1>
-                        </div>
-                        
-            
-                            
-                    </div>
-                    
+    </div>
+</nav>
+<!-- Main Body -->
+<div class="container">
+    <div class="row" style="margin-top: 2%;">
+        <h2
+            style="text-align: center; font-size: 25px; text-transform: uppercase; font-weight: 900; font-family: 'Times New Roman', Times, serif;">
+            Muhammad al-Xorazmiy nomidagi Toshkent axborot texnologiyalari universiteti
+            <h2
+                style="text-align: center; font-size: 25px;  text-transform: uppercase; font-weight: 900; font-family: 'Times New Roman', Times, serif;">
+                Qarshi filiali</h2>
+        </h2>
+    </div>
+    <div class="row">
+        <div class="col-sm-5 col-md-12 col-12 pb-4">
+            <div style="display: flex;">
+                <div style="width: 52.5%;">
+                    <h1 style="color: black;">Talabalar</h1>
+                </div>
+                <div class="d-flex ">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Fakultetni tanlang</mat-label>
+                        <mat-select (selectionChange)="fakultetTanlash($event)" disableRipple>
+                            <mat-option *ngFor="let f of fakultetlar" [value]="f">{{f.nom}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
 
 
-                    <div *ngFor="let t of talabalar" class="text-justify darker col-12 mt-4 float-left" id="main123" style="background-color: white; color: black; cursor: pointer;" [routerLink]="['info', t.id]">
-                        <div>
-                            
-                        <img src="https://i.imgur.com/CFpa3nK.jpg" alt=""  width="70" height="70">
-                        <h4 style="color: black;">{{t.ism}} {{t.familya}}</h4>&nbsp; <span>{{t.sharif}}</span> <br>
-                        <p>{{t?.guruh?.yunalish?.fakultet?.nom}}</p>
-                        
-                        </div>
-                       
-                    </div>
-                    
-                </div>  
-                <mat-paginator (page)="load()" #paginator  [length]="length" [pageSize]="5" [pageSizeOptions]="[3, 7, 10, 12]" aria-label="Select page">
-                </mat-paginator>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Yo'nalishni tanlang</mat-label>
+                        <mat-select (selectionChange)="yunalishTanlash($event)" disableRipple>
+                            <mat-option *ngFor="let y of yunalishlar" [value]="y">{{y.nom}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Guruhni tanlang</mat-label>
+                        <mat-select (selectionChange)="guruhTanlash($event)" disableRipple>
+                            <mat-option *ngFor="let g of guruhlar" [value]="g">{{g.nom}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+
+
+
+
+            </div>  
+
+            <div class="form-group">
+                <label for="key">Qidiruv</label>
+                <input (input)="load($event.target)"  type="text" class="form-control" name="key" id="key"
+                    aria-describedby="key" placeholder="Qidirish" style="background-color: white;">
+                <small id="key" class="form-text text-muted">Qidirish uchun yozing</small>
             </div>
+
+
+        
+
+            <div *ngFor="let t of talabalar" class="text-justify darker col-12 mt-4 float-left" id="main123"
+                style="background-color: white; color: black; cursor: pointer;" [routerLink]="['info', t.id]">
+                <div>
+
+                    <img src="https://i.imgur.com/CFpa3nK.jpg" alt="" width="70" height="70">
+                    <h4 style="color: black;">{{t.ism}} {{t.familya}}</h4>&nbsp; <span>{{t.sharif}}</span> <br>
+                    <p>{{t?.guruh?.yunalish?.fakultet?.nom}}</p>
+
+                </div>
+
+            </div>
+
         </div>
+        <mat-paginator (page)="load()" #paginator [length]="length" [pageSize]="5" [pageSizeOptions]="[5, 7, 10, 12]"
+            aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div>
