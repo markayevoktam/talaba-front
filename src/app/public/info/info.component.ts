@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Talaba } from 'src/app/model/talaba';
 import { PublicService } from 'src/app/service/public.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-info',
@@ -29,6 +30,12 @@ export class InfoComponent implements OnInit {
       }
     })
 
+  }
+
+  getRasm(file: any) {
+    if (file)
+      return environment.baseApi + "/api/file/download/" + file.id;
+    else return "https://idrok.net/logo.png"
   }
 
 }

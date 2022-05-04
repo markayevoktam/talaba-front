@@ -15,6 +15,7 @@ import { YunalishComponent } from './component/yunalish/yunalish.component';
 import { YutuqComponent } from './component/yutuq/yutuq.component';
 import { UserComponent } from './component/user/user.component';
 import { LoginComponent } from '../public/login/login.component';
+import { ProfilComponent } from './component/profil/profil.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { LoginComponent } from '../public/login/login.component';
     YunalishComponent,
     YutuqComponent,
     UserComponent,
-    LoginComponent
+    LoginComponent,
+    ProfilComponent
   ],
   imports: [
     

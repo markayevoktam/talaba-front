@@ -8,6 +8,6 @@ export interface User {
   parol:string;
   regVaqt:Date;
   oxirgiTashrif:Date;
-  
+  rasm: any;  
 
 }

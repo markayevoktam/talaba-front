@@ -15,5 +15,5 @@ export interface Talaba{
     xarakter:Xarakter
     info:string
     oquvShakl:OquvShakl;
-    ball:number
+    rasm:any;
 }

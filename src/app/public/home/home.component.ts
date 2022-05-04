@@ -8,6 +8,7 @@ import { GuruhService } from 'src/app/service/guruh.service';
 import { PublicService } from 'src/app/service/public.service';
 import { TalabaService } from 'src/app/service/talaba.service';
 import { YunalishService } from 'src/app/service/yunalish.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   yunalishlar: any;
   guruhlar: any;
 
+
   length = 100;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -32,16 +34,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
 
   constructor(private publicService: PublicService,
-    private talabaService:TalabaService,
+    private talabaService: TalabaService,
     private fakultetService: FakultetService,
-    private yunalishService:YunalishService,
-    private guruhService:GuruhService,
+    private yunalishService: YunalishService,
+    private guruhService: GuruhService,
 
 
-    ) { }
+  ) { }
   ngAfterViewInit(): void {
-    this.load(); 
-      this.fakultetService.getAll('').subscribe(data => {
+    this.load();
+    this.fakultetService.getAll('').subscribe(data => {
       this.fakultetlar = data.content;
     })
     this.yunalishService.getAll('').subscribe(data => {
@@ -50,11 +52,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.guruhService.getAll('').subscribe(data => {
       this.guruhlar = data.content;
     })
+
   }
 
   ngOnInit(): void {
- 
- 
+
+
+
   }
 
   load(key?: any) {
@@ -69,55 +73,71 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.talabalar = [];
     let params: any = {
       key: key,
-     
+
       page: this.paginator.pageIndex,
       size: this.paginator.pageSize,
       sort: 'id'
     };
 
-    if(this.tanlanganGuruh){
+    if (this.tanlanganGuruh) {
       params.guruh = this.tanlanganGuruh.id;
     }
-
-    if(this.tanlanganYunalish){
+    if (this.tanlanganFakultet) {
+      params.fakultet = this.tanlanganFakultet.id;
+    }
+    if (this.tanlanganYunalish) {
       params.yunalish = this.tanlanganYunalish.id;
     }
 
- 
+
 
     this.publicService.getAll(params).subscribe(royxat => {
-  
       console.log(royxat);
       this.talabalar = royxat.content;
       this.length = royxat.totalElements;
     });
+
   }
-  fakultetTanlash(event: any){
+
+
+
+  fakultetTanlash(event: any) {
+
     this.tanlanganFakultet = event.value;
     this.tanlanganYunalish = null;
     this.tanlanganGuruh = null;
     console.log(this.tanlanganFakultet);
     this.paginator.pageIndex = 0;
     this.load();
-    
+
   }
-  
-  yunalishTanlash(event: any){
+
+  yunalishTanlash(event: any) {
+
+
+
     this.tanlanganYunalish = event.value;
-    this.tanlanganGuruh= null;
+    this.tanlanganGuruh = null;
     console.log(this.tanlanganYunalish);
-    this.paginator.pageIndex=0;
-    this.load()
+    this.paginator.pageIndex = 0;
+    this.load();
+
+
   }
 
 
-  
-   guruhTanlash(event:any){
-     this.guruhTanlash = event.value;
-     this.paginator.pageIndex=0;
-     this.load();
-   }
 
+  guruhTanlash(event: any) {
+    this.tanlanganGuruh = event.value;
+    this.paginator.pageIndex = 0;
+    this.load();
+  }
+
+  getRasm(file: any) {
+    if (file)
+      return environment.baseApi + "/api/file/download/" + file.id;
+    else return "https://idrok.net/logo.png"
+  }
 
 }
 

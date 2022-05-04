@@ -65,26 +65,54 @@
             </div>  
 
             <div class="form-group">
-                <label for="key">Qidiruv</label>
                 <input (input)="load($event.target)"  type="text" class="form-control" name="key" id="key"
-                    aria-describedby="key" placeholder="Qidirish" style="background-color: white;">
+                    aria-describedby="key" placeholder="Qidirish" style="background-color: white; border-radius: 8px; border: none; box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.612) 0px 1px 2px; padding: 10px;">
                 <small id="key" class="form-text text-muted">Qidirish uchun yozing</small>
             </div>
+            
 
 
         
 
-            <div *ngFor="let t of talabalar" class="text-justify darker col-12 mt-4 float-left" id="main123"
-                style="background-color: white; color: black; cursor: pointer;" [routerLink]="['info', t.id]">
-                <div>
+            <div *ngFor="let t of talabalar" id="main123"
+                style="background-color: white; color: black; cursor: pointer; " [routerLink]="['info', t.id]">
+                <!-- <div> -->
 
-                    <img src="https://i.imgur.com/CFpa3nK.jpg" alt="" width="70" height="70">
-                    <h4 style="color: black;">{{t.ism}} {{t.familya}}</h4>&nbsp; <span>{{t.sharif}}</span> <br>
-                    <p>{{t?.guruh?.yunalish?.fakultet?.nom}}</p>
+                    <!-- <img [src]="getRasm(t?.rasm)" alt="" width="70" height="70" style="border-radius: 50%;">
+                    <h4 style="color: black; padding-left: 20px;">{{t.ism}} {{t.familya}}</h4>&nbsp; <span>{{t.sharif}}</span> <br>
+                    <p>{{t?.guruh?.yunalish?.fakultet?.nom}}</p> -->
 
-                </div>
+                <!-- </div> -->
+                <div class="col m-1">
+                            <!-- <div class="row ">
+                            <div class="col-md-1">
+                                <img [src]="getRasm(t?.rasm)"  class="card-img" alt="..." style="width: 100px; height: 100px;">
+                            </div>
+                            <div class="col-md-11">
+                                <div class="card-body">
+                                <h4 class="card-text" style="color: black;">{{t.ism}} {{t.familya}}</h4>&nbsp; <span>{{t.sharif}}</span> <br>
+                                <p>{{t?.guruh?.yunalish?.fakultet?.nom}}</p>
+                                </div>
+                            </div>
+                            </div> -->
 
+
+
+                            <!-- card -->
+                            <div class=" col-12" style="display: flex;">
+                                <div class="col-md-1">
+                                    <img [src]="getRasm(t?.rasm)"  class="card-img" alt="..." style="width: 100px; height: 100px;">
+                                </div>
+                                <div class="col-11">
+                                    <h4 class="card-text" style="color: black;">{{t.ism}} {{t.familya}}</h4> <span>{{t.sharif}}</span> <br>
+                                    <p>{{t?.guruh?.yunalish?.fakultet?.nom}}</p>
+                                </div>
+                              </div>
+                              
+                        </div>
             </div>
+
+        
 
         </div>
         <mat-paginator (page)="load()" #paginator [length]="length" [pageSize]="5" [pageSizeOptions]="[5, 7, 10, 12]"
@@ -92,3 +120,4 @@
         </mat-paginator>
     </div>
 </div>
+

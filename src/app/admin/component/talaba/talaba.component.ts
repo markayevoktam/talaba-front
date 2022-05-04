@@ -3,10 +3,14 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
+import { AccountService } from 'src/app/core/account.service';
+import { User } from 'src/app/model/user';
+import { FaylService } from 'src/app/service/fayl.service';
 import { GuruhService } from 'src/app/service/guruh.service';
 import { LoyihaService } from 'src/app/service/loyiha.service';
 import { TalabaService } from 'src/app/service/talaba.service';
 import { XarakterService } from 'src/app/service/xarakter.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-talaba',
@@ -23,7 +27,8 @@ export class TalabaComponent implements OnInit {
   guruhlar: any;
   xarakterlar: any;
   loyihalar: any;
-
+  user!:User;
+  rasmManzil!:string;
   surovBajarilmoqda = false;
 
   displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif', 'yosh', 'hudud', 'guruh', 'oquvShakl', 'loyiha', 'xarakter', 'info', 'amal'];
@@ -34,13 +39,17 @@ export class TalabaComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   @ViewChild(MatSort) sort!: MatSort;
+  rasm: any;
 
   constructor(private fb: FormBuilder,
     private guruhService: GuruhService,
     private talabaService: TalabaService,
     private xarakterService: XarakterService,
     private loyihaService: LoyihaService,
-    private snakBar: MatSnackBar) { }
+    private snakBar: MatSnackBar,
+    private faylService: FaylService,
+    private accountService:AccountService,
+    ) { }
   ngAfterViewInit(): void {
 
     this.load();
@@ -66,7 +75,7 @@ export class TalabaComponent implements OnInit {
 
     this.guruhService.getAll('').subscribe(data => {
       this.guruhlar = data.content;
-    })
+    }) 
     this.xarakterService.getAll('').subscribe(data => {
       this.xarakterlar = data.content;
     })
@@ -74,6 +83,18 @@ export class TalabaComponent implements OnInit {
       this.loyihalar = data.content;
     })
 
+    this.accountService.identity().subscribe(data=>{
+      if(data){
+        this.user=data;
+        this.rasmManzilOzgar();
+      }
+    })
+
+  }
+
+  rasmManzilOzgar(){
+    if(this.rasm)
+    this.rasmManzil = environment.baseApi + "/api/file/download/"+this.rasm.id;
   }
 
   load(key?: any) {
@@ -101,10 +122,25 @@ export class TalabaComponent implements OnInit {
     });
   }
 
+  onFileSelected(event: any){
+    const file:File = event.target.files[0];
+    if(file){
+      this.faylService.uploadFayl(file).subscribe(f=>{
+        this.rasm=f;
+        this.rasmManzilOzgar();
+       
+      })
+    }
+
+  }
+
+  
+
+
   saqlash() {
     this.surovBajarilmoqda = true;
     let talaba = this.talabaForm.getRawValue();
-
+    talaba.rasm = this.rasm;
     talaba.guruh = {
       id: talaba.guruh
     }
@@ -133,7 +169,7 @@ export class TalabaComponent implements OnInit {
       })
   }
   ochirish(talaba: any) {
-    if (confirm("Siz " + talaba.nom + "ni o'chirishga rozimisiz")) {
+    if (confirm("Siz " + talaba.ism + "ni o'chirishga rozimisiz")) {
       this.talabaService.deleteById(talaba.id).subscribe(data => {
         this.load();
       })
