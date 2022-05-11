@@ -19,7 +19,7 @@ export class UserRouteAccessGuard implements CanActivate {
                   }
                 this._snackBar.open("Sizga bu bo'limda ishlashga huquq berilmagan!", 'X ', {
                     duration: 4000,
-                    verticalPosition: 'bottom',
+                    verticalPosition: 'top',
 
                 });
                // this.stateStorageService.storeUrl(state.url);

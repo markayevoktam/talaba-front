@@ -16,6 +16,7 @@ import { YutuqComponent } from './component/yutuq/yutuq.component';
 import { UserComponent } from './component/user/user.component';
 import { LoginComponent } from '../public/login/login.component';
 import { ProfilComponent } from './component/profil/profil.component';
+import { StudentComponent } from './component/student/student.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ProfilComponent } from './component/profil/profil.component';
     YutuqComponent,
     UserComponent,
     LoginComponent,
-    ProfilComponent
+    ProfilComponent,
+    StudentComponent
   ],
   imports: [
     
@@ -41,7 +43,7 @@ import { ProfilComponent } from './component/profil/profil.component';
     ReactiveFormsModule,
     ...material_imports
   ]
-  // ,
-  // schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  ,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AdminModule { }

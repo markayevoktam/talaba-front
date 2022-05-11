@@ -51,13 +51,7 @@
                         <input formControlName="hudud" matInput placeholder="Hudud..." autocomplete="off">
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Baholar</mat-label>
-                        <mat-hint>Baho kiriting</mat-hint>
-                        <input formControlName="ball" matInput placeholder="Baho..." autocomplete="off">
-                    </mat-form-field>
-
-               
+                  
 
                     <mat-form-field appearance="outline">
                         <mat-label>Guruh</mat-label>
@@ -83,6 +77,15 @@
                         <mat-hint>Xarakter tanlang</mat-hint>
                       </mat-form-field>
 
+                      
+                      
+                      <mat-form-field appearance="outline">
+                        <mat-label>Info</mat-label>
+                        <mat-hint>Info kiriting</mat-hint>
+                        <input formControlName="info" matInput placeholder="Info..." autocomplete="off">
+                    </mat-form-field>
+                    
+
 
                       <mat-form-field appearance="outline">
                         <mat-label>Talabaning O'quv shakli </mat-label>
@@ -92,7 +95,9 @@
                         </mat-select>
                         <mat-hint>Talaba O'quv shakli</mat-hint>
                       </mat-form-field>
-                      <img class="img-account-profil rounded-circle mb-2" [src]="rasmManzil??'https://idrok.net/logo.png'">
+
+                      
+                      <img class="img-account-profil rounded-circle mb-2" [src]="rasmManzil??'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoy14evimpQRK5-u3G2N76z2pyVisthKXoSCL4ThuDhxJcfMqWh3fyHTGRtaqJMeUgzg4&usqp=CAU'">
 
                       <input type="file" class="file-input"
                       (change)="onFileSelected($event)" #fileUpload
@@ -100,9 +105,6 @@
                       <button class="btn btn-primary" type="button" (click)="fileUpload.click()">Rasm yuklash</button>
                     
               
-                      
-        
-
                     
 
                     
@@ -136,12 +138,13 @@
                       <th>Sharif </th>
                       <th>Yosh</th>
                       <th>Hudud</th>
-                      <th>Ball</th>
+                      <!-- <th>Ball</th> -->
                       <th>Loyiha</th>
                       <th>Guruh</th>
                       <th>Xarakter</th>
                       <th>Oquv Shakl</th>
                       <!-- <th>Rasm</th> -->
+                      <th>Info</th> 
                       <th>Amal</th> 
                   </tr>
               </thead>
@@ -153,7 +156,7 @@
                       <td>{{x?.sharif}}</td>
                       <td>{{x?.yosh}}</td>
                       <td>{{x?.hudud}}</td>
-                      <td>{{x?.info}}</td>
+                      <!-- <td>{{x?.info}}</td> -->
                       <td>{{x?.loyiha?.nom}}</td>
                       <td>{{x?.guruh?.nom}}</td>
                       <td>{{x?.xarakter?.nom}}</td>
@@ -170,7 +173,7 @@
                             </span>
                         </span>                       
                       </td>
-                      <!-- <td>{{x?.info}}</td> -->
+                      <td>{{x?.info}}</td>
                       <td>
                           <button mat-button color="primary" (click)="tahrirlash(x)">
                               <mat-icon diametr=5>edit</mat-icon>

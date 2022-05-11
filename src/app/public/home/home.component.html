@@ -31,7 +31,17 @@
         <div class="col-sm-5 col-md-12 col-12 pb-4">
             <div style="display: flex;">
                 <div style="width: 52.5%;">
-                    <h1 style="color: black;">Talabalar</h1>
+                    <!-- <h1 style="color: black;">Talabalar</h1> -->
+                    
+                    <!-- <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['student']">
+                        <mat-icon class="sidenav-icon">verified_user</mat-icon>
+                        Iqrtidorli talabalar
+                    </a> -->
+
+                   <div>
+                    <button mat-button color="dark">Talabalar</button>
+                    <button mat-button color="dark"  [routerLink]="['student']">Iqtidorli talabalar</button>
+                   </div>
                 </div>
                 <div class="d-flex ">
                     <mat-form-field appearance="fill">
@@ -76,36 +86,16 @@
 
             <div *ngFor="let t of talabalar" id="main123"
                 style="background-color: white; color: black; cursor: pointer; " [routerLink]="['info', t.id]">
-                <!-- <div> -->
-
-                    <!-- <img [src]="getRasm(t?.rasm)" alt="" width="70" height="70" style="border-radius: 50%;">
-                    <h4 style="color: black; padding-left: 20px;">{{t.ism}} {{t.familya}}</h4>&nbsp; <span>{{t.sharif}}</span> <br>
-                    <p>{{t?.guruh?.yunalish?.fakultet?.nom}}</p> -->
-
-                <!-- </div> -->
+          
                 <div class="col m-1">
-                            <!-- <div class="row ">
-                            <div class="col-md-1">
-                                <img [src]="getRasm(t?.rasm)"  class="card-img" alt="..." style="width: 100px; height: 100px;">
-                            </div>
-                            <div class="col-md-11">
-                                <div class="card-body">
-                                <h4 class="card-text" style="color: black;">{{t.ism}} {{t.familya}}</h4>&nbsp; <span>{{t.sharif}}</span> <br>
-                                <p>{{t?.guruh?.yunalish?.fakultet?.nom}}</p>
-                                </div>
-                            </div>
-                            </div> -->
-
-
-
-                            <!-- card -->
-                            <div class=" col-12" style="display: flex;">
+                        
+                             <div class=" col-12" style="display: flex;">
                                 <div class="col-md-1">
                                     <img [src]="getRasm(t?.rasm)"  class="card-img" alt="..." style="width: 100px; height: 100px;">
                                 </div>
                                 <div class="col-11">
                                     <h4 class="card-text" style="color: black;">{{t.ism}} {{t.familya}}</h4> <span>{{t.sharif}}</span> <br>
-                                    <p>{{t?.guruh?.yunalish?.fakultet?.nom}}</p>
+                                    <p>{{t?.guruh?.yunalish?.nom}}</p>
                                 </div>
                               </div>
                               

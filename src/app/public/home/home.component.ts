@@ -6,6 +6,7 @@ import { Talaba } from 'src/app/model/talaba';
 import { FakultetService } from 'src/app/service/fakultet.service';
 import { GuruhService } from 'src/app/service/guruh.service';
 import { PublicService } from 'src/app/service/public.service';
+import { StudentService } from 'src/app/service/student.service';
 import { TalabaService } from 'src/app/service/talaba.service';
 import { YunalishService } from 'src/app/service/yunalish.service';
 import { environment } from 'src/environments/environment';
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   key: any;
   filter = new FormControl('filter')
   fakultetlar: any;
+  studentlar: any;
   yunalishlar: any;
   guruhlar: any;
 
@@ -38,6 +40,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private fakultetService: FakultetService,
     private yunalishService: YunalishService,
     private guruhService: GuruhService,
+    private studentService: StudentService,
 
 
   ) { }
@@ -51,6 +54,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     })
     this.guruhService.getAll('').subscribe(data => {
       this.guruhlar = data.content;
+    })
+    this.studentService.getAll('').subscribe(data=> {
+      this.studentlar = data.content;
     })
 
   }

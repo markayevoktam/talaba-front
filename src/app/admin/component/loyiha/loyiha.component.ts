@@ -75,9 +75,7 @@ export class LoyihaComponent implements OnInit {
   saqlash() {
     this.surovBajarilmoqda = true;
     let loyiha = this.loyihaForm.getRawValue();
-    // yutuq.lavozim = {
-    //   id: yutuq.lavozim
-    // }
+
     let surov;
     if (this.tahrirRejim)
       surov = this.loyihaService.update(loyiha);

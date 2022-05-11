@@ -8,7 +8,7 @@ export interface Talaba{
     ism:string
     familya:string
     sharif:string
-    yosh:string
+    yosh: number
     hudud:string
     loyiha:Loyiha
     guruh:Guruh
