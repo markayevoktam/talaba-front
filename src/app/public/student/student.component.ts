@@ -27,12 +27,7 @@ export class StudentComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.load();
-    this.studentService.getAll('').subscribe(data => {
-      this.studentlar = data.content;
-    })
-   
-
-  }
+    }
 
   
   load(key?: any) {
@@ -54,7 +49,7 @@ export class StudentComponent implements OnInit {
 
 
 
-    this.publicService.getAll(params).subscribe(royxat => {
+    this.studentService.getAll(params).subscribe(royxat => {
       console.log(royxat);
       this.studentlar = royxat.content;
       this.length = royxat.totalElements;

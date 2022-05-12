@@ -1,22 +1,35 @@
-<nav class="navbar navbar-expand-sm navbar-dark  "> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<nav class="navbar navbar-expand-sm navbar-dark  ">
     <div class="container">
-      <img src="https://static10.tgstat.ru/channels/_0/0c/0c8cceaffdb83ce07230e847feb482d2.jpg" width="50" height="50" class="d-inline-block align-top rounded-circle" alt="">
-   <a class="navbar-brand ml-2" style="color: black; font-size: 25px;" href="#" data-abc="true">TATU Qarshi filiali</a> 
-   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span> 
-      </button>
- 
-  <div style="width: 90%;">
+        <div class="box">
+            <div>
+                <img src="https://static10.tgstat.ru/channels/_0/0c/0c8cceaffdb83ce07230e847feb482d2.jpg" width="50"
+                    height="50" class="d-inline-block align-top rounded-circle" alt="">
 
-  </div>
-  </div>
-  </nav>
-	<div class="container">    
-   
-        <article  *ngFor="let s of studentlar" class="postcard light yellow">
-            <div class="col">
-                <img class="postcard__img"  [src]="getRasm(s?.rasm)" alt="..." >
             </div>
+            <div>
+                <a class="navbar-brand ml-2" style="color: rgb(0, 0, 0); font-size: 25px;" href="#" data-abc="true">TATU
+                    Qarshi filiali</a>
+                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span> 
+      </button> -->
+            </div>
+        </div>
+
+        <div class="box_icon">
+            <a [routerLink]="['/']" class="boshqism"> Bosh sahifa</a>
+            <a [routerLink]="['/login']" class="icon">
+                <i class="fa fa-sign-in fa-3x" ></i></a>
+
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <article *ngFor="let s of studentlar" class="postcard light yellow">
+        <div class="col">
+            <img class="postcard__img" [src]="getRasm(s?.rasm)" alt="...">
+        </div>
         <div class="postcard__text t-dark">
             <h1 class="postcard__title yellow" style="cursor: pointer;">{{s?.ism}}</h1>
             <h1 class="postcard__title yellow" style="cursor: pointer;">{{s?.familya}}</h1>
@@ -36,10 +49,8 @@
                 </li>
             </ul>
         </div>
-        
+
     </article>
 
-    <button [routerLink]="['/']"  class="btn btn-light">        
-        <a style="text-decoration: none; font-size: 15px; font-family: Arial, Helvetica, sans-serif; color: black ;"> Bosh sahifa</a>
-   </button>
-    </div>
+
+</div>

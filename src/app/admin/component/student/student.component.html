@@ -59,15 +59,15 @@
               </mat-form-field>
 
             <mat-form-field appearance="outline">
-                <mat-label>O'qishga kirgan yili</mat-label>
-                <input formControlName='oqishgaKirYil'  matInput placeholder="O'qishga kirgan yili">
-                <mat-hint>O'qishga kirgan yili</mat-hint>
+                <mat-label>Ishga kirgan yili</mat-label>
+                <input formControlName='oqishgaKirYil'  matInput placeholder="Ishga kirgan yili">
+                <mat-hint>Ishga kirgan yili</mat-hint>
               </mat-form-field>
 
             <mat-form-field appearance="outline">
-                <mat-label>O'qish tugatgan yili</mat-label>
-                <input formControlName='oqishTugYil'  matInput placeholder="O'qish tugatgan yili">
-                <mat-hint>O'qish tugatgan yili</mat-hint>
+                <mat-label>Ishni tugatgan yili</mat-label>
+                <input formControlName='oqishTugYil'  matInput placeholder="Ish tugatgan yili">
+                <mat-hint>Ish tugatgan yili</mat-hint>
               </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -75,6 +75,15 @@
                 <input formControlName='info'  matInput placeholder="Info">
                 <mat-hint>Info</mat-hint>
               </mat-form-field>
+
+              <img class="img-account-profil rounded-circle mb-2" [src]="rasmManzil??'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoy14evimpQRK5-u3G2N76z2pyVisthKXoSCL4ThuDhxJcfMqWh3fyHTGRtaqJMeUgzg4&usqp=CAU'">
+
+              <input type="file" class="file-input"
+              (change)="onFileSelected($event)" #fileUpload
+              >
+              <button class="btn btn-primary" type="button" (click)="fileUpload.click()">Rasm yuklash</button>
+            
+              
 
               <button [disabled]="surovBajarilmoqda"  mat-raised-button color="primary" type='submit'>
                 <mat-spinner *ngIf="surovBajarilmoqda " diameter="20" color="accent"></mat-spinner>  
@@ -107,7 +116,7 @@
               <th>Yosh</th>
               <th>Ishlash joyi</th>
               <th>Ishga kirgan yili</th>
-              <th>O'qishni tugatgan yili</th>
+              <th>Ishni tugatgan yili</th>
               <th>Info</th>
               <th>Amal</th>
           </tr>
@@ -124,14 +133,7 @@
               <td>{{x?.oqishgaKirYil}}</td>
               <td>{{x?.oqishTugYil}}</td>
               <td>{{x?.info}}</td>
-              <img class="img-account-profil rounded-circle mb-2" [src]="rasmManzil??'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoy14evimpQRK5-u3G2N76z2pyVisthKXoSCL4ThuDhxJcfMqWh3fyHTGRtaqJMeUgzg4&usqp=CAU'">
-
-              <input type="file" class="file-input"
-              (change)="onFileSelected($event)" #fileUpload
-              >
-              <button class="btn btn-primary" type="button" (click)="fileUpload.click()">Rasm yuklash</button>
-            
-      
+             
               <td>
                   <button mat-button color="primary" (click)="tahrirlash(x)">
                       <mat-icon diametr=5>edit</mat-icon>
