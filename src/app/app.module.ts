@@ -13,6 +13,7 @@ import { DeleteDialog } from './shared/delete-dialog.component';
 import { MyFilterService } from './core/my-filter.service';
 import { InfoComponent } from './public/info/info.component';
 import { StudentComponent } from './public/student/student.component';
+import { TalentdComponent } from './public/talentd/talentd.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +21,7 @@ import { StudentComponent } from './public/student/student.component';
     HomeComponent,
     InfoComponent,
     StudentComponent,
+    TalentdComponent,
     
     
   ],

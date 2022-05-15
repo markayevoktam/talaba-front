@@ -19,6 +19,11 @@ export class TalabaService {
     });
   }
   
+  getAllTalented(params: any): Observable<Page> {
+    return this.http.get<Page>(this.api+"/talented", {
+      params: params
+    });
+  }
 
   getById(id: number): Observable<any>{
     return this.http.get<any>(this.api + "/" + id);

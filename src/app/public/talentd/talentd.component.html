@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<nav class="navbar navbar-expand-sm navbar-dark  ">
+
+<nav class="navbar navbar-expand-sm navbar-dark">
     <div class="container">
         <div class="box">
             <div>
@@ -10,21 +11,27 @@
             <div>
                 <a class="navbar-brand ml-2" style="color: rgb(0, 0, 0); font-size: 25px;" href="#" data-abc="true">TATU
                     Qarshi filiali</a>
-                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span> 
-      </button> -->
             </div>
         </div>
 
         <div class="box_icon">
-            <!-- <a [routerLink]="['/']" class="boshqism"> Bosh sahifa</a> -->
-            <button mat-button color="dark"  [routerLink]="['/']" class="boshqism">Bosh sahifa</button>
+            
+
+                   <div>
+                    <button mat-button color="dark"  [routerLink]="['/']" class="boshqism">Bosh sahifa</button>
+                    <!-- <button mat-button color="dark"  [routerLink]="['talentd']" class="boshqism">Iqtidorli talabalar</button> -->
+                   </div>
+                    <a [routerLink]="['/login']" class="icon"   >
+                        <button mat-button color="dark" >Kirish</button>
+                    </a>
+
         </div>
     </div>
 </nav>
+
 <div class="container">
 
-    <article *ngFor="let s of studentlar" class="postcard light yellow">
+    <article *ngFor="let s of talabalar" class="postcard light yellow">
         <div class="col">
             <img class="postcard__img" [src]="getRasm(s?.rasm)" alt="...">
         </div>
@@ -32,19 +39,12 @@
             <h1 class="postcard__title yellow" style="cursor: pointer;">{{s?.ism}}</h1>
             <h1 class="postcard__title yellow" style="cursor: pointer;">{{s?.familya}}</h1>
             <h1 class="postcard__title yellow" style="cursor: pointer;">{{s?.sharif}}</h1>
-            <div class="postcard__subtitle small">
-                <time datetime="2020-05-25 12:00:00">
-                    <i class="fas fa-calendar-alt mr-2"></i>{{s?.ishlashJoyi}}
-                </time>
-            </div>
             <div class="postcard__bar" style="background-color: rgba(46, 46, 235, 0.671);"></div>
-            <div class="postcard__preview-txt">{{s?.oqishgaKirYil}}</div>
+            <div class="postcard__preview-txt">{{s?.guruh?.nom}}</div>
+            <div class="postcard__preview-txt">{{s?.guruh?.yunalish?.nom}}</div>
+            <div class="postcard__preview-txt">{{s?.guruh?.yunalish?.fakultet?.nom}}</div>
             <ul class="postcard__tagbox">
-                <li class="tag__item">{{s?.hudud}}</li>
-                <li class="tag__item">{{s?.yosh+" yosh"}}</li>
-                <!-- <li class="tag__item">
-                    {{s?.oqishTugYil}}
-                </li> -->
+               
             </ul>
         </div>
 
@@ -52,3 +52,4 @@
 
 
 </div>
+

@@ -1,4 +1,38 @@
-@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
+.navbar{
+    box-shadow: 1px 1px 10px 2px grey
+}
+
+.navbar {
+    box-shadow: 1px 1px 10px 2px grey;
+    margin-bottom: 20px;
+  }
+  
+  .boshqism {
+    text-decoration: none;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    display: inline-block;
+    margin: 10px;
+    
+  }
+  
+  .box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+  }
+  
+  .box_icon{
+    display: flex;
+  }
+  .icon i{
+    font-size: 18px;
+    margin: 10px;
+  }
+
+  @import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
 $main-green: #79dd09 !default;
 $main-green-rgb-015: rgba(121, 221, 9, 0.1) !default;
 $main-yellow: #bdbb49 !default;

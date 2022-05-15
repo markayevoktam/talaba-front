@@ -15,7 +15,6 @@ import { YunalishComponent } from './component/yunalish/yunalish.component';
 import { YutuqComponent } from './component/yutuq/yutuq.component';
 import { UserComponent } from './component/user/user.component';
 import { LoginComponent } from '../public/login/login.component';
-import { ProfilComponent } from './component/profil/profil.component';
 import { StudentComponent } from './component/student/student.component';
 
 
@@ -32,7 +31,6 @@ import { StudentComponent } from './component/student/student.component';
     YutuqComponent,
     UserComponent,
     LoginComponent,
-    ProfilComponent,
     StudentComponent
   ],
   imports: [

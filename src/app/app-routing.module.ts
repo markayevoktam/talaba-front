@@ -6,6 +6,7 @@ import { InfoComponent } from './public/info/info.component';
 import { LoginComponent } from './public/login/login.component';
 import { RegisterComponent } from './public/register/register.component';
 import { StudentComponent } from './public/student/student.component';
+import { TalentdComponent } from './public/talentd/talentd.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,10 @@ const routes: Routes = [
   },{
     path: 'student',
     component: StudentComponent
+  },
+  {
+    path:'talentd',
+    component: TalentdComponent
   }
 
 ];

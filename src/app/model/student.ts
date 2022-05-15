@@ -6,8 +6,8 @@ export interface Student{
     yosh: number
     hudud:string
     ishlashJoyi:string
-    oqishgaKirYil:string
-    oqishTugYil:string
+    oqishgaKirYil: Date
+    oqishTugYil: Date
     info:string
     rasm:any;
 

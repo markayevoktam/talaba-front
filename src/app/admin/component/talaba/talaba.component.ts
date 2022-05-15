@@ -31,6 +31,8 @@ export class TalabaComponent implements OnInit {
   rasmManzil!:string;
   surovBajarilmoqda = false;
 
+  talented = false;
+
   displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif', 'yosh', 'hudud', 'guruh', 'oquvShakl', 'loyiha', 'xarakter', 'info', 'amal'];
   dataSource: any;
   filter = new FormControl('filter')
@@ -49,6 +51,7 @@ export class TalabaComponent implements OnInit {
     private snakBar: MatSnackBar,
     private faylService: FaylService,
     private accountService:AccountService,
+    
     ) { }
   ngAfterViewInit(): void {
 
@@ -69,6 +72,7 @@ export class TalabaComponent implements OnInit {
       xarakter: ['', Validators.required],
       oquvShakl: ['', Validators.required],
       loyiha: ['', Validators.required],
+      talented: [false],
       info: [''],
       amal: ['']
     });
@@ -167,6 +171,15 @@ export class TalabaComponent implements OnInit {
         this.snakBar.open("Xatolik ro'y berdi", "Ok");
         this.surovBajarilmoqda = false;
       })
+
+      // talented student add
+      if(this.talented=true){
+        this.xarakterService.create('').subscribe(data => {
+          this.talabalar = data.content;
+        })
+      }
+
+
   }
   ochirish(talaba: any) {
     if (confirm("Siz " + talaba.ism + "ni o'chirishga rozimisiz")) {
@@ -181,6 +194,8 @@ export class TalabaComponent implements OnInit {
     this.talabaForm.reset(talaba);
     this.formOchiq = true;
   }
+
+
 
   tozalash() {
     this.talabaForm.reset({});

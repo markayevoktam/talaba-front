@@ -11,16 +11,19 @@
             <div>
                 <a class="navbar-brand ml-2" style="color: rgb(0, 0, 0); font-size: 25px;" href="#" data-abc="true">TATU
                     Qarshi filiali</a>
-                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span> 
-      </button> -->
             </div>
         </div>
 
         <div class="box_icon">
-            <a [routerLink]="['/']" class="boshqism"> Bosh sahifa</a>
-            <a [routerLink]="['/login']" class="icon">
-                <i class="fa fa-sign-in fa-3x" ></i></a>
+            
+
+                   <div>
+                    <button mat-button color="dark"  [routerLink]="['student']" class="boshqism">Bizning faxrimiz</button>
+                    <button mat-button color="dark"  [routerLink]="['talentd']" class="boshqism">Iqtidorli talabalar</button>
+                   </div>
+                    <a [routerLink]="['/login']" class="icon"   >
+                        <button mat-button color="dark" >Kirish</button>
+                    </a>
 
         </div>
     </div>
@@ -41,11 +44,6 @@
             <div style="display: flex;">
                 <div style="width: 52.5%;">
              
-
-                   <div>
-                    <button mat-button color="dark">Talabalar</button>
-                    <button mat-button color="dark"  [routerLink]="['student']">Iqtidorli talabalar</button>
-                   </div>
                 </div>
                 <div class="d-flex ">
                     <mat-form-field appearance="fill">
@@ -89,7 +87,7 @@
         
 
             <div *ngFor="let t of talabalar" id="main123"
-                style="background-color: white; color: black; cursor: pointer; " [routerLink]="['info', t.id]">
+                style="background-color: white; color: black; cursor: pointer; margin-bottom: 10px;" [routerLink]="['info', t.id]">
           
                 <div class="col m-1">
                         
@@ -105,7 +103,6 @@
                               
                         </div>
             </div>
-
         
 
         </div>

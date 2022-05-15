@@ -5,7 +5,6 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { FakultetComponent } from './component/fakultet/fakultet.component';
 import { GuruhComponent } from './component/guruh/guruh.component';
 import { LoyihaComponent } from './component/loyiha/loyiha.component';
-import { ProfilComponent } from './component/profil/profil.component';
 import { StudentComponent } from './component/student/student.component';
 import { TalabaComponent } from './component/talaba/talaba.component';
 import { UserComponent } from './component/user/user.component';
@@ -59,10 +58,7 @@ const routes: Routes = [
         path: 'yutuq',
         component: YutuqComponent
       }
-      ,{
-        path: 'profil',
-        component: ProfilComponent
-      }
+     
       ,{
         path: 'student',
         component: StudentComponent

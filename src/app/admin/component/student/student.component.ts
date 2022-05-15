@@ -71,6 +71,7 @@ export class StudentComponent implements OnInit {
   rasmManzilOzgar(){
     if(this.rasm)
     this.rasmManzil = environment.baseApi + "/api/file/download/"+this.rasm.id;
+    
   }
 
   onFileSelected(event: any){
