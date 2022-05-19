@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Fruit } from 'src/app/admin/component/talaba/talaba.component';
 import { Talaba } from 'src/app/model/talaba';
 import { PublicService } from 'src/app/service/public.service';
 import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class InfoComponent implements OnInit {
 
   talaba!: Talaba;
-
+  fruits: Fruit[] = [];
 
   constructor(private activatedRouter: ActivatedRoute, private publicService: PublicService) { }
 

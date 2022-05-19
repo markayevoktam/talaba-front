@@ -19,7 +19,15 @@
         <div class="box_icon">
             <!-- <a [routerLink]="['/']" class="boshqism"> Bosh sahifa</a> -->
             <button mat-button color="dark"  [routerLink]="['/']" class="boshqism">Bosh sahifa</button>
-        </div>
+                <div>
+                    <button mat-button color="dark" [routerLink]="['/student']" class="boshqism">Bizning faxrimiz</button>
+                    <button mat-button color="dark" [routerLink]="['/talentd']" class="boshqism">Iqtidorli talabalar</button>
+                </div>
+                <a [routerLink]="['/login']" class="icon">
+                    <button mat-button color="dark">Kirish</button>
+                </a>
+    
+            </div>
     </div>
 </nav>
 <div class="container">
@@ -33,8 +41,8 @@
             <h1 class="postcard__title yellow" style="cursor: pointer;">{{s?.familya}}</h1>
             <h1 class="postcard__title yellow" style="cursor: pointer;">{{s?.sharif}}</h1>
             <div class="postcard__subtitle small">
-                <time datetime="2020-05-25 12:00:00">
-                    <i class="fas fa-calendar-alt mr-2"></i>{{s?.ishlashJoyi}}
+                <time style="font-size: 15px;">
+                    {{s?.ishlashJoyi}}
                 </time>
             </div>
             <div class="postcard__bar" style="background-color: rgba(46, 46, 235, 0.671);"></div>

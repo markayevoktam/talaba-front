@@ -13,19 +13,22 @@
                     Qarshi filiali</a>
             </div>
         </div>
-
         <div class="box_icon">
-            
+            <div>
+                <button mat-button color="dark" [routerLink]="['/']" class="boshqism">Bosh sahifa</button>
+                <!-- <button mat-button color="dark"  [routerLink]="['talentd']" class="boshqism">Iqtidorli talabalar</button> -->
+            </div>
 
-                   <div>
-                    <button mat-button color="dark"  [routerLink]="['/']" class="boshqism">Bosh sahifa</button>
-                    <!-- <button mat-button color="dark"  [routerLink]="['talentd']" class="boshqism">Iqtidorli talabalar</button> -->
-                   </div>
-                    <a [routerLink]="['/login']" class="icon"   >
-                        <button mat-button color="dark" >Kirish</button>
-                    </a>
 
+            <div>
+                <button mat-button color="dark" [routerLink]="['/student']" class="boshqism">Bizning faxrimiz</button>
+                <button mat-button color="dark" [routerLink]="['talentd']" class="boshqism">Iqtidorli talabalar</button>
+            </div>
+            <a [routerLink]="['/login']" class="icon">
+                <button mat-button color="dark">Kirish</button>
+            </a>
         </div>
+
     </div>
 </nav>
 
@@ -44,7 +47,7 @@
             <div class="postcard__preview-txt">{{s?.guruh?.yunalish?.nom}}</div>
             <div class="postcard__preview-txt">{{s?.guruh?.yunalish?.fakultet?.nom}}</div>
             <ul class="postcard__tagbox">
-               
+
             </ul>
         </div>
 
@@ -52,4 +55,3 @@
 
 
 </div>
-

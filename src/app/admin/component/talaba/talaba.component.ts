@@ -11,13 +11,22 @@ import { LoyihaService } from 'src/app/service/loyiha.service';
 import { TalabaService } from 'src/app/service/talaba.service';
 import { XarakterService } from 'src/app/service/xarakter.service';
 import { environment } from 'src/environments/environment';
-
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material/chips';
+export interface Fruit {
+  name: string;
+}
 @Component({
   selector: 'app-talaba',
   templateUrl: './talaba.component.html',
   styleUrls: ['./talaba.component.scss']
 })
+
 export class TalabaComponent implements OnInit {
+
+  // Chips ma'lumtlarri bilan ishlsh
+
+
 
   talabaForm!: FormGroup;
 
@@ -154,6 +163,7 @@ export class TalabaComponent implements OnInit {
     talaba.loyiha = {
       id: talaba.loyiha
     }
+    
 
     let surov;
     if (this.tahrirRejim)
@@ -179,8 +189,17 @@ export class TalabaComponent implements OnInit {
         })
       }
 
+      
+
 
   }
+
+  xato(talaba:any){
+    if(talaba.ism==Number){
+      this.snakBar.open("Xatolik","X")
+    }
+  }
+  
   ochirish(talaba: any) {
     if (confirm("Siz " + talaba.ism + "ni o'chirishga rozimisiz")) {
       this.talabaService.deleteById(talaba.id).subscribe(data => {
@@ -203,4 +222,34 @@ export class TalabaComponent implements OnInit {
     this.formOchiq = false;
   }
 
+
+
+
+  // Chips ma'lumotlari
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  fruits: Fruit[] = [];
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our fruit
+    if (value) {
+      this.fruits.push({name: value});
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+
+  remove(fruit: Fruit): void {
+    const index = this.fruits.indexOf(fruit);
+
+    if (index >= 0) {
+      this.fruits.splice(index, 1);
+    }
+  }
+  
+
 }
+

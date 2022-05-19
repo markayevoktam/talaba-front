@@ -16,6 +16,8 @@ import { YutuqComponent } from './component/yutuq/yutuq.component';
 import { UserComponent } from './component/user/user.component';
 import { LoginComponent } from '../public/login/login.component';
 import { StudentComponent } from './component/student/student.component';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 
 @NgModule({
@@ -39,6 +41,7 @@ import { StudentComponent } from './component/student/student.component';
     AdminRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    MatChipsModule,
     ...material_imports
   ]
   ,

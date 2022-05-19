@@ -19,27 +19,27 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Ism</mat-label>
                         <mat-hint>Ism kiriting</mat-hint>
-                        <input formControlName="ism" matInput placeholder="Ism..." autocomplete="off">
+                        <input  pattern="^[a-zA-Z0-9]{3}" formControlName="ism" matInput placeholder="Ism..." autocomplete="off" maxlength="20" minlength="3">
                     </mat-form-field>
 
 
                     <mat-form-field appearance="outline">
                         <mat-label>Familya</mat-label>
                         <mat-hint>Familya kiriting</mat-hint>
-                        <input formControlName="familya" matInput placeholder="Familya..." autocomplete="off">
+                        <input  pattern="^[a-zA-Z0-9]{3}" formControlName="familya" matInput placeholder="Familya..." autocomplete="off" maxlength="20" minlength="3">
                     </mat-form-field>
 
 
                     <mat-form-field appearance="outline">
                         <mat-label>Sharif</mat-label>
                         <mat-hint>Sharif kiriting</mat-hint>
-                        <input formControlName="sharif" matInput placeholder="Sharif..." autocomplete="off">
+                        <input  pattern="^[a-zA-Z0-9]{3}" formControlName="sharif" matInput placeholder="Sharif..." autocomplete="off" maxlength="20" minlength="3">
                     </mat-form-field>
 
                     <mat-form-field appearance="outline">
                         <mat-label>Yosh</mat-label>
                         <mat-hint>Yosh kiriting</mat-hint>
-                        <input formControlName="yosh" matInput placeholder="Yosh..." autocomplete="off">
+                        <input formControlName="yosh" matInput placeholder="Yosh..." autocomplete="off" type="number" min="10" max="100">
                     </mat-form-field>
 
 
@@ -48,7 +48,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Hudud</mat-label>
                         <mat-hint>Hudud kiriting</mat-hint>
-                        <input formControlName="hudud" matInput placeholder="Hudud..." autocomplete="off">
+                        <input  pattern="^[a-zA-Z0-9]{3}" formControlName="hudud" matInput placeholder="Hudud..." autocomplete="off">
                     </mat-form-field>
 
 
@@ -83,7 +83,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Info</mat-label>
                         <mat-hint>Info kiriting</mat-hint>
-                        <input formControlName="info" matInput placeholder="Info..." autocomplete="off">
+                        <input  pattern="^[a-zA-Z0-9]{3}" formControlName="info" matInput placeholder="Info..." autocomplete="off">
                     </mat-form-field>
                     
                   
@@ -123,9 +123,6 @@
                     </button>
                     <button mat-raised-button color="accent" type="reset" (click)="tozalash()">
                         Bekor qilish</button>
-
-                    <mat-checkbox class="example-margin" style="margin-left: 20px;">Siz kiritgan talaba iqtidorli
-                        talabami ?</mat-checkbox>
 
                 </form>
 
@@ -202,6 +199,29 @@
                 </tbody>
             </table>
         </div>
+
+
+        <!--  Chips ma'lumotlari bilan ishlash -->
+
+        <mat-form-field class="example-chip-list" appearance="fill">
+            <mat-label>Yutuqlar</mat-label>
+            <mat-chip-list #chipList aria-label="Talabaning yutuqlari  ">
+              <mat-chip *ngFor="let fruit of fruits" (removed)="remove(fruit)">
+                {{fruit.name}}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <input placeholder="Yutuq nomi qo'shing ..."
+                     [matChipInputFor]="chipList"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="add($event)"
+                     autocomplete="off"
+                     >
+            </mat-chip-list>
+          </mat-form-field>
+          
 
 
 

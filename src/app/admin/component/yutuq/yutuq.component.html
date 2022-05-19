@@ -24,7 +24,7 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Nom</mat-label>
-                <input formControlName='nom'  matInput placeholder="nom">
+                <input  pattern="^[a-zA-Z0-9]{3}" formControlName='nom'  matInput placeholder="nom">
                 <mat-hint>Nom</mat-hint>
               </mat-form-field>
 

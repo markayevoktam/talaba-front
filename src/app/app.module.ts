@@ -14,6 +14,8 @@ import { MyFilterService } from './core/my-filter.service';
 import { InfoComponent } from './public/info/info.component';
 import { StudentComponent } from './public/student/student.component';
 import { TalentdComponent } from './public/talentd/talentd.component';
+import {MatChipsModule} from '@angular/material/chips';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +34,7 @@ import { TalentdComponent } from './public/talentd/talentd.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatChipsModule,
 
    
    

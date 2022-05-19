@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <nav class="navbar navbar-expand-sm navbar-dark">
     <div class="container">
         <div class="box">
@@ -15,15 +15,15 @@
         </div>
 
         <div class="box_icon">
-            
 
-                   <div>
-                    <button mat-button color="dark"  [routerLink]="['student']" class="boshqism">Bizning faxrimiz</button>
-                    <button mat-button color="dark"  [routerLink]="['talentd']" class="boshqism">Iqtidorli talabalar</button>
-                   </div>
-                    <a [routerLink]="['/login']" class="icon"   >
-                        <button mat-button color="dark" >Kirish</button>
-                    </a>
+
+            <div>
+                <button mat-button color="dark" [routerLink]="['student']" class="boshqism">Bizning faxrimiz</button>
+                <button mat-button color="dark" [routerLink]="['talentd']" class="boshqism">Iqtidorli talabalar</button>
+            </div>
+            <a [routerLink]="['/login']" class="icon">
+                <button mat-button color="dark">Kirish</button>
+            </a>
 
         </div>
     </div>
@@ -40,11 +40,8 @@
         </h2>
     </div>
     <div class="row">
-        <div class="col-sm-5 col-md-12 col-12 pb-4">
-            <div style="display: flex;">
-                <div style="width: 52.5%;">
-             
-                </div>
+        <div class="col-sm-12 col-md-12 col-12 pb-4">
+            <div>
                 <div class="d-flex ">
                     <mat-form-field appearance="fill">
                         <mat-label>Fakultetni tanlang</mat-label>
@@ -74,36 +71,83 @@
 
 
 
-            </div>  
+            </div>
 
             <div class="form-group">
-                <input (input)="load($event.target)"  type="text" class="form-control" name="key" id="key"
-                    aria-describedby="key" placeholder="Qidirish" style="background-color: white; border-radius: 8px; border: none; box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.612) 0px 1px 2px; padding: 10px;">
+                <input (input)="load($event.target)" type="text" class="form-control" name="key" id="key"
+                    aria-describedby="key" placeholder="Qidirish"
+                    style="background-color: white; border-radius: 8px; border: none; box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.612) 0px 1px 2px; padding: 10px;">
                 <small id="key" class="form-text text-muted">Qidirish uchun yozing</small>
             </div>
-            
 
 
-        
 
-            <div *ngFor="let t of talabalar" id="main123"
-                style="background-color: white; color: black; cursor: pointer; margin-bottom: 10px;" [routerLink]="['info', t.id]">
-          
-                <div class="col m-1">
-                        
-                             <div class=" col-12" style="display: flex;">
-                                <div class="col-md-1">
-                                    <img [src]="getRasm(t?.rasm)"  class="card-img" alt="..." style="width: 100px; height: 100px;">
-                                </div>
-                                <div class="col-11">
-                                    <h4 class="card-text" style="color: black;">{{t.ism}} {{t.familya}}</h4> <span>{{t.sharif}}</span> <br>
-                                    <p>{{t?.guruh?.yunalish?.nom}}</p>
-                                </div>
-                              </div>
-                              
+
+
+            <!-- <div *ngFor="let t of talabalar" id="main123"
+                style="background-color: white; color: black; cursor: pointer; margin-bottom: 10px;"
+                [routerLink]="['info', t.id]" class="col-sm-12">
+
+                <div class="card    " style="max-width: 100%; ">
+                    <div class="row no-gutters">
+                      <div class="col-md-3 col-sm-12 " style="height: 250px;">
+                        <img [src]="getRasm(t?.rasm)" class="card-img" alt="...">
+                      </div>
+                      <div class="col-md-9 ">
+                        <div class="card-body">
+                          <h2 class="card-title">{{t.ism}} {{t.familya}}</h2>
+                          <p class="card-text">{{t?.guruh?.yunalish?.fakultet?.nom}}</p>
+                          <p class="card-text"><small class="text-muted">{{t?.guruh?.yunalish?.nom}}</small></p>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+            </div> -->
+
+            <!-- test cards -->
+            <div id="container" *ngFor="let t of talabalar" [routerLink]="['info', t.id]">
+                <div class="product-image">
+
+                    <img [src]="getRasm(t?.rasm)" class="card-img" alt="...">
+                </div>
+                <div class="product-details">
+
+                    <h1 class="card-title">{{t.ism}} {{t.familya}}</h1>
+                    <span class="hint-star star">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </span>
+
+                    <div class="card-body">
+
+                        <p class="card-text" style="font-size: 20px;">{{t?.guruh?.yunalish?.fakultet?.nom}}</p>
+                        <p class="card-text" class="text-muted" style="font-size: 25px;">{{t?.guruh?.yunalish?.nom}}</p>
+                    </div>
+
+                    <!--                     
+            <div class="control">
+                
+                <button class="btn">
+                 <span class="price">$250</span>
+               <span class="shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+               <span class="buy">Get now</span>
+             </button>
+                
+            </div> -->
+
+                </div>
+
+
+
             </div>
-        
+
+
+
+
+
 
         </div>
         <mat-paginator (page)="load()" #paginator [length]="length" [pageSize]="5" [pageSizeOptions]="[5, 7, 10, 12]"
@@ -111,4 +155,3 @@
         </mat-paginator>
     </div>
 </div>
-
