@@ -1,3 +1,5 @@
+import { OquvShakl } from "./oquvShakl"
+
 export interface Student{
     id:number
     ism:string
@@ -8,7 +10,8 @@ export interface Student{
     ishlashJoyi:string
     oqishgaKirYil: Date
     oqishTugYil: Date
+    oquvShakl: OquvShakl
     info:string
-    rasm:any;
+    rasm:any
 
 }

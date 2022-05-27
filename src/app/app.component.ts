@@ -12,7 +12,7 @@ export class AppComponent implements OnInit{
   constructor(private accountService: AccountService){}
   ngOnInit(): void {
     this.accountService.identity().subscribe(data=>{
-      console.log(data);
+      // console.log(data);
       
     })
   }

@@ -39,7 +39,6 @@ export class MyFilterService implements HttpInterceptor{
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // filter
     let token = localStorage.getItem('token');
-    console.log(token);
 
 
 
@@ -49,12 +48,10 @@ export class MyFilterService implements HttpInterceptor{
         
         .set('Authorization', "Bearer "+token)
       });
-      console.log('ketti');
 
       return next.handle(authReq);
     }
 
-    console.log('ketmadi');
     return next.handle(req);
   }
 }

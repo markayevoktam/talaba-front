@@ -19,21 +19,21 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Ism</mat-label>
                         <mat-hint>Ism kiriting</mat-hint>
-                        <input  pattern="^[a-zA-Z0-9]{3}" formControlName="ism" matInput placeholder="Ism..." autocomplete="off" maxlength="20" minlength="3">
+                        <input   formControlName="ism" matInput placeholder="Ism..." autocomplete="off" maxlength="30" minlength="3">
                     </mat-form-field>
 
 
                     <mat-form-field appearance="outline">
                         <mat-label>Familya</mat-label>
                         <mat-hint>Familya kiriting</mat-hint>
-                        <input  pattern="^[a-zA-Z0-9]{3}" formControlName="familya" matInput placeholder="Familya..." autocomplete="off" maxlength="20" minlength="3">
+                        <input   formControlName="familya" matInput placeholder="Familya..." autocomplete="off" maxlength="30" minlength="3">
                     </mat-form-field>
 
 
                     <mat-form-field appearance="outline">
                         <mat-label>Sharif</mat-label>
                         <mat-hint>Sharif kiriting</mat-hint>
-                        <input  pattern="^[a-zA-Z0-9]{3}" formControlName="sharif" matInput placeholder="Sharif..." autocomplete="off" maxlength="20" minlength="3">
+                        <input   formControlName="sharif" matInput placeholder="Sharif..." autocomplete="off" maxlength="30" minlength="3">
                     </mat-form-field>
 
                     <mat-form-field appearance="outline">
@@ -48,7 +48,14 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Hudud</mat-label>
                         <mat-hint>Hudud kiriting</mat-hint>
-                        <input  pattern="^[a-zA-Z0-9]{3}" formControlName="hudud" matInput placeholder="Hudud..." autocomplete="off">
+                        <input   formControlName="hudud" matInput placeholder="Hudud..." autocomplete="off">
+                    </mat-form-field>
+
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Ball</mat-label>
+                        <mat-hint>Ball kiriting</mat-hint>
+                        <input   formControlName="ball" matInput placeholder="Ball..." autocomplete="off"  type="number">
                     </mat-form-field>
 
 
@@ -83,7 +90,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Info</mat-label>
                         <mat-hint>Info kiriting</mat-hint>
-                        <input  pattern="^[a-zA-Z0-9]{3}" formControlName="info" matInput placeholder="Info..." autocomplete="off">
+                        <input  formControlName="info" matInput placeholder="Info..." autocomplete="off">
                     </mat-form-field>
                     
                   
@@ -107,12 +114,21 @@
                         <mat-hint>Talaba O'quv shakli</mat-hint>
                     </mat-form-field>
 
+                    <mat-form-field appearance="outline">
+                        <mat-label>Yutuqlar </mat-label>
+                        <mat-select name="yutuq" id="yutuq" formControlName="yutuq"
+                            placeholder="Yutuqlarni tanlang">
+                            <mat-option *ngFor="let o of yutuqlar" [value]="o.id">{{o.nom}}</mat-option>
+                        </mat-select>
+                        <mat-hint>Yutuq tanlang</mat-hint>
+                    </mat-form-field>
+
 
                     <img class="img-account-profil rounded-circle mb-2"
-                        [src]="rasmManzil??'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoy14evimpQRK5-u3G2N76z2pyVisthKXoSCL4ThuDhxJcfMqWh3fyHTGRtaqJMeUgzg4&usqp=CAU'">
+                        [src]="rasmManzil??'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyZWy7kT6uc49fJN5Wavk-4quDzKwV6JLtGw&usqp=CAU'">
 
-                    <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
-                    <button class="btn btn-primary" type="button" (click)="fileUpload.click()">Rasm yuklash</button>
+                    <input type="file" class="file-input" (change)="onFileSelected($event)"      #fileUpload >
+                    <button class="btn btn-primary" type="button" (click)="fileUpload.click()" >Rasm yuklash</button>
 
 
 
@@ -146,13 +162,13 @@
                         <th>Sharif </th>
                         <th>Yosh</th>
                         <th>Hudud</th>
-                        <!-- <th>Ball</th> -->
+                        <th>Ball</th>
                         <th>Loyiha</th>
                         <th>Guruh</th>
                         <th>Xarakter</th>
                         <th>Yosh</th>
                         <th>Oquv Shakl</th>
-                        <!-- <th>Rasm</th> -->
+                        <th>Yutuq</th>
                         <th>Info</th>
                         <th>Amal</th>
                     </tr>
@@ -165,7 +181,7 @@
                         <td>{{x?.sharif}}</td>
                         <td>{{x?.yosh}}</td>
                         <td>{{x?.hudud}}</td>
-                        <!-- <td>{{x?.info}}</td> -->
+                        <td>{{x?.ball}}</td>
                         <td>{{x?.loyiha?.nom}}</td>
                         <td>{{x?.guruh?.nom}}</td>
                         <td>{{x?.xarakter?.nom}}</td>
@@ -183,6 +199,7 @@
                                 </span>
                             </span>
                         </td>
+                        <td>{{x?.yutuq?.nom}}</td>
                         <td>{{x?.info}}</td>
                         <td>
                             <button mat-button color="primary" (click)="tahrirlash(x)">

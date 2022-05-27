@@ -23,25 +23,26 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Ism</mat-label>
-            <input  pattern="^[a-zA-Z0-9]{3}" formControlName='ism' matInput placeholder="Ism" minlength="3" maxlength="20">
+            <input  formControlName='ism' matInput placeholder="Ism"
+            minlength="3" maxlength="30">
             <mat-hint>Ism</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Familya</mat-label>
-            <input  pattern="^[a-zA-Z0-9]{3}" formControlName='familya' matInput placeholder="Familya" minlength="3" maxlength="20">
+            <input  formControlName='familya' matInput placeholder="Familya" minlength="3" maxlength="30">
             <mat-hint>Familya</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Sharif</mat-label>
-            <input  pattern="^[a-zA-Z0-9]{3}" formControlName='sharif' matInput placeholder="Sharif" minlength="3" maxlength="20">
+            <input  formControlName='sharif' matInput placeholder="Sharif" minlength="3" maxlength="40">
             <mat-hint>Sharif</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Yashash joyi</mat-label>
-            <input  pattern="^[a-zA-Z0-9]{3}" formControlName='hudud' matInput placeholder="Hudud" minlength="3">
+            <input   formControlName='hudud' matInput placeholder="Hudud" minlength="3">
             <mat-hint>Hudud</mat-hint>
           </mat-form-field>
 
@@ -53,9 +54,20 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Ishlash Joyi</mat-label>
-            <input  pattern="^[a-zA-Z0-9]{3}" formControlName='ishlashJoyi' matInput placeholder="Ishlash joyi" minlength="3">
+            <input   formControlName='ishlashJoyi' matInput placeholder="Ishlash joyi" minlength="3">
             <mat-hint>Ishlash joyi</mat-hint>
           </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Talabaning O'quv shakli </mat-label>
+            <mat-select formControlName="oquvShakl" placeholder=" ">
+                <mat-option value="SHARTNOMA">Shartnoma asosida</mat-option>
+                <mat-option value="GRAND">Davlat granti asosida</mat-option>
+            </mat-select>
+            <mat-hint>Talaba O'quv shakli</mat-hint>
+        </mat-form-field>
+
+      
 
 
 
@@ -75,7 +87,7 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Info</mat-label>
-            <input  pattern="^[a-zA-Z0-9]{3}" formControlName='info' matInput placeholder="Info">
+            <input  formControlName='info' matInput placeholder="Info">
             <mat-hint>Info</mat-hint>
           </mat-form-field>
 
@@ -88,7 +100,7 @@
 
 
           <button [disabled]="surovBajarilmoqda" mat-raised-button color="primary" type='submit'>
-            <mat-spinner *ngIf="surovBajarilmoqda " diameter="20" color="accent"></mat-spinner>
+            <mat-spinner *ngIf="surovBajarilmoqda " diameter="30" color="accent"></mat-spinner>
             Saqlash
           </button>
           <button mat-raised-button color="accent" type='reset'>Bekor qilish</button>
@@ -118,6 +130,7 @@
             <th>Hudud</th>
             <th>Yosh</th>
             <th>Ishlash joyi</th>
+            <th>O'quv shakl</th>
             <th>Ishga kirgan yili</th>
             <!-- <th>Ishni tugatgan yili</th> -->
             <th>Info</th>
@@ -133,6 +146,19 @@
             <td>{{x?.hudud}}</td>
             <td>{{x?.yosh}}</td>
             <td>{{x?.ishlashJoyi}}</td>
+            <td>
+              <span [ngSwitch]="x?.oquvShakl">
+                  <span style="color: #ff0;" *ngSwitchCase="'SHARTNOMA'">
+                      Shartnoma asosida
+                  </span>
+                  <span style="color: #0f0;" *ngSwitchCase="'GRAND'">
+                      Davlat granti
+                  </span>
+                  <span *ngSwitchDefault>
+                      -
+                  </span>
+              </span>
+          </td>
             <td>{{x?.oqishgaKirYil}}</td>
             <!-- <td>{{x?.oqishTugYil}}</td> -->
             <td>{{x?.info}}</td>

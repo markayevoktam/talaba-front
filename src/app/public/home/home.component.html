@@ -107,7 +107,6 @@
             <!-- test cards -->
             <div id="container" *ngFor="let t of talabalar" [routerLink]="['info', t.id]">
                 <div class="product-image">
-
                     <img [src]="getRasm(t?.rasm)" class="card-img" alt="...">
                 </div>
                 <div class="product-details">
@@ -137,18 +136,8 @@
              </button>
                 
             </div> -->
-
                 </div>
-
-
-
             </div>
-
-
-
-
-
-
         </div>
         <mat-paginator (page)="load()" #paginator [length]="length" [pageSize]="5" [pageSizeOptions]="[5, 7, 10, 12]"
             aria-label="Select page">

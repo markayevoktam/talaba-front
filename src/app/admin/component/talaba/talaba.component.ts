@@ -11,8 +11,9 @@ import { LoyihaService } from 'src/app/service/loyiha.service';
 import { TalabaService } from 'src/app/service/talaba.service';
 import { XarakterService } from 'src/app/service/xarakter.service';
 import { environment } from 'src/environments/environment';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {MatChipInputEvent} from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { YutuqService } from 'src/app/service/yutuq.service';
 export interface Fruit {
   name: string;
 }
@@ -36,13 +37,14 @@ export class TalabaComponent implements OnInit {
   guruhlar: any;
   xarakterlar: any;
   loyihalar: any;
-  user!:User;
-  rasmManzil!:string;
+  user!: User;
+  rasmManzil!: string;
   surovBajarilmoqda = false;
+  yutuqlar: any;
 
   talented = false;
 
-  displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif', 'yosh', 'hudud', 'guruh', 'oquvShakl', 'loyiha', 'xarakter', 'info', 'amal'];
+  displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif', 'yosh', 'hudud', 'guruh', 'oquvShakl','yutuq','ball', 'loyiha', 'xarakter', 'info', 'amal'];
   dataSource: any;
   filter = new FormControl('filter')
 
@@ -59,9 +61,10 @@ export class TalabaComponent implements OnInit {
     private loyihaService: LoyihaService,
     private snakBar: MatSnackBar,
     private faylService: FaylService,
-    private accountService:AccountService,
-    
-    ) { }
+    private accountService: AccountService,
+    private yutuqService: YutuqService
+
+  ) { }
   ngAfterViewInit(): void {
 
     this.load();
@@ -78,9 +81,11 @@ export class TalabaComponent implements OnInit {
       yosh: ['', Validators.required],
       hudud: ['', Validators.required],
       guruh: ['', Validators.required],
-      xarakter: ['', Validators.required],
-      oquvShakl: ['', Validators.required],
+      xarakter: ['',Validators.required],
+      oquvShakl: [ Validators.required],
       loyiha: ['', Validators.required],
+      yutuq: ['', Validators.required],
+      ball: [Validators.required],
       talented: [false],
       info: [''],
       amal: ['']
@@ -88,26 +93,29 @@ export class TalabaComponent implements OnInit {
 
     this.guruhService.getAll('').subscribe(data => {
       this.guruhlar = data.content;
-    }) 
+    })
     this.xarakterService.getAll('').subscribe(data => {
       this.xarakterlar = data.content;
     })
     this.loyihaService.getAll('').subscribe(data => {
       this.loyihalar = data.content;
     })
+    this.yutuqService.getAll('').subscribe(data=>{
+      this.yutuqlar= data.content;
+    })
 
-    this.accountService.identity().subscribe(data=>{
-      if(data){
-        this.user=data;
+    this.accountService.identity().subscribe(data => {
+      if (data) {
+        this.user = data;
         this.rasmManzilOzgar();
       }
     })
 
   }
 
-  rasmManzilOzgar(){
-    if(this.rasm)
-    this.rasmManzil = environment.baseApi + "/api/file/download/"+this.rasm.id;
+  rasmManzilOzgar() {
+    if (this.rasm)
+      this.rasmManzil = environment.baseApi + "/api/file/download/" + this.rasm.id;
   }
 
   load(key?: any) {
@@ -135,20 +143,35 @@ export class TalabaComponent implements OnInit {
     });
   }
 
-  onFileSelected(event: any){
-    const file:File = event.target.files[0];
-    if(file){
-      this.faylService.uploadFayl(file).subscribe(f=>{
-        this.rasm=f;
-        this.rasmManzilOzgar();
-       
-      })
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+
+      let img = new Image();
+      let fr = new FileReader();
+      fr.onload = (e: any)=>{
+          img.onload = (ev)=>{
+            if(Math.abs(img.width/img.height-0.75)<0.0001)
+              {
+                this.faylService.uploadFayl(file).subscribe(f=>{
+                  this.rasm=f;
+                  this.rasmManzilOzgar();
+                })
+
+              }   else {
+                this.snakBar.open("Rasm 300x400 gacha bo'lishi zarur", "Ok");
+              }
+          }
+          img.src = e.target?.result;
+      };
+      fr.readAsDataURL(file);
+
     }
-
-  }
-
   
 
+
+
+  }
 
   saqlash() {
     this.surovBajarilmoqda = true;
@@ -163,7 +186,10 @@ export class TalabaComponent implements OnInit {
     talaba.loyiha = {
       id: talaba.loyiha
     }
-    
+    talaba.yutuq = {
+      id: talaba.yutuq
+    }
+
 
     let surov;
     if (this.tahrirRejim)
@@ -182,24 +208,20 @@ export class TalabaComponent implements OnInit {
         this.surovBajarilmoqda = false;
       })
 
-      // talented student add
-      if(this.talented=true){
-        this.xarakterService.create('').subscribe(data => {
-          this.talabalar = data.content;
-        })
-      }
-
-      
-
-
-  }
-
-  xato(talaba:any){
-    if(talaba.ism==Number){
-      this.snakBar.open("Xatolik","X")
+    // talented student add
+    if (this.talented = true) {
+      this.xarakterService.create('').subscribe(data => {
+        this.talabalar = data.content;
+      })
     }
+
+
+
+
   }
-  
+
+
+
   ochirish(talaba: any) {
     if (confirm("Siz " + talaba.ism + "ni o'chirishga rozimisiz")) {
       this.talabaService.deleteById(talaba.id).subscribe(data => {
@@ -235,7 +257,7 @@ export class TalabaComponent implements OnInit {
 
     // Add our fruit
     if (value) {
-      this.fruits.push({name: value});
+      this.fruits.push({ name: value });
     }
 
     // Clear the input value
@@ -249,7 +271,7 @@ export class TalabaComponent implements OnInit {
       this.fruits.splice(index, 1);
     }
   }
-  
+
 
 }
 

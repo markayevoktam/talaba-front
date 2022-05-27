@@ -24,7 +24,7 @@ export class StudentComponent implements OnInit {
   rasmManzil!:string;
   rasm: any;
 
-  displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif' ,'hudud','yosh','ishlashJoyi','oqishgaKirYil','oqishTugYil','info','amal'];
+  displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif' ,'hudud','yosh','ishlashJoyi','oqishgaKirYil', 'oquvShakl' ,'oqishTugYil','info','amal'];
   dataSource: any;
   filter = new FormControl('filter')
 
@@ -50,9 +50,10 @@ export class StudentComponent implements OnInit {
       familya: ['', Validators.required],
       sharif: ['', Validators.required],
       hudud: ['', Validators.required],
-      yosh: ['', Validators.required],
-      ishlashJoyi: ['', Validators.required],
-      oqishgaKirYil: ['', Validators.required],
+      yosh: [],
+      ishlashJoyi: [''],
+      oqishgaKirYil: [],
+      oquvShakl:[Validators.required],
       oqishTugYil: [''],
       info: ['']
     });
@@ -122,7 +123,7 @@ export class StudentComponent implements OnInit {
       surov = this.studentService.update(student);
     else
       surov = this.studentService.create(student);
-
+   
 
     surov.subscribe(data => {
       this.tozalash();

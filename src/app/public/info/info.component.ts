@@ -35,7 +35,7 @@ export class InfoComponent implements OnInit {
   getRasm(file: any) {
     if (file)
       return environment.baseApi + "/api/file/download/" + file.id;
-    else return "https://idrok.net/logo.png"
+    else return "https://flixarena.com/wp-content/uploads/2020/04/Netflix-Winner.png"
   }
 
 }
