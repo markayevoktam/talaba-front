@@ -55,18 +55,25 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Ball</mat-label>
                         <mat-hint>Ball kiriting</mat-hint>
-                        <input   formControlName="ball" matInput placeholder="Ball..." autocomplete="off"  type="number">
+                        <input   formControlName="ball" matInput placeholder="Kurs..." autocomplete="off" >
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Kurs</mat-label>
+                        <mat-hint>Kurs kiriting</mat-hint>
+                        <input   formControlName="kurs" matInput placeholder="Ball..." autocomplete="off"  >
                     </mat-form-field>
 
 
 
                     <mat-form-field appearance="outline">
                         <mat-label>Guruh</mat-label>
-                        <mat-select name="guruh" id="guruh" formControlName="guruh" placeholder="">
-                            <mat-option *ngFor="let k of guruhlar" [value]="k.id">{{k.nom}}</mat-option>
+                        <mat-select  name="guruh" id="guruh" formControlName="guruh" placeholder="">
+                            <mat-option  *ngFor="let k of guruhlar" [value]="k.id">{{k.nom}}</mat-option>
                         </mat-select>
                         <mat-hint>Guruhni tanlang</mat-hint>
                     </mat-form-field>
+  
 
                     <mat-form-field appearance="outline">
                         <mat-label>Loyiha</mat-label>
@@ -97,7 +104,7 @@
                        
                         <mat-checkbox value="false" formControlName="talented" align="start"
                                      [indeterminate]="false"
-                                     color="primary">
+                                     color="warn">
                             Iqdidorli
                         </mat-checkbox>
 
@@ -163,6 +170,7 @@
                         <th>Yosh</th>
                         <th>Hudud</th>
                         <th>Ball</th>
+                        <th>Kurs</th>
                         <th>Loyiha</th>
                         <th>Guruh</th>
                         <th>Xarakter</th>
@@ -182,6 +190,7 @@
                         <td>{{x?.yosh}}</td>
                         <td>{{x?.hudud}}</td>
                         <td>{{x?.ball}}</td>
+                        <td>{{x?.kurs}}</td>
                         <td>{{x?.loyiha?.nom}}</td>
                         <td>{{x?.guruh?.nom}}</td>
                         <td>{{x?.xarakter?.nom}}</td>
@@ -220,25 +229,7 @@
 
         <!--  Chips ma'lumotlari bilan ishlash -->
 
-        <mat-form-field class="example-chip-list" appearance="fill">
-            <mat-label>Yutuqlar</mat-label>
-            <mat-chip-list #chipList aria-label="Talabaning yutuqlari  ">
-              <mat-chip *ngFor="let fruit of fruits" (removed)="remove(fruit)">
-                {{fruit.name}}
-                <button matChipRemove>
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip>
-              <input placeholder="Yutuq nomi qo'shing ..."
-                     [matChipInputFor]="chipList"
-                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                     [matChipInputAddOnBlur]="addOnBlur"
-                     (matChipInputTokenEnd)="add($event)"
-                     autocomplete="off"
-                     >
-            </mat-chip-list>
-          </mat-form-field>
-          
+   
 
 
 

@@ -139,7 +139,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   getRasm(file: any) {
     if (file)
       return environment.baseApi + "/api/file/download/" + file.id;
-    else return "https://i.pinimg.com/originals/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
+    else return "https://flixarena.com/wp-content/uploads/2020/04/Netflix-Winner.png"
   }
 
 }

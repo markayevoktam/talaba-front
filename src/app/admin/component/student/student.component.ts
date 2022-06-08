@@ -22,7 +22,7 @@ export class StudentComponent implements OnInit {
   formOchiq = false;
   user!:User;
   rasmManzil!:string;
-  rasm: any;
+  rasm: any; 
 
   displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif' ,'hudud','yosh','ishlashJoyi','oqishgaKirYil', 'oquvShakl' ,'oqishTugYil','info','amal'];
   dataSource: any;

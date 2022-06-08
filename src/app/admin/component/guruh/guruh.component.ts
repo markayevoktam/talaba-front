@@ -52,6 +52,8 @@ export class GuruhComponent implements OnInit {
       this.yunalishService.getAll('').subscribe(data => {
         this.yunalishlar = data.content;
       })
+
+      
     }
     
     load(key?: any) {
@@ -61,7 +63,6 @@ export class GuruhComponent implements OnInit {
         if (typeof (key) == 'object') {
           key = key.value;
         }
-        console.log(key);
     
     
       }
@@ -102,6 +103,7 @@ export class GuruhComponent implements OnInit {
             this.surovBajarilmoqda = false;
           })
     }
+
     ochirish(guruh: any) {
            if (confirm("Siz " + guruh.nom + "ni o'chirishga rozimisiz")) {
              this.guruhService.deleteById(guruh.id).subscribe(data => {
@@ -121,5 +123,6 @@ export class GuruhComponent implements OnInit {
       this.tahrirRejim = false;
       this.formOchiq = false;
     }
+    
 
 }

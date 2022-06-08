@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { YutuqService } from 'src/app/service/yutuq.service';
+import { MatSelectChange } from '@angular/material/select';
 export interface Fruit {
   name: string;
 }
@@ -44,7 +45,7 @@ export class TalabaComponent implements OnInit {
 
   talented = false;
 
-  displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif', 'yosh', 'hudud', 'guruh', 'oquvShakl','yutuq','ball', 'loyiha', 'xarakter', 'info', 'amal'];
+  displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif', 'yosh','kurs', 'hudud', 'guruh', 'oquvShakl','yutuq','ball', 'loyiha', 'xarakter', 'info', 'amal'];
   dataSource: any;
   filter = new FormControl('filter')
 
@@ -68,6 +69,8 @@ export class TalabaComponent implements OnInit {
   ngAfterViewInit(): void {
 
     this.load();
+    console.log(this.talabalar);
+    
   }
 
   ngOnInit(): void {
@@ -78,16 +81,17 @@ export class TalabaComponent implements OnInit {
       ism: ['', Validators.required],
       familya: ['', Validators.required],
       sharif: ['', Validators.required],
-      yosh: ['', Validators.required],
-      hudud: ['', Validators.required],
-      guruh: ['', Validators.required],
-      xarakter: ['',Validators.required],
-      oquvShakl: [ Validators.required],
-      loyiha: ['', Validators.required],
-      yutuq: ['', Validators.required],
-      ball: [Validators.required],
+      yosh: [''],
+      hudud: [''],
+      guruh: [''],
+      xarakter: [''],
+      oquvShakl: [ ],
+      loyiha: [''],
+      yutuq: [''],
+      ball: [],
       talented: [false],
       info: [''],
+      kurs:[''],
       amal: ['']
     });
 
@@ -112,6 +116,8 @@ export class TalabaComponent implements OnInit {
     })
 
   }
+
+  
 
   rasmManzilOzgar() {
     if (this.rasm)
@@ -247,30 +253,9 @@ export class TalabaComponent implements OnInit {
 
 
 
-  // Chips ma'lumotlari
-  addOnBlur = true;
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  fruits: Fruit[] = [];
 
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
 
-    // Add our fruit
-    if (value) {
-      this.fruits.push({ name: value });
-    }
 
-    // Clear the input value
-    event.chipInput!.clear();
-  }
-
-  remove(fruit: Fruit): void {
-    const index = this.fruits.indexOf(fruit);
-
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
-    }
-  }
 
 
 }

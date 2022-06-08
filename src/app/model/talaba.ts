@@ -19,4 +19,5 @@ export interface Talaba{
     ball:number
     rasm:any
     yutuq:Yutuq
+    kurs:string
 }
