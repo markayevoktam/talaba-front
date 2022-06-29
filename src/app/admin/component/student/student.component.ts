@@ -1,13 +1,23 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { AccountService } from 'src/app/core/account.service';
 import { User } from 'src/app/model/user';
 import { FaylService } from 'src/app/service/fayl.service';
+import { GuruhService } from 'src/app/service/guruh.service';
 import { StudentService } from 'src/app/service/student.service';
+import { YunalishService } from 'src/app/service/yunalish.service';
 import { environment } from 'src/environments/environment';
+
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
+
 
 @Component({
   selector: 'app-student',
@@ -23,8 +33,15 @@ export class StudentComponent implements OnInit {
   user!:User;
   rasmManzil!:string;
   rasm: any; 
+  guruhlar: any;
+  yunalishlar: any;
+  // open dialog connect
 
-  displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif' ,'hudud','yosh','ishlashJoyi','oqishgaKirYil', 'oquvShakl' ,'oqishTugYil','info','amal'];
+  animal!:string;
+  name!:string;
+
+
+  displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif' ,'hudud','yosh','ishlashJoyi','yunalish','oqishgaKirYil', 'guruh' , 'oquvShakl' ,'oqishTugYil','info','amal'];
   dataSource: any;
   filter = new FormControl('filter')
 
@@ -36,8 +53,13 @@ export class StudentComponent implements OnInit {
     private studentService: StudentService,
     private accountService: AccountService,
     private faylService: FaylService,
-    private snakBar: MatSnackBar
+    private snakBar: MatSnackBar,
+    private guruhService: GuruhService,
+    private yonalishService: YunalishService,
+
   ) { }
+
+  
   ngAfterViewInit(): void {
 
     this.load();
@@ -55,11 +77,19 @@ export class StudentComponent implements OnInit {
       oqishgaKirYil: [],
       oquvShakl:[Validators.required],
       oqishTugYil: [''],
+      guruh: ['',Validators.required],
+      yunalish: ['',Validators.required],
       info: ['']
     });
    
     this.studentService.getAll('').subscribe(data => {
       this.studentlar = data.content;
+    })
+    this.guruhService.getAll('').subscribe(data=>{
+      this.guruhlar = data.content;
+    })
+    this.yonalishService.getAll('').subscribe(data=>{
+      this.yunalishlar = data.content;
     })
 
     this.accountService.identity().subscribe(data=>{

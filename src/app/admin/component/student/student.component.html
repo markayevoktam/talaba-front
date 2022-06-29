@@ -51,12 +51,33 @@
             <input formControlName='yosh' matInput placeholder="Yosh" min="10">
             <mat-hint>Yosh</mat-hint>
           </mat-form-field>
-
+<!-- 
           <mat-form-field appearance="outline">
-            <mat-label>Ishlash Joyi</mat-label>
+            <mat-label>Yo'nalishi</mat-label>
             <input   formControlName='ishlashJoyi' matInput placeholder="Ishlash joyi" minlength="3">
-            <mat-hint>Ishlash joyi</mat-hint>
+            <mat-hint>Yo'nalishi</mat-hint>
           </mat-form-field>
+
+
+           -->
+           <mat-form-field appearance="outline">
+            <mat-label>Guruhlar</mat-label>
+            <mat-select name="guruh" id="guruh" formControlName="guruh" placeholder="">
+              <mat-option *ngFor="let d of guruhlar" [value]="d.id">{{d.nom}}</mat-option>
+            </mat-select>
+            <mat-hint>Guruhlar tanlang</mat-hint>
+          </mat-form-field>
+
+
+           <mat-form-field appearance="outline">
+            <mat-label>Yo'nalishlar</mat-label>
+            <mat-select name="yunalish" id="yunalish" formControlName="yunalish" placeholder="">
+              <mat-option *ngFor="let d of yunalishlar" [value]="d.id">{{d.nom}}</mat-option>
+            </mat-select>
+            <mat-hint>Yo'nalish tanlang</mat-hint>
+          </mat-form-field>
+
+
 
           <mat-form-field appearance="outline">
             <mat-label>Talabaning O'quv shakli </mat-label>
@@ -71,12 +92,12 @@
 
 
 
-          <mat-form-field appearance="fill">
-            <mat-label>Ishga kirgan sana</mat-label>
+          <!-- <mat-form-field appearance="fill">
+            <mat-label>O'qishga kirgan sana</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="oqishgaKirYil" matInput placeholder="Sana...">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
+          </mat-form-field> -->
 
           <!-- <mat-form-field appearance="fill">
             <mat-label>Ishni tugatgan sana</mat-label>
@@ -107,6 +128,8 @@
 
         </form>
 
+        
+
       </mat-expansion-panel>
     </mat-accordion>
 
@@ -131,7 +154,7 @@
             <th>Yosh</th>
             <th>Ishlash joyi</th>
             <th>O'quv shakl</th>
-            <th>Ishga kirgan yili</th>
+            <th>O'qishga kirgan yili</th>
             <!-- <th>Ishni tugatgan yili</th> -->
             <th>Info</th>
             <th>Amal</th>

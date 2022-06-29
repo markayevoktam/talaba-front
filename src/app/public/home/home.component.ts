@@ -54,6 +54,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     })
     this.guruhService.getAll('').subscribe(data => {
       this.guruhlar = data.content;
+      console.log(data);
+      // console.log(data.content);
+      
+      
     })
     this.studentService.getAll('').subscribe(data=> {
       this.studentlar = data.content;

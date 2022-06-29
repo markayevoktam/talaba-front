@@ -75,7 +75,9 @@ export class GuruhComponent implements OnInit {
     
         console.log(royxat);
         this.guruhlar = royxat.content;
-    
+        console.log(royxat.size)
+        console.log(royxat.content);
+        
         this.length = royxat.totalElements;
       });
     }
