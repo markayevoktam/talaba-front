@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { PublicService } from './public.service';
@@ -6,11 +7,13 @@ describe('PublicService', () => {
   let service: PublicService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule]
+    });
     service = TestBed.inject(PublicService);
   });
 
-  it('should be created', () => {
+  it('yaratilishi kerak', () => {
     expect(service).toBeTruthy();
   });
 });

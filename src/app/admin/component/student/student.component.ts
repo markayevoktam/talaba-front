@@ -1,23 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
-import { AccountService } from 'src/app/core/account.service';
-import { User } from 'src/app/model/user';
 import { FaylService } from 'src/app/service/fayl.service';
 import { GuruhService } from 'src/app/service/guruh.service';
 import { StudentService } from 'src/app/service/student.service';
 import { YunalishService } from 'src/app/service/yunalish.service';
 import { environment } from 'src/environments/environment';
-
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
-
+import { RASM_YOQ } from 'src/app/shared/rasm.util';
 
 @Component({
   selector: 'app-student',
@@ -30,32 +19,22 @@ export class StudentComponent implements OnInit {
   studentForm!: FormGroup;
   surovBajarilmoqda = false;
   formOchiq = false;
-  user!:User;
-  rasmManzil!:string;
+  rasmManzil?: string;
+  readonly rasmYoq = RASM_YOQ;
   rasm: any; 
   guruhlar: any;
   yunalishlar: any;
-  // open dialog connect
-
-  animal!:string;
-  name!:string;
-
 
   displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif' ,'hudud','yosh','ishlashJoyi','yunalish','oqishgaKirYil', 'guruh' , 'oquvShakl' ,'oqishTugYil','info','amal'];
-  dataSource: any;
-  filter = new FormControl('filter')
 
   length = 100;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private fb: FormBuilder,
     private studentService: StudentService,
-    private accountService: AccountService,
     private faylService: FaylService,
-    private snakBar: MatSnackBar,
     private guruhService: GuruhService,
-    private yonalishService: YunalishService,
+    private yonalishService: YunalishService
 
   ) { }
 
@@ -75,34 +54,25 @@ export class StudentComponent implements OnInit {
       yosh: [],
       ishlashJoyi: [''],
       oqishgaKirYil: [],
-      oquvShakl:[Validators.required],
+      oquvShakl: ['', Validators.required],
       oqishTugYil: [''],
       guruh: ['',Validators.required],
       yunalish: ['',Validators.required],
       info: ['']
     });
    
-    this.studentService.getAll('').subscribe(data => {
-      this.studentlar = data.content;
-    })
     this.guruhService.getAll('').subscribe(data=>{
       this.guruhlar = data.content;
     })
     this.yonalishService.getAll('').subscribe(data=>{
       this.yunalishlar = data.content;
     })
-
-    this.accountService.identity().subscribe(data=>{
-      if(data){
-        this.user=data;
-        this.rasmManzilOzgar();
-      }
-    })
   }
-  rasmManzilOzgar(){
-    if(this.rasm)
-    this.rasmManzil = environment.baseApi + "/api/file/download/"+this.rasm.id;
-    
+
+  rasmManzilOzgar() {
+    this.rasmManzil = this.rasm
+      ? environment.baseApi + "/api/file/download/" + this.rasm.id
+      : undefined;
   }
 
   onFileSelected(event: any){
@@ -126,7 +96,6 @@ export class StudentComponent implements OnInit {
       if (typeof (key) == 'object') {
         key = key.value;
       }
-      console.log(key);
 
 
     }
@@ -137,7 +106,6 @@ export class StudentComponent implements OnInit {
       sort: 'id'
     }).subscribe(royxat => {
 
-      console.log(royxat);
       this.studentlar = royxat.content;
 
       this.length = royxat.totalElements;
@@ -145,6 +113,11 @@ export class StudentComponent implements OnInit {
   }
 
   saqlash() {
+    if (this.studentForm.invalid) {
+      this.studentForm.markAllAsTouched();
+      return;
+    }
+
     this.surovBajarilmoqda = true;
     let student = this.studentForm.getRawValue();
     student.rasm = this.rasm;
@@ -161,9 +134,8 @@ export class StudentComponent implements OnInit {
       this.surovBajarilmoqda = false;
     },
       error => {
-        this.snakBar.open("Xatolik ro'y berdi", "Ok");
-        this.surovBajarilmoqda = false;
-      })
+          this.surovBajarilmoqda = false;
+        })
   }
   ochirish(student: any) {
     if (confirm("Siz " + student.ism + "ni o'chirishga rozimisiz")) {
@@ -175,12 +147,16 @@ export class StudentComponent implements OnInit {
 
   tahrirlash(student: any) {
     this.tahrirRejim = true;
-    this.studentForm.reset(student);
+    this.studentForm.reset({ ...student, guruh: student.guruh?.id ?? '', yunalish: student.yunalish?.id ?? '' });
+    this.rasm = student.rasm;
+    this.rasmManzilOzgar();
     this.formOchiq = true;
   }
 
   tozalash() {
     this.studentForm.reset({});
+    this.rasm = undefined;
+    this.rasmManzilOzgar();
     this.tahrirRejim = false;
     this.formOchiq = false;
   }

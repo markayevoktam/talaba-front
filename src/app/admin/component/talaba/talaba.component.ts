@@ -1,23 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
-import { AccountService } from 'src/app/core/account.service';
-import { User } from 'src/app/model/user';
 import { FaylService } from 'src/app/service/fayl.service';
 import { GuruhService } from 'src/app/service/guruh.service';
 import { LoyihaService } from 'src/app/service/loyiha.service';
 import { TalabaService } from 'src/app/service/talaba.service';
 import { XarakterService } from 'src/app/service/xarakter.service';
 import { environment } from 'src/environments/environment';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material/chips';
+import { RASM_YOQ } from 'src/app/shared/rasm.util';
 import { YutuqService } from 'src/app/service/yutuq.service';
-import { MatSelectChange } from '@angular/material/select';
-export interface Fruit {
-  name: string;
-}
+
 @Component({
   selector: 'app-talaba',
   templateUrl: './talaba.component.html',
@@ -25,10 +18,6 @@ export interface Fruit {
 })
 
 export class TalabaComponent implements OnInit {
-
-  // Chips ma'lumtlarri bilan ishlsh
-
-
 
   talabaForm!: FormGroup;
 
@@ -38,21 +27,16 @@ export class TalabaComponent implements OnInit {
   guruhlar: any;
   xarakterlar: any;
   loyihalar: any;
-  user!: User;
-  rasmManzil!: string;
+  rasmManzil?: string;
+  readonly rasmYoq = RASM_YOQ;
   surovBajarilmoqda = false;
   yutuqlar: any;
 
-  talented = false;
-
   displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif', 'yosh','kurs', 'hudud', 'guruh', 'oquvShakl','yutuq','ball', 'loyiha', 'xarakter', 'info', 'amal'];
-  dataSource: any;
-  filter = new FormControl('filter')
 
   length = 100;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  @ViewChild(MatSort) sort!: MatSort;
   rasm: any;
 
   constructor(private fb: FormBuilder,
@@ -62,15 +46,11 @@ export class TalabaComponent implements OnInit {
     private loyihaService: LoyihaService,
     private snakBar: MatSnackBar,
     private faylService: FaylService,
-    private accountService: AccountService,
     private yutuqService: YutuqService
 
   ) { }
   ngAfterViewInit(): void {
-
     this.load();
-    console.log(this.talabalar);
-    
   }
 
   ngOnInit(): void {
@@ -91,8 +71,7 @@ export class TalabaComponent implements OnInit {
       ball: [],
       talented: [false],
       info: [''],
-      kurs:[''],
-      amal: ['']
+      kurs: ['']
     });
 
     this.guruhService.getAll('').subscribe(data => {
@@ -108,43 +87,28 @@ export class TalabaComponent implements OnInit {
       this.yutuqlar= data.content;
     })
 
-    this.accountService.identity().subscribe(data => {
-      if (data) {
-        this.user = data;
-        this.rasmManzilOzgar();
-      }
-    })
-
   }
 
-  
-
   rasmManzilOzgar() {
-    if (this.rasm)
-      this.rasmManzil = environment.baseApi + "/api/file/download/" + this.rasm.id;
+    this.rasmManzil = this.rasm
+      ? environment.baseApi + "/api/file/download/" + this.rasm.id
+      : undefined;
   }
 
   load(key?: any) {
     if (!key) {
       key = '';
-    } else {
-      if (typeof (key) == 'object') {
-        key = key.value;
-      }
-      console.log(key);
-
-
+    } else if (typeof (key) == 'object') {
+      key = key.value;
     }
+
     this.talabaService.getAll({
       key: key,
       page: this.paginator.pageIndex,
       size: this.paginator.pageSize,
       sort: 'id'
     }).subscribe(royxat => {
-
-      console.log(royxat);
       this.talabalar = royxat.content;
-
       this.length = royxat.totalElements;
     });
   }
@@ -173,29 +137,21 @@ export class TalabaComponent implements OnInit {
       fr.readAsDataURL(file);
 
     }
-  
-
-
-
   }
 
   saqlash() {
+    if (this.talabaForm.invalid) {
+      this.talabaForm.markAllAsTouched();
+      return;
+    }
+
     this.surovBajarilmoqda = true;
     let talaba = this.talabaForm.getRawValue();
     talaba.rasm = this.rasm;
-    talaba.guruh = {
-      id: talaba.guruh
-    }
-    talaba.xarakter = {
-      id: talaba.xarakter
-    }
-    talaba.loyiha = {
-      id: talaba.loyiha
-    }
-    talaba.yutuq = {
-      id: talaba.yutuq
-    }
-
+    talaba.guruh = this.bogliqlik(talaba.guruh);
+    talaba.xarakter = this.bogliqlik(talaba.xarakter);
+    talaba.loyiha = this.bogliqlik(talaba.loyiha);
+    talaba.yutuq = this.bogliqlik(talaba.yutuq);
 
     let surov;
     if (this.tahrirRejim)
@@ -203,34 +159,29 @@ export class TalabaComponent implements OnInit {
     else
       surov = this.talabaService.create(talaba);
 
-
-    surov.subscribe(data => {
-      this.tozalash();
-      this.load();
-      this.surovBajarilmoqda = false;
-    },
-      error => {
-        this.snakBar.open("Xatolik ro'y berdi", "Ok");
+    surov.subscribe({
+      next: () => {
+        this.tozalash();
+        this.load();
         this.surovBajarilmoqda = false;
-      })
+      },
+      error: () => this.surovBajarilmoqda = false
+    })
+  }
 
-    // talented student add
-    if (this.talented = true) {
-      this.xarakterService.create('').subscribe(data => {
-        this.talabalar = data.content;
-      })
+  /** Select'dan kelgan id'ni backend kutadigan {id} obyektiga o'giradi; tanlanmagan bo'lsa null */
+  private bogliqlik(id: any) {
+    if (id === null || id === undefined || id === '') {
+      return null;
     }
-
-
-
-
+    return { id: id };
   }
 
 
 
   ochirish(talaba: any) {
     if (confirm("Siz " + talaba.ism + "ni o'chirishga rozimisiz")) {
-      this.talabaService.deleteById(talaba.id).subscribe(data => {
+      this.talabaService.deleteById(talaba.id).subscribe(() => {
         this.load();
       })
     }
@@ -238,14 +189,23 @@ export class TalabaComponent implements OnInit {
 
   tahrirlash(talaba: any) {
     this.tahrirRejim = true;
-    this.talabaForm.reset(talaba);
+    // Select'lar id bilan ishlaydi, backend esa to'liq obyekt qaytaradi
+    this.talabaForm.reset({
+      ...talaba,
+      guruh: talaba.guruh?.id ?? '',
+      xarakter: talaba.xarakter?.id ?? '',
+      loyiha: talaba.loyiha?.id ?? '',
+      yutuq: talaba.yutuq?.id ?? ''
+    });
+    this.rasm = talaba.rasm;
+    this.rasmManzilOzgar();
     this.formOchiq = true;
   }
 
-
-
   tozalash() {
     this.talabaForm.reset({});
+    this.rasm = undefined;
+    this.rasmManzilOzgar();
     this.tahrirRejim = false;
     this.formOchiq = false;
   }

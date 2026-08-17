@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
 import { XarakterService } from 'src/app/service/xarakter.service';
 
 @Component({
@@ -19,16 +17,12 @@ export class XarakterComponent implements OnInit {
   formOchiq= false;
 
   displayedColumns: string[] = ['id', 'nom', 'info', 'amal'];
-  dataSource: any;
-  filter = new FormControl('filter')
 
   length = 100;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private fb: FormBuilder,
-     private xarakterService: XarakterService,
-     private snakBar: MatSnackBar
+     private xarakterService: XarakterService
      ) { }
      ngAfterViewInit(): void {
   
@@ -41,9 +35,6 @@ export class XarakterComponent implements OnInit {
       nom:['',Validators.required],
       info:['']
     });
-    this.xarakterService.getAll('').subscribe(data => {
-      this.xarakterlar = data.content;
-    })
   }
 
   load(key?: any) {
@@ -53,7 +44,6 @@ export class XarakterComponent implements OnInit {
       if (typeof (key) == 'object') {
         key = key.value;
       }
-      console.log(key);
   
   
     }
@@ -64,7 +54,6 @@ export class XarakterComponent implements OnInit {
       sort: 'id'
     }).subscribe(royxat => {
   
-      console.log(royxat);
       this.xarakterlar = royxat.content;
   
       this.length = royxat.totalElements;
@@ -72,11 +61,13 @@ export class XarakterComponent implements OnInit {
   }
   
   saqlash() {
+    if (this.xarakterForm.invalid) {
+      this.xarakterForm.markAllAsTouched();
+      return;
+    }
+
     this.surovBajarilmoqda = true;
     let xarakter = this.xarakterForm.getRawValue();
-    // yutuq.lavozim = {
-    //   id: yutuq.lavozim
-    // }
     let surov;
     if (this.tahrirRejim)
       surov = this.xarakterService.update(xarakter);
@@ -90,9 +81,8 @@ export class XarakterComponent implements OnInit {
       this.surovBajarilmoqda = false;
     },
       error => {
-        this.snakBar.open("Xatolik ro'y berdi", "Ok");
-        this.surovBajarilmoqda = false;
-      })
+          this.surovBajarilmoqda = false;
+        })
 }
 ochirish(xarakter: any) {
        if (confirm("Siz " + xarakter.nom + "ni o'chirishga rozimisiz")) {

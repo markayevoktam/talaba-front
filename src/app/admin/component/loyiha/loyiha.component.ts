@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
 import { LoyihaService } from 'src/app/service/loyiha.service';
 
 @Component({
@@ -19,16 +17,12 @@ export class LoyihaComponent implements OnInit {
   formOchiq = false;
 
   displayedColumns: string[] = ['id', 'nom', 'info', 'amal'];
-  dataSource: any;
-  filter = new FormControl('filter')
 
   length = 100;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private fb: FormBuilder,
-    private loyihaService: LoyihaService,
-    private snakBar: MatSnackBar
+    private loyihaService: LoyihaService
   ) { }
   ngAfterViewInit(): void {
 
@@ -42,9 +36,6 @@ export class LoyihaComponent implements OnInit {
       info: ['']
     });
    
-    this.loyihaService.getAll('').subscribe(data => {
-      this.loyihalar = data.content;
-    })
   }
 
   load(key?: any) {
@@ -54,7 +45,6 @@ export class LoyihaComponent implements OnInit {
       if (typeof (key) == 'object') {
         key = key.value;
       }
-      console.log(key);
 
 
     }
@@ -65,7 +55,6 @@ export class LoyihaComponent implements OnInit {
       sort: 'id'
     }).subscribe(royxat => {
 
-      console.log(royxat);
       this.loyihalar = royxat.content;
 
       this.length = royxat.totalElements;
@@ -73,6 +62,11 @@ export class LoyihaComponent implements OnInit {
   }
 
   saqlash() {
+    if (this.loyihaForm.invalid) {
+      this.loyihaForm.markAllAsTouched();
+      return;
+    }
+
     this.surovBajarilmoqda = true;
     let loyiha = this.loyihaForm.getRawValue();
 
@@ -89,9 +83,8 @@ export class LoyihaComponent implements OnInit {
       this.surovBajarilmoqda = false;
     },
       error => {
-        this.snakBar.open("Xatolik ro'y berdi", "Ok");
-        this.surovBajarilmoqda = false;
-      })
+          this.surovBajarilmoqda = false;
+        })
   }
   ochirish(loyiha: any) {
     if (confirm("Siz " + loyiha.nom + "ni o'chirishga rozimisiz")) {

@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
-//Angular Material Components
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { material_imports } from './shared/material-import';
-import { HomeComponent } from './public/home/home.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { SharedModule } from './shared/shared.module';
 import { DeleteDialog } from './shared/delete-dialog.component';
-import { MyFilterService } from './core/my-filter.service';
+import { AuthInterceptor } from './shared/auth-interceptor';
+import { HomeComponent } from './public/home/home.component';
 import { InfoComponent } from './public/info/info.component';
+import { LoginComponent } from './public/login/login.component';
+import { RegisterComponent } from './public/register/register.component';
 import { StudentComponent } from './public/student/student.component';
 import { TalentdComponent } from './public/talentd/talentd.component';
-import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -22,28 +21,22 @@ import {MatChipsModule} from '@angular/material/chips';
     DeleteDialog,
     HomeComponent,
     InfoComponent,
+    LoginComponent,
+    RegisterComponent,
     StudentComponent,
-    TalentdComponent,
-    
-    
+    TalentdComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
-    MatChipsModule,
-
-   
-   
-    ...material_imports
+    SharedModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: MyFilterService,
+      useClass: AuthInterceptor,
       multi: true
     }
   ],

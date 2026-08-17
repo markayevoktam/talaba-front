@@ -1,7 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { Talaba } from 'src/app/model/talaba';
 import { FakultetService } from 'src/app/service/fakultet.service';
 import { GuruhService } from 'src/app/service/guruh.service';
@@ -9,7 +7,7 @@ import { PublicService } from 'src/app/service/public.service';
 import { StudentService } from 'src/app/service/student.service';
 import { TalabaService } from 'src/app/service/talaba.service';
 import { YunalishService } from 'src/app/service/yunalish.service';
-import { environment } from 'src/environments/environment';
+import { rasmManzili } from 'src/app/shared/rasm.util';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +18,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   talabalar: Talaba[] = [];
   key: any;
-  filter = new FormControl('filter')
   fakultetlar: any;
   studentlar: any;
   yunalishlar: any;
@@ -29,7 +26,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   length = 100;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
   tanlanganFakultet: any;
   tanlanganYunalish: any;
   tanlanganGuruh: any;
@@ -54,8 +50,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     })
     this.guruhService.getAll('').subscribe(data => {
       this.guruhlar = data.content;
-      console.log(data);
-      // console.log(data.content);
       
       
     })
@@ -102,7 +96,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
 
     this.publicService.getAll(params).subscribe(royxat => {
-      console.log(royxat);
       this.talabalar = royxat.content;
       this.length = royxat.totalElements;
     });
@@ -116,7 +109,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.tanlanganFakultet = event.value;
     this.tanlanganYunalish = null;
     this.tanlanganGuruh = null;
-    console.log(this.tanlanganFakultet);
     this.paginator.pageIndex = 0;
     this.load();
 
@@ -125,7 +117,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   yunalishTanlash(event: any) {
     this.tanlanganYunalish = event.value;
     this.tanlanganGuruh = null;
-    console.log(this.tanlanganYunalish);
     this.paginator.pageIndex = 0;
     this.load();
 
@@ -141,9 +132,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   getRasm(file: any) {
-    if (file)
-      return environment.baseApi + "/api/file/download/" + file.id;
-    else return "https://flixarena.com/wp-content/uploads/2020/04/Netflix-Winner.png"
+    return rasmManzili(file);
   }
 
 }

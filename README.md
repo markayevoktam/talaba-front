@@ -1,27 +1,51 @@
-# TalabaFront
+# Talaba Front
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.4.
+Universitet talabalari, bitiruvchilari va ularning yutuqlari haqidagi axborot tizimining frontend qismi.
+Angular 13 (Angular CLI 13.2.4) da yozilgan, backend alohida REST API sifatida ishlaydi.
 
-## Development server
+## Tuzilishi
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```
+src/app/
+├── core/      AccountService, JwtUtil, UserRouteAccessGuard
+├── model/     Fakultet, Yunalish, Guruh, Talaba, Student, Yutuq, Xarakter, Loyiha, User
+├── service/   har bir bo'lim uchun CRUD servislari
+├── public/    ochiq sahifalar: bosh sahifa, talaba profili, iqtidorlilar, bitiruvchilar, kirish/ro'yxatdan o'tish
+├── admin/     lazy-load qilinadigan boshqaruv paneli (10 ta bo'lim)
+└── shared/    SharedModule, Material modullari, interceptor, 404 sahifasi
+```
 
-## Code scaffolding
+Ma'lumot ierarxiyasi: **Fakultet → Yo'nalish → Guruh → Talaba**.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Ishga tushirish
 
-## Build
+```bash
+npm ci
+npm start          # http://localhost:4200
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Backend manzili `src/environments/environment.ts` da (`baseApi`) ko'rsatiladi:
+dev uchun `http://localhost:8080`, prod uchun `src/environments/environment.prod.ts`.
+Servislar bu manzilga `/api/...` qo'shadi, shuning uchun `baseApi` faqat host bo'lishi kerak.
 
-## Running unit tests
+## Buyruqlar
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+| Buyruq | Vazifasi |
+| --- | --- |
+| `npm start` | dev server |
+| `npm run build` | prod build (`dist/talaba-front`) |
+| `npm test` | testlar (brauzer ochiladi) |
+| `npm run test:ci` | testlar (ChromeHeadless, CI uchun) |
 
-## Running end-to-end tests
+## Autentifikatsiya
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+JWT ishlatiladi. Token `JwtUtil` orqali saqlanadi ("meni eslab qol" belgilansa `localStorage`,
+aks holda `sessionStorage`), `AuthInterceptor` uni har bir so'rovga qo'shadi va xatoliklarni
+foydalanuvchiga ko'rsatadi. `/admin` bo'limi `UserRouteAccessGuard` bilan himoyalangan:
+token muddati tekshiriladi, token rollarni e'lon qilsa `ADMIN` roli talab qilinadi.
 
-## Further help
+## Deploy
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+`master` shoxobchasiga har push'da GitHub Actions testlarni va build'ni bajarib,
+Cloudflare Pages'ga joylaydi (`.github/workflows/deploy.yml`).
+SPA yo'nalishlari uchun `src/_redirects` fayli ishlatiladi.

@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
 import { FakultetService } from 'src/app/service/fakultet.service';
 
 @Component({
@@ -19,16 +17,12 @@ export class FakultetComponent implements OnInit {
   surovBajarilmoqda = false;
   
   displayedColumns: string[] = ['id', 'nom', 'info', 'amal'];
-  dataSource: any;
-  filter = new FormControl('filter')
   
   length = 100;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
   
   constructor(private fb: FormBuilder,
-    private fakultetService: FakultetService,
-    private snakBar: MatSnackBar) { }
+    private fakultetService: FakultetService) { }
   ngAfterViewInit(): void {
   
     this.load();
@@ -43,9 +37,6 @@ export class FakultetComponent implements OnInit {
       info: ['']
     });
   
-    this.fakultetService.getAll('').subscribe(data => {
-      this.fakultetlar = data.content;
-    })
   }
   
   load(key?: any) {
@@ -55,7 +46,6 @@ export class FakultetComponent implements OnInit {
       if (typeof (key) == 'object') {
         key = key.value;
       }
-      console.log(key);
   
   
     }
@@ -66,7 +56,6 @@ export class FakultetComponent implements OnInit {
       sort: 'id'
     }).subscribe(royxat => {
   
-      console.log(royxat);
       this.fakultetlar = royxat.content;
   
       this.length = royxat.totalElements;
@@ -74,11 +63,12 @@ export class FakultetComponent implements OnInit {
   }
   
   saqlash() {
+      if (this.fakultetForm.invalid) {
+        this.fakultetForm.markAllAsTouched();
+        return;
+      }
       this.surovBajarilmoqda = true;
       let fakultet = this.fakultetForm.getRawValue();
-      fakultet.lavozim = {
-        id: fakultet.lavozim
-      }
       let surov;
       if (this.tahrirRejim)
         surov = this.fakultetService.update(fakultet);
@@ -92,7 +82,6 @@ export class FakultetComponent implements OnInit {
         this.surovBajarilmoqda = false;
       },
         error => {
-          this.snakBar.open("Xatolik ro'y berdi", "Ok");
           this.surovBajarilmoqda = false;
         })
   }

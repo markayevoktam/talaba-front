@@ -1,4 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { SharedModule } from '../../shared/shared.module';
 
 import { StudentComponent } from './student.component';
 
@@ -8,9 +12,15 @@ describe('StudentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StudentComponent ]
+      imports: [
+        SharedModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        NoopAnimationsModule
+      ],
+      declarations: [StudentComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +29,7 @@ describe('StudentComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('yaratilishi kerak', () => {
     expect(component).toBeTruthy();
   });
 });

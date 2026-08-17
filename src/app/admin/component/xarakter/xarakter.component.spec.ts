@@ -1,4 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { SharedModule } from '../../../shared/shared.module';
 
 import { XarakterComponent } from './xarakter.component';
 
@@ -8,9 +12,15 @@ describe('XarakterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ XarakterComponent ]
+      imports: [
+        SharedModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        NoopAnimationsModule
+      ],
+      declarations: [XarakterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +29,7 @@ describe('XarakterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('yaratilishi kerak', () => {
     expect(component).toBeTruthy();
   });
 });

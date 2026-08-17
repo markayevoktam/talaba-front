@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
 import { GuruhService } from 'src/app/service/guruh.service';
 import { YunalishService } from 'src/app/service/yunalish.service';
 
@@ -22,18 +20,14 @@ export class GuruhComponent implements OnInit {
     surovBajarilmoqda = false;
     
     displayedColumns: string[] = ['id', 'nom', 'yunalish', 'info','amal'];
-    dataSource: any;
-    filter = new FormControl('filter')
     
     length = 100;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
-    @ViewChild(MatSort) sort!: MatSort;
 
     
     constructor(private fb: FormBuilder,
       private yunalishService: YunalishService,
-      private guruhService:GuruhService,
-      private snakBar: MatSnackBar) { }
+      private guruhService:GuruhService) { }
     ngAfterViewInit(): void {
   
       this.load();
@@ -73,16 +67,18 @@ export class GuruhComponent implements OnInit {
         sort: 'id'
       }).subscribe(royxat => {
     
-        console.log(royxat);
         this.guruhlar = royxat.content;
-        console.log(royxat.size)
-        console.log(royxat.content);
         
         this.length = royxat.totalElements;
       });
     }
     
     saqlash() {
+        if (this.guruhForm.invalid) {
+          this.guruhForm.markAllAsTouched();
+          return;
+        }
+
         this.surovBajarilmoqda = true;
         let guruh = this.guruhForm.getRawValue();
         guruh.yunalish = {
@@ -101,9 +97,8 @@ export class GuruhComponent implements OnInit {
           this.surovBajarilmoqda = false;
         },
           error => {
-            this.snakBar.open("Xatolik ro'y berdi", "Ok");
-            this.surovBajarilmoqda = false;
-          })
+          this.surovBajarilmoqda = false;
+        })
     }
 
     ochirish(guruh: any) {
@@ -116,7 +111,7 @@ export class GuruhComponent implements OnInit {
     
     tahrirlash(guruh: any) {
       this.tahrirRejim = true;
-      this.guruhForm.reset(guruh);
+      this.guruhForm.reset({ ...guruh, yunalish: guruh.yunalish?.id ?? '' });
       this.formOchiq = true;
     }
     

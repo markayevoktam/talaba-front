@@ -58,9 +58,7 @@
                 <h3>Xarakter:  {{talaba?.xarakter?.nom}}</h3>
                 <h3>Yosh:    {{talaba?.yosh}}</h3>
                 <h3>Ball:    {{talaba?.ball}}</h3>
-                  <div *ngFor="let chip of fruits"  >
-                   yutuq {{chip.name}}
-                  </div>
+                <h3 *ngIf="talaba?.yutuq">Yutuq:    {{talaba?.yutuq?.nom}}</h3>
      
               
 

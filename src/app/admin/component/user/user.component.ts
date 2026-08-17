@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/service/user.service';
 import { DeleteDialog } from 'src/app/shared/delete-dialog.component';
@@ -27,7 +21,6 @@ export class UserComponent implements OnInit {
     'ism',
     'familiya',
     'login',
-    'parol',
     'regVaqt',
     'oxirgiTashrif',
     'role',
@@ -35,12 +28,9 @@ export class UserComponent implements OnInit {
   ];
   dataSource: any;
 
-  filter = new FormControl('filter');
-
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private snakBar: MatSnackBar,
     private dialog: MatDialog
   ) {}
 
@@ -53,7 +43,7 @@ export class UserComponent implements OnInit {
       parol: ['', Validators.required],
       regVaqt: [],
       oxirgiTashrif: [],
-      role: [Validators.required],
+      role: ['USER', Validators.required],
     });
     this.load();
   }
@@ -64,7 +54,6 @@ export class UserComponent implements OnInit {
       if (typeof key == 'object') {
         key = key.value;
       }
-      console.log(key);
     }
     this.userService.getAll(key).subscribe((data) => {
       this.dataSource = data;
@@ -72,6 +61,11 @@ export class UserComponent implements OnInit {
   }
 
   saqlash() {
+    if (this.userForm.invalid) {
+      this.userForm.markAllAsTouched();
+      return;
+    }
+
     this.surovBajarilmoqda = true;
     let user = this.userForm.getRawValue();
     let surov;
@@ -85,9 +79,8 @@ export class UserComponent implements OnInit {
         this.surovBajarilmoqda = false;
       },
       (error) => {
-        this.snakBar.open("Xatolik ro'y berdi", 'Ok');
-        this.surovBajarilmoqda = false;
-      }
+          this.surovBajarilmoqda = false;
+        }
     );
   }
   tahrir(user: User) {

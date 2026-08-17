@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Student } from 'src/app/model/student';
 import { PublicService } from 'src/app/service/public.service';
 import { StudentService } from 'src/app/service/student.service';
-import { environment } from 'src/environments/environment';
+import { rasmManzili } from 'src/app/shared/rasm.util';
 
 @Component({
   selector: 'app-student',
@@ -50,7 +50,6 @@ export class StudentComponent implements OnInit {
 
 
     this.studentService.getAll(params).subscribe(royxat => {
-      console.log(royxat);
       this.studentlar = royxat.content;
       this.length = royxat.totalElements;
     });
@@ -58,9 +57,7 @@ export class StudentComponent implements OnInit {
   }
 
   getRasm(file: any) {
-    if (file)
-      return environment.baseApi + "/api/file/download/" + file.id;
-    else return "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    return rasmManzili(file);
   }
 
 }

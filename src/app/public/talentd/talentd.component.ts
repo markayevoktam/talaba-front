@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TalabaService } from 'src/app/service/talaba.service';
-import { environment } from 'src/environments/environment';
+import { rasmManzili } from 'src/app/shared/rasm.util';
 
 @Component({
   selector: 'app-talentd',
@@ -25,9 +25,7 @@ export class TalentdComponent implements OnInit {
 
 
   getRasm(file: any) {
-    if (file)
-      return environment.baseApi + "/api/file/download/" + file.id;
-    else return "https://idrok.net/logo.png"
+    return rasmManzili(file);
   }
 
 }
