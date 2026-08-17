@@ -26,6 +26,27 @@ jobs:
       - run: npm run test:ci
       - run: npm run build
 
+      # Wrangler'ning tushunarsiz xatosi o'rniga aniq xabar berish uchun
+      - name: Cloudflare secretlarini tekshirish
+        if: github.event_name != 'pull_request'
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          xato=0
+          if [ -z "$TOKEN" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN topilmadi. Settings > Secrets and variables > Actions > Repository secrets bo'limiga aynan shu nom bilan qo'shing (Environment secrets yoki Variables emas)."
+            xato=1
+          fi
+          if [ -z "$ACCOUNT" ]; then
+            echo "::error::CLOUDFLARE_ACCOUNT_ID topilmadi. Xuddi shu joyga aynan shu nom bilan qo'shing."
+            xato=1
+          fi
+          if [ "$xato" = "0" ]; then
+            echo "Ikkala secret ham o'rnatilgan."
+          fi
+          exit $xato
+
       - name: Deploy to Cloudflare Pages
         if: github.event_name != 'pull_request'
         uses: cloudflare/wrangler-action@v3
