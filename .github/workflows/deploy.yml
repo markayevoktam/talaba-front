@@ -12,8 +12,6 @@ jobs:
     permissions:
       contents: read
       deployments: write
-    env:
-      CHROME_BIN: /usr/bin/google-chrome
     steps:
       - uses: actions/checkout@v4
 
@@ -23,6 +21,18 @@ jobs:
           cache: npm
 
       - run: npm ci
+
+      # Karma brauzerni CHROME_BIN orqali topadi; runner obrazi o'zgarsa ham ishlashi uchun
+      - name: Chrome yo'lini aniqlash
+        run: |
+          bin=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium-browser || command -v chromium || true)
+          if [ -z "$bin" ]; then
+            echo "::error::Runner'da Chrome/Chromium topilmadi, testlarni ishga tushirib bo'lmaydi."
+            exit 1
+          fi
+          echo "Chrome: $bin"
+          echo "CHROME_BIN=$bin" >> "$GITHUB_ENV"
+
       - run: npm run test:ci
       - run: npm run build
 
