@@ -1,102 +1,69 @@
-// import { HttpClient } from '@angular/common/http';
-// import { Injectable } from '@angular/core';
-// import { map, Observable } from 'rxjs';
-// import { environment } from 'src/environments/environment';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class AccountService {
-//   hasAnyAuthority(authorities: any): boolean {
-//     throw new Error('Method not implemented.');
-//   }
-//   api = environment.baseApi + "/api/account";
-
-//   private userCache$!: Observable<any>;
-
-//   constructor(private http: HttpClient) { }
-
-//   login(loginParol: any): Observable<any> {
-//     return this.http.post(this.api + "/auth", loginParol)
-//     .pipe(
-//       map((data:any)=>{
-//         if(data && data.token){
-//             localStorage.setItem('token', data.token);
-//         }
-//         return data;
-//       })
-//     )
-//   }
-
-//   register(user: any): Observable<any> {
-//     return this.http.post(this.api + "/register", user);
-//   }
-
-//   identity(){
-//     return this.http.get(this.api+"/current");
-//   }
-
-// }
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, shareReplay } from 'rxjs';
+import { map, Observable, of, shareReplay } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../model/user';
+import { JwtUtil } from './jwtutil';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
 
-
   api = environment.baseApi + "/api/account";
+
   private currentUser: User | undefined;
 
   private userCache$: Observable<any> | undefined;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private jwtUtil: JwtUtil) { }
 
-  login(loginParol: any): Observable<any> {
+  login(loginParol: any, rememberMe: boolean = true): Observable<any> {
     return this.http.post(this.api + "/auth", loginParol)
-    .pipe(
-      map((data:any)=>{
-        if(data && data.token){
-            localStorage.setItem('token', data.token);
-        }
-        return data;
-      })
-    )
+      .pipe(
+        map((data: any) => {
+          if (data && data.token) {
+            this.jwtUtil.save(data.token, rememberMe);
+            // Yangi foydalanuvchi kirdi - eski keshni tashlab yuboramiz
+            this.userCache$ = undefined;
+            this.currentUser = undefined;
+          }
+          return data;
+        })
+      )
   }
 
   register(user: any): Observable<any> {
     return this.http.post(this.api + "/register", user);
   }
+
   update(user: any): Observable<any> {
     return this.http.post(this.api + "/update", user);
   }
 
-  identity(){
-    if(!this.userCache$) this.userCache$ = this.http.get<User>(this.api+"/current")
-    .pipe(
-      shareReplay(1),
-      map(user=>{
-        this.currentUser = user;
-        return user;
-      })
-    );
+  identity(): Observable<any> {
+    // Yaroqli token bo'lmasa, backendga bexuda 401 so'rov yubormaymiz
+    if (!this.jwtUtil.tokenYaroqli()) {
+      return of(null);
+    }
+    if (!this.userCache$) this.userCache$ = this.http.get<User>(this.api + "/current")
+      .pipe(
+        shareReplay(1),
+        map(user => {
+          this.currentUser = user;
+          return user;
+        })
+      );
     return this.userCache$;
   }
+
   logout() {
-    localStorage.removeItem('token');
+    this.jwtUtil.clear();
     this.userCache$ = undefined;
+    this.currentUser = undefined;
   }
-  // hasRole(role: Role[]): boolean  {
-  //   console.log(role, this.currentUser);
 
-  //   if(this.currentUser){
-  //       return role.includes(this.currentUser.role);
-  //   }
-  //   return false;
-
-  // }
+  hasAnyRole(roles: string[]): boolean {
+    return this.jwtUtil.hasAnyRole(roles);
+  }
 }

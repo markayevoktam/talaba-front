@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseApi: "https://idrok.net/api"
+  baseApi: "https://idrok.net"
 };

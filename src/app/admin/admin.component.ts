@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AccountService } from '../core/account.service';
+import { User } from '../model/user';
 
 @Component({
   selector: 'app-admin',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
   showFiller = false;
-  constructor() { }
+  user?: User;
+
+  constructor(private accountService: AccountService, private router: Router) { }
 
   ngOnInit(): void {
+    this.accountService.identity().subscribe(user => this.user = user);
+  }
+
+  chiqish(): void {
+    this.accountService.logout();
+    this.router.navigate(['/login']);
   }
 
 }

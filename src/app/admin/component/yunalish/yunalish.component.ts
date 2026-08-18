@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
 import { FakultetService } from 'src/app/service/fakultet.service';
 import { YunalishService } from 'src/app/service/yunalish.service';
 
@@ -22,18 +20,14 @@ export class YunalishComponent implements OnInit {
     surovBajarilmoqda = false;
     
     displayedColumns: string[] = ['id', 'nom', 'fakultet', 'info','amal'];
-    dataSource: any;
-    filter = new FormControl('filter')
     
     length = 100;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
-    @ViewChild(MatSort) sort!: MatSort;
 
     
     constructor(private fb: FormBuilder,
       private yunalishService: YunalishService,
-      private fakultetService:FakultetService,
-      private snakBar: MatSnackBar) { }
+      private fakultetService:FakultetService) { }
     ngAfterViewInit(): void {
   
       this.load();
@@ -61,7 +55,6 @@ export class YunalishComponent implements OnInit {
         if (typeof (key) == 'object') {
           key = key.value;
         }
-        console.log(key);
     
     
       }
@@ -72,7 +65,6 @@ export class YunalishComponent implements OnInit {
         sort: 'id'
       }).subscribe(royxat => {
     
-        console.log(royxat);
         this.yunalishlar = royxat.content;
     
         this.length = royxat.totalElements;
@@ -80,6 +72,11 @@ export class YunalishComponent implements OnInit {
     }
     
     saqlash() {
+        if (this.yunalishForm.invalid) {
+          this.yunalishForm.markAllAsTouched();
+          return;
+        }
+
         this.surovBajarilmoqda = true;
         let yunalish = this.yunalishForm.getRawValue();
         yunalish.fakultet = {
@@ -98,9 +95,8 @@ export class YunalishComponent implements OnInit {
           this.surovBajarilmoqda = false;
         },
           error => {
-            this.snakBar.open("Xatolik ro'y berdi", "Ok");
-            this.surovBajarilmoqda = false;
-          })
+          this.surovBajarilmoqda = false;
+        })
     }
     ochirish(yunalish: any) {
            if (confirm("Siz " + yunalish.nom + "ni o'chirishga rozimisiz")) {
@@ -112,7 +108,7 @@ export class YunalishComponent implements OnInit {
     
     tahrirlash(yunalish: any) {
       this.tahrirRejim = true;
-      this.yunalishForm.reset(yunalish);
+      this.yunalishForm.reset({ ...yunalish, fakultet: yunalish.fakultet?.id ?? '' });
       this.formOchiq = true;
     }
     

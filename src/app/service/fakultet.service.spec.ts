@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { FakultetService } from './fakultet.service';
@@ -6,11 +7,13 @@ describe('FakultetService', () => {
   let service: FakultetService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule]
+    });
     service = TestBed.inject(FakultetService);
   });
 
-  it('should be created', () => {
+  it('yaratilishi kerak', () => {
     expect(service).toBeTruthy();
   });
 });

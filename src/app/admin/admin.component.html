@@ -6,11 +6,12 @@
       <mat-icon class="mat-18">view_list</mat-icon>
     </button>
         <span class="example-spacer"></span>
-        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
+        <span *ngIf="user" class="foydalanuvchi">{{ user.ism }} {{ user.familiya }}</span>
+        <a mat-icon-button [routerLink]="['/']" matTooltip="Sayt" aria-label="Saytga o'tish">
+      <mat-icon>home</mat-icon>
+    </a>
+        <button mat-icon-button (click)="chiqish()" matTooltip="Chiqish" aria-label="Tizimdan chiqish">
+      <mat-icon>logout</mat-icon>
     </button>
 
     </mat-toolbar-row>
@@ -75,6 +76,12 @@
             <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['fakultet']">
                 <mat-icon>view_carousel</mat-icon>
                 Fakultetlar
+            </a>
+            <mat-divider></mat-divider>
+
+            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['user']">
+                <mat-icon>manage_accounts</mat-icon>
+                Foydalanuvchilar
             </a>
             <mat-divider></mat-divider>
 

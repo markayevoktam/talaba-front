@@ -7,6 +7,7 @@ import { LoginComponent } from './public/login/login.component';
 import { RegisterComponent } from './public/register/register.component';
 import { StudentComponent } from './public/student/student.component';
 import { TalentdComponent } from './public/talentd/talentd.component';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -25,21 +26,25 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent
   },
-  
   {
     path: 'admin',
     loadChildren: () => import("./admin/admin.module").then(m => m.AdminModule),
-    canActivate: [UserRouteAccessGuard]
-
-  },{
+    canActivate: [UserRouteAccessGuard],
+    // Token rollarni e'lon qilsa, faqat ADMIN kiritiladi; e'lon qilmasa tekshiruv backendda qoladi
+    data: { roles: ['ADMIN'] }
+  },
+  {
     path: 'student',
     component: StudentComponent
   },
   {
-    path:'talentd',
+    path: 'talentd',
     component: TalentdComponent
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent
   }
-
 ];
 
 @NgModule({

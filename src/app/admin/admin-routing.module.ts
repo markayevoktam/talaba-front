@@ -11,6 +11,7 @@ import { UserComponent } from './component/user/user.component';
 import { XarakterComponent } from './component/xarakter/xarakter.component';
 import { YunalishComponent } from './component/yunalish/yunalish.component';
 import { YutuqComponent } from './component/yutuq/yutuq.component';
+import { PageNotFoundComponent } from '../shared/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,7 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'dashboard',
-      
+        pathMatch: 'full'
       },
       {
         path: 'dashboard',
@@ -63,7 +64,10 @@ const routes: Routes = [
         path: 'student',
         component: StudentComponent
       },
-     
+      {
+        path: '**',
+        component: PageNotFoundComponent
+      }
     ]
   },
 

@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
 import { YutuqService } from 'src/app/service/yutuq.service';
 
 @Component({
@@ -18,16 +16,12 @@ export class YutuqComponent implements OnInit {
   formOchiq= false;
 
   displayedColumns: string[] = ['id', 'nom', 'info', 'amal'];
-  dataSource: any;
-  filter = new FormControl('filter')
 
   length = 100;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private fb: FormBuilder,
-     private yutuqService: YutuqService,
-     private snakBar: MatSnackBar
+     private yutuqService: YutuqService
      ) { }
      ngAfterViewInit(): void {
   
@@ -40,9 +34,6 @@ export class YutuqComponent implements OnInit {
       nom:['',Validators.required],
       info:['']
     });
-    this.yutuqService.getAll('').subscribe(data => {
-      this.yutuqlar = data.content;
-    })
   }
 
   load(key?: any) {
@@ -52,7 +43,6 @@ export class YutuqComponent implements OnInit {
       if (typeof (key) == 'object') {
         key = key.value;
       }
-      console.log(key);
   
   
     }
@@ -63,7 +53,6 @@ export class YutuqComponent implements OnInit {
       sort: 'id'
     }).subscribe(royxat => {
   
-      console.log(royxat);
       this.yutuqlar = royxat.content;
   
       this.length = royxat.totalElements;
@@ -71,11 +60,13 @@ export class YutuqComponent implements OnInit {
   }
   
   saqlash() {
+    if (this.yutuqForm.invalid) {
+      this.yutuqForm.markAllAsTouched();
+      return;
+    }
+
     this.surovBajarilmoqda = true;
     let yutuq = this.yutuqForm.getRawValue();
-    // yutuq.lavozim = {
-    //   id: yutuq.lavozim
-    // }
     let surov;
     if (this.tahrirRejim)
       surov = this.yutuqService.update(yutuq);
@@ -89,9 +80,8 @@ export class YutuqComponent implements OnInit {
       this.surovBajarilmoqda = false;
     },
       error => {
-        this.snakBar.open("Xatolik ro'y berdi", "Ok");
-        this.surovBajarilmoqda = false;
-      })
+          this.surovBajarilmoqda = false;
+        })
 }
 ochirish(yutuq: any) {
        if (confirm("Siz " + yutuq.nom + "ni o'chirishga rozimisiz")) {
