@@ -1,78 +1,76 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="pub-sahifa">
+  <app-pub-nav></app-pub-nav>
 
-<nav class="navbar navbar-expand-sm navbar-dark  "> 
-  <div class="container">
-    <div class="box">
-        <div>
-            <img src="https://static10.tgstat.ru/channels/_0/0c/0c8cceaffdb83ce07230e847feb482d2.jpg" width="50"
-                height="50" class="d-inline-block align-top rounded-circle" alt="">
+  <main class="pub-ich">
+    <a class="pub-orqaga" [routerLink]="['/']"><mat-icon>arrow_back</mat-icon> Talabalar ro'yxatiga qaytish</a>
 
+    <ng-container *ngIf="talaba; else yuklanmoqda">
+      <section class="pub-profil">
+        <div class="pub-profil-rasm">
+          <img [src]="getRasm(talaba.rasm)" [alt]="talaba.ism + ' ' + talaba.familya">
         </div>
-        <div>
-            <a class="navbar-brand ml-2" style="color: rgb(0, 0, 0); font-size: 25px;" href="#" data-abc="true">TATU
-                Qarshi filiali</a>
-            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span> 
-  </button> -->
-        </div>
-    </div>
-        <div class="box_icon">
 
+        <div class="pub-profil-asosiy">
+          <h1>{{ talaba.familya }} {{ talaba.ism }}</h1>
+          <div class="pub-profil-sharif">{{ talaba.sharif }}</div>
 
-          <div>        
-            <button mat-button color="dark"  [routerLink]="['/']" class="boshqism">Bosh sahifa</button>
-              <button mat-button color="dark" [routerLink]="['/student']" class="boshqism">Bizning faxrimiz</button>
-              <button mat-button color="dark" [routerLink]="['/talentd']" class="boshqism">Iqtidorli talabalar</button>
+          <div class="pub-profil-chiplar">
+            <span *ngIf="talaba.talented" class="pub-belgi" style="background:#fdf3dc;color:#8a5a00"><mat-icon>star</mat-icon> Iqtidorli talaba</span>
+            <span *ngIf="talaba.guruh?.nom" class="pub-belgi kurs"><mat-icon>groups</mat-icon> {{ talaba.guruh.nom }}</span>
+            <span *ngIf="talaba.kurs" class="pub-belgi och">{{ talaba.kurs }}-kurs</span>
+            <span *ngIf="talaba.oquvShakl === 'GRAND'" class="pub-belgi grant"><mat-icon>verified</mat-icon> Davlat granti</span>
+            <span *ngIf="talaba.oquvShakl === 'SHARTNOMA'" class="pub-belgi shartnoma"><mat-icon>description</mat-icon> Shartnoma</span>
           </div>
-          <a [routerLink]="['/login']" class="icon">
-              <button mat-button color="dark">Kirish</button>
-          </a>
 
+          <dl class="pub-profil-panjara">
+            <div class="pub-malumot" *ngIf="talaba.guruh?.yunalish?.fakultet?.nom">
+              <mat-icon>account_balance</mat-icon>
+              <div><dt>Fakultet</dt><dd>{{ talaba.guruh?.yunalish?.fakultet?.nom }}</dd></div>
+            </div>
+            <div class="pub-malumot" *ngIf="talaba.guruh?.yunalish?.nom">
+              <mat-icon>alt_route</mat-icon>
+              <div><dt>Yo'nalish</dt><dd>{{ talaba.guruh?.yunalish?.nom }}</dd></div>
+            </div>
+            <div class="pub-malumot" *ngIf="talaba.ball !== null && talaba.ball !== undefined">
+              <mat-icon>leaderboard</mat-icon>
+              <div><dt>Reyting bali</dt><dd>{{ talaba.ball }}</dd></div>
+            </div>
+            <div class="pub-malumot" *ngIf="talaba.yosh">
+              <mat-icon>cake</mat-icon>
+              <div><dt>Yosh</dt><dd>{{ talaba.yosh }}</dd></div>
+            </div>
+            <div class="pub-malumot" *ngIf="talaba.hudud">
+              <mat-icon>place</mat-icon>
+              <div><dt>Hudud</dt><dd>{{ talaba.hudud }}</dd></div>
+            </div>
+            <div class="pub-malumot" *ngIf="talaba.loyiha?.nom">
+              <mat-icon>lightbulb</mat-icon>
+              <div><dt>Loyiha</dt><dd>{{ talaba.loyiha.nom }}</dd></div>
+            </div>
+            <div class="pub-malumot" *ngIf="talaba.yutuq?.nom">
+              <mat-icon>emoji_events</mat-icon>
+              <div><dt>Yutuq</dt><dd>{{ talaba.yutuq.nom }}</dd></div>
+            </div>
+            <div class="pub-malumot" *ngIf="talaba.xarakter?.nom">
+              <mat-icon>psychology</mat-icon>
+              <div><dt>Xarakter</dt><dd>{{ talaba.xarakter.nom }}</dd></div>
+            </div>
+          </dl>
+
+          <div class="pub-profil-izoh" *ngIf="talaba.info">
+            {{ talaba.info }}
+          </div>
+        </div>
+      </section>
+    </ng-container>
+
+    <ng-template #yuklanmoqda>
+      <div class="pub-holat" style="margin-top:24px">
+        <mat-spinner diameter="32"></mat-spinner>
+        <span>Yuklanmoqda…</span>
       </div>
+    </ng-template>
+  </main>
 
+  <footer class="pub-footer">© {{ yil }} TATU Qarshi filiali</footer>
 </div>
-</nav>
-<mat-card>
-   <div>
-    <mat-card-header class="container">
-        <mat-card-title>{{talaba?.ism}} {{talaba?.familya}}</mat-card-title>
-        <mat-card-subtitle>Yo'nalish: {{talaba?.guruh?.yunalish?.nom}}</mat-card-subtitle>
-    </mat-card-header>
-   </div>
-
-   
-
-
-    <div class="card mb-12 container col-lg-10">
-        <div class="row no-gutters">
-          <div class="col-md-7">
-            <div class="card-body">
-                <mat-card-title>{{talaba?.ism}} {{talaba?.familya}}</mat-card-title>
-                <h3>{{talaba?.sharif}}</h3>
-                <h3>Guruh:  {{talaba?.guruh?.nom}}</h3>
-                <h3>Yo'nalish:   {{talaba?.guruh?.yunalish?.nom}}</h3>
-                <h3>Kurs:    {{talaba?.kurs}}</h3>
-                <h3>Loyiha:   {{talaba?.loyiha?.nom}}</h3>
-                <h3>O'quv shakli:   {{talaba?.oquvShakl}}</h3>
-                <h3>Fakulteti:  {{talaba?.guruh?.yunalish?.fakultet?.nom}}</h3>
-                <h3>Xarakter:  {{talaba?.xarakter?.nom}}</h3>
-                <h3>Yosh:    {{talaba?.yosh}}</h3>
-                <h3>Ball:    {{talaba?.ball}}</h3>
-                <h3 *ngIf="talaba?.yutuq">Yutuq:    {{talaba?.yutuq?.nom}}</h3>
-     
-              
-
-              </div>
-          </div>
-          <div class="col-md-5">
-           <img [src]="getRasm(talaba?.rasm)" alt="..." style="width: 100%; height: 100%;">
-          </div>
-        </div>
-      </div>
-
-
-    
-    <mat-card-footer>
-       
-    </mat-card-footer>
-</mat-card>

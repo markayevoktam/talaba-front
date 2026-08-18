@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Student } from 'src/app/model/student';
-import { PublicService } from 'src/app/service/public.service';
 import { StudentService } from 'src/app/service/student.service';
 import { rasmManzili } from 'src/app/shared/rasm.util';
 
+/** Ochiq sayt: "Bizning faxrimiz" — bitiruvchilar ro'yxati */
 @Component({
   selector: 'app-student',
   templateUrl: './student.component.html',
@@ -12,52 +11,39 @@ import { rasmManzili } from 'src/app/shared/rasm.util';
 })
 export class StudentComponent implements OnInit {
 
-  studentlar: Student[]=[];
-  length=100;
+  studentlar: Student[] = [];
+  key = '';
+  length = 0;
+  yuklanmoqda = true;
+  readonly yil = new Date().getFullYear();
+  private qidiruvTaymer?: any;
 
-  constructor(private activatedRouter: ActivatedRoute,
-     private publicService: PublicService,
-     private studentService: StudentService
-     ) { }
+  constructor(private studentService: StudentService) { }
 
-    
   ngOnInit(): void {
-
-  }
-
-  ngAfterViewInit(): void {
     this.load();
-    }
-
-  
-  load(key?: any) {
-    if (!key) {
-      key = '';
-    } else {
-      if (typeof (key) == 'object') {
-        key = key.value;
-      }
-    }
-
-    this.studentlar = [];
-    let params: any = {
-      key: key,
-
-
-      sort: 'id'
-    };
-
-
-
-    this.studentService.getAll(params).subscribe(royxat => {
-      this.studentlar = royxat.content;
-      this.length = royxat.totalElements;
-    });
-
   }
 
-  getRasm(file: any) {
+  load(): void {
+    this.yuklanmoqda = true;
+    this.studentService.getAll({ key: this.key ?? '', page: 0, size: 200, sort: 'id,desc' }).subscribe({
+      next: royxat => {
+        this.studentlar = royxat.content ?? [];
+        this.length = royxat.totalElements ?? 0;
+        this.yuklanmoqda = false;
+      },
+      error: () => { this.studentlar = []; this.length = 0; this.yuklanmoqda = false; }
+    });
+  }
+
+  qidir(): void {
+    clearTimeout(this.qidiruvTaymer);
+    this.qidiruvTaymer = setTimeout(() => this.load(), 300);
+  }
+
+  getRasm(file: any): string {
     return rasmManzili(file);
   }
 
+  trackById(_: number, s: Student): number { return s.id; }
 }

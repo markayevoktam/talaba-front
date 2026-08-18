@@ -1,0 +1,251 @@
+/* =========================================================
+   Admin panel umumiy uslubi (barcha CRUD sahifalar uchun)
+   Sinflar: .sahifa, .sahifa-sarlavha, .panel, .forma-panjara,
+            .forma-amallar, .jadval-bosh, .jadval-orash, .jadval,
+            .belgi, .amal-tugmalar, .rasm-yuklash, .bosh-holat
+   ========================================================= */
+
+$ink-1: #1f2544;
+$ink-2: #3a4160;
+$ink-3: #7c84a3;
+$ink-4: #9aa0b8;
+$chiziq: #e6e9f2;
+$chiziq-och: #f0f2f8;
+$primary: #3f51b5;
+$primary-toq: #303f9f;
+$primary-och: #e8ebfa;
+
+.sahifa {
+  display: block;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ---------- Sahifa sarlavhasi ---------- */
+.sahifa-sarlavha {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: $ink-1;
+    letter-spacing: -.2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    mat-icon {
+      color: $primary;
+      background: $primary-och;
+      border-radius: 10px;
+      padding: 6px;
+      width: 24px; height: 24px; font-size: 24px;
+      box-sizing: content-box;
+    }
+  }
+  p { margin: 4px 0 0; color: $ink-3; font-size: 14px; }
+
+  .sarlavha-amallar { display: flex; gap: 8px; align-items: center; }
+  .sarlavha-amallar mat-icon { margin-right: 6px; }
+}
+
+/* ---------- Panel (karta) ---------- */
+.panel {
+  background: #fff;
+  border: 1px solid $chiziq;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  box-shadow: none !important;
+}
+
+.panel-sarlavha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+
+  h2 { margin: 0; font-size: 16px; font-weight: 600; color: $ink-1; }
+  p  { margin: 2px 0 0; font-size: 12.5px; color: $ink-4; }
+}
+
+/* ---------- Forma ---------- */
+.forma-panel {
+  border-color: #d5dbf3;
+  background: #fbfbfe;
+}
+
+.forma-panjara {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 4px 16px;
+
+  mat-form-field { width: 100%; }
+  .toliq { grid-column: 1 / -1; }
+  .ikki  { grid-column: span 2; }
+  .tekshir { display: flex; align-items: center; min-height: 56px; padding-bottom: 20px; }
+}
+
+.forma-amallar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 8px;
+  margin-top: 8px;
+  border-top: 1px solid $chiziq-och;
+
+  mat-spinner { display: inline-block; margin-right: 8px; }
+  .bosh-joy { flex: 1; }
+}
+
+.tahrir-belgisi {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  background: #fdf3dc; color: #8a5a00; font-size: 12px; font-weight: 600;
+  mat-icon { font-size: 16px; width: 16px; height: 16px; }
+}
+
+/* Rasm yuklash bloki (talaba/student) */
+.rasm-yuklash {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  border: 1px dashed #c9cfe6;
+  border-radius: 12px;
+  background: #fff;
+
+  img {
+    width: 72px; height: 72px; border-radius: 50%; object-fit: cover;
+    background: #eef0f6; border: 2px solid #fff; box-shadow: 0 0 0 1px $chiziq;
+  }
+  .rasm-matn { flex: 1; min-width: 0; }
+  .rasm-matn strong { display: block; font-size: 14px; color: $ink-1; }
+  .rasm-matn span { font-size: 12.5px; color: $ink-3; }
+  input[type=file] { display: none; }
+  button mat-icon { margin-right: 6px; }
+}
+
+/* ---------- Jadval ---------- */
+.jadval-bosh {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+
+  .qidiruv {
+    flex: 1 1 260px;
+    max-width: 380px;
+    .mat-form-field-wrapper { padding-bottom: 0; }
+    .mat-form-field-infix { padding: 10px 0 12px !important; border-top-width: 6px; }
+    .mat-form-field-outline { color: #d9def0; }
+    mat-icon { color: $ink-4; }
+  }
+  .jadval-soni { color: $ink-3; font-size: 13px; white-space: nowrap; }
+}
+
+.jadval-orash {
+  overflow-x: auto;
+  border: 1px solid $chiziq;
+  border-radius: 12px;
+}
+
+table.jadval {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13.5px;
+  color: $ink-2;
+
+  th, td { padding: 10px 14px; text-align: left; vertical-align: middle; }
+  th {
+    position: sticky; top: 0;
+    background: #f5f6fb;
+    color: $ink-3;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: .4px; text-transform: uppercase;
+    white-space: nowrap;
+    border-bottom: 1px solid $chiziq;
+  }
+  td { border-bottom: 1px solid $chiziq-och; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover td { background: #fafbfe; }
+
+  .ustun-id { color: $ink-4; font-variant-numeric: tabular-nums; width: 56px; }
+  .ustun-amal { width: 96px; text-align: right; white-space: nowrap; }
+  .asosiy { font-weight: 600; color: $ink-1; }
+  .ikkilamchi { color: $ink-3; font-size: 12.5px; }
+  .qisqa { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .son { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .nowrap { white-space: nowrap; }
+}
+
+.amal-tugmalar {
+  display: inline-flex; gap: 2px;
+  button { width: 34px; height: 34px; line-height: 34px; }
+  mat-icon { font-size: 19px; width: 19px; height: 19px; }
+  .tahrir { color: $primary; }
+  .ochir  { color: #e34948; }
+}
+
+.jadval-rasm {
+  width: 36px; height: 36px; border-radius: 50%; object-fit: cover;
+  background: #eef0f6; vertical-align: middle; margin-right: 10px;
+}
+
+.shaxs { display: inline-flex; align-items: center; white-space: nowrap; }
+.shaxs-matn { display: inline-flex; flex-direction: column; line-height: 1.25; }
+
+/* Belgilar (badge) */
+.belgi {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 9px; border-radius: 999px;
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+  background: #eef0f6; color: $ink-2;
+  mat-icon { font-size: 14px; width: 14px; height: 14px; }
+
+  &.grant     { background: #e0f5ec; color: #0e7a52; }
+  &.shartnoma { background: #fdf3dc; color: #8a5a00; }
+  &.admin     { background: #e8ebfa; color: $primary-toq; }
+  &.user      { background: #eef0f6; color: $ink-2; }
+  &.iqtidor   { background: #fbe7ef; color: #a8285e; }
+  &.och       { background: #f5f6fb; color: $ink-3; font-weight: 500; }
+}
+
+/* Bo'sh holat */
+.bosh-holat {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 36px 12px; text-align: center; color: $ink-3; font-size: 14px;
+  mat-icon { font-size: 40px; width: 40px; height: 40px; color: #c3c8dc; }
+}
+
+/* Paginator */
+.jadval-paginator {
+  margin-top: 4px;
+  .mat-paginator { background: transparent; }
+}
+
+/* mat-table (user sahifasi) ham jadval bilan bir xil ko'rinsin */
+table.mat-table.jadval {
+  th.mat-header-cell { background: #f5f6fb; color: $ink-3; font-size: 12px; text-transform: uppercase; letter-spacing: .4px; border-bottom: 1px solid $chiziq; }
+  td.mat-cell { border-bottom: 1px solid $chiziq-och; font-size: 13.5px; }
+  tr.mat-row:hover td { background: #fafbfe; }
+}
+
+@media (max-width: 700px) {
+  .panel { padding: 14px; }
+  .forma-panjara { grid-template-columns: 1fr; }
+  .forma-panjara .ikki { grid-column: auto; }
+}

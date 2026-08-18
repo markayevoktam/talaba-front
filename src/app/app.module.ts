@@ -1,4 +1,8 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeUz from '@angular/common/locales/uz';
+
+registerLocaleData(localeUz);
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -34,6 +38,7 @@ import { TalentdComponent } from './public/talentd/talentd.component';
     SharedModule
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'uz' },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

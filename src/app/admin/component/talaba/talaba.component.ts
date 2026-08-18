@@ -8,7 +8,7 @@ import { LoyihaService } from 'src/app/service/loyiha.service';
 import { TalabaService } from 'src/app/service/talaba.service';
 import { XarakterService } from 'src/app/service/xarakter.service';
 import { environment } from 'src/environments/environment';
-import { RASM_YOQ } from 'src/app/shared/rasm.util';
+import { RASM_YOQ, rasmManzili } from 'src/app/shared/rasm.util';
 import { YutuqService } from 'src/app/service/yutuq.service';
 
 @Component({
@@ -29,6 +29,8 @@ export class TalabaComponent implements OnInit {
   loyihalar: any;
   rasmManzil?: string;
   readonly rasmYoq = RASM_YOQ;
+  /** Jadvaldagi rasm manzili */
+  readonly rasmUrl = rasmManzili;
   surovBajarilmoqda = false;
   yutuqlar: any;
 

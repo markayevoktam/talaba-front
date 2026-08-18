@@ -1,63 +1,49 @@
-body {
-    background-color: #F50057
+:host { display: block; }
+
+.kirish-sahifa {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  background: radial-gradient(1200px 600px at 10% -10%, #e8ebfa 0%, transparent 60%),
+              radial-gradient(900px 500px at 110% 110%, #e0f5ec 0%, transparent 55%),
+              #f4f6fb;
 }
 
-.container {
-    height: 100vh
+.kirish-karta {
+  width: 100%; max-width: 400px;
+  background: #fff;
+  border: 1px solid #e6e9f2;
+  border-radius: 20px;
+  padding: 32px 30px 26px;
+  box-shadow: 0 20px 50px rgba(31, 37, 68, .10);
+  text-align: center;
+
+  h1 { margin: 14px 0 2px; font-size: 22px; font-weight: 700; color: #1f2544; }
+  .kirish-izoh { margin: 0 0 22px; color: #7c84a3; font-size: 13.5px; }
+
+  form { display: flex; flex-direction: column; text-align: left; }
+  mat-form-field { width: 100%; }
+  .mat-form-field-prefix mat-icon { color: #9aa0b8; margin-right: 6px; }
 }
 
-.card {
-    width: 100%;
-    padding: 30px
+.kirish-logo {
+  display: inline-block;
+  img { border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 4px #e8ebfa; }
 }
 
-.form {
-    padding: 20px
+.kirish-eslab { margin: -4px 0 16px; font-size: 14px; color: #3a4160; }
+
+.kirish-tugma {
+  height: 46px; font-size: 15px; font-weight: 600; border-radius: 12px;
+  mat-spinner { display: inline-block; ::ng-deep circle { stroke: #fff; } }
 }
 
-.form-control {
-    height: 50px;
-    background-color: #eee
+.kirish-havolalar {
+  margin-top: 18px; font-size: 13.5px; color: #9aa0b8;
+  display: flex; justify-content: center; gap: 10px;
+  a { color: #3f51b5; text-decoration: none; font-weight: 500; &:hover { color: #303f9f; text-decoration: underline; } }
 }
 
-.form-control:focus {
-    color: #495057;
-    background-color: #fff;
-    border-color: #f50057;
-    outline: 0;
-    box-shadow: none;
-    background-color: #eee
-}
-
-.inputbox {
-    margin-bottom: 15px
-}
-
-.register {
-    width: 200px;
-    height: 51px;
-    background-color: #f50057;
-    border-color: #f50057
-}
-
-.register:hover {
-    width: 200px;
-    height: 51px;
-    background-color: #f50057;
-    border-color: #f50057
-}
-
-.login {
-    color: #f50057;
-    text-decoration: none
-}
-
-.login:hover {
-    color: #f50057;
-    text-decoration: none
-}
-
-.form-check-input:checked {
-    background-color: #f50057;
-    border-color: #f50057
-}
+.kirish-karta.keng { max-width: 460px; }
+.ikki-ustun { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+@media (max-width: 480px) { .ikki-ustun { grid-template-columns: 1fr; } }

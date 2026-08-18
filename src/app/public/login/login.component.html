@@ -1,18 +1,41 @@
+<div class="kirish-sahifa">
+  <div class="kirish-karta">
+    <a class="kirish-logo" [routerLink]="['/']">
+      <img src="assets/img/logo.jpg" alt="TATU logotipi" width="64" height="64">
+    </a>
+    <h1>Tizimga kirish</h1>
+    <p class="kirish-izoh">TATU Qarshi filiali · Talabalar portali</p>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<div class="wrapper">
-    <div class="logo"> <img src="https://www.kindpng.com/picc/m/475-4750705_school-administrator-icon-png-transparent-png.png" alt=""> </div>
-    <div class="text-center mt-4 name"> Admin </div>
-    <form [formGroup]="loginForm" class="p-3 mt-3" (ngSubmit)="login()">
-        <div class="form-field d-flex align-items-center"> <i class="fa fa-user" style="padding-right: 6px;"></i>
-            <input type="text" formControlName="username" name="userName" id="userName" placeholder="Username"> </div>
-        <div class="form-field d-flex align-items-center"> <i class="fa fa-key" style="padding-right: 2px;"></i>
-            <input type="password" formControlName="password" name="password" id="pwd" placeholder="Password"> </div>
-        <div class="form-field mt-2">
-            <label> <input type="checkbox" formControlName="rememberMe"> Meni eslab qol </label>
-        </div>
-        <button class="btn mt-3" [disabled]="surovBajarilmoqda">Kirish</button>
+    <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+      <mat-form-field appearance="outline">
+        <mat-label>Login</mat-label>
+        <mat-icon matPrefix>person</mat-icon>
+        <input matInput formControlName="username" autocomplete="username" required>
+        <mat-error>Login kiriting</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Parol</mat-label>
+        <mat-icon matPrefix>lock</mat-icon>
+        <input matInput [type]="parolKorinsin ? 'text' : 'password'" formControlName="password" autocomplete="current-password" required>
+        <button mat-icon-button matSuffix type="button" (click)="parolKorinsin = !parolKorinsin" [attr.aria-label]="parolKorinsin ? 'Parolni yashirish' : 'Parolni ko\'rsatish'">
+          <mat-icon>{{ parolKorinsin ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error>Parol kiriting</mat-error>
+      </mat-form-field>
+
+      <mat-checkbox formControlName="rememberMe" color="primary" class="kirish-eslab">Meni eslab qol</mat-checkbox>
+
+      <button mat-flat-button color="primary" class="kirish-tugma" type="submit" [disabled]="surovBajarilmoqda">
+        <mat-spinner *ngIf="surovBajarilmoqda" diameter="18"></mat-spinner>
+        <ng-container *ngIf="!surovBajarilmoqda">Kirish</ng-container>
+      </button>
     </form>
-    <div class="text-center fs-6"> <a [routerLink]="['/register']">Ro'yxatdan o'tish</a> &nbsp;&nbsp; <a [routerLink]="['/']">Bosh sahifa</a>
+
+    <div class="kirish-havolalar">
+      <a [routerLink]="['/register']">Ro'yxatdan o'tish</a>
+      <span>·</span>
+      <a [routerLink]="['/']">Bosh sahifa</a>
     </div>
+  </div>
 </div>

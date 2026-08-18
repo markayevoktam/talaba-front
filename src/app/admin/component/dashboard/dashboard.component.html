@@ -1,3 +1,118 @@
-<h2>
-    Dashboard
-</h2>
+<section class="sarlavha">
+  <div>
+    <h1>{{ salom }}<ng-container *ngIf="user">, {{ user.ism }}</ng-container>!</h1>
+    <p class="izoh">
+      Boshqaruv paneli · {{ bugun | date:'d MMMM, EEEE' }}
+    </p>
+  </div>
+  <a mat-flat-button color="primary" class="asosiy-tugma" [routerLink]="['/admin/talaba']">
+    <mat-icon>person_add</mat-icon>
+    Talaba qo'shish
+  </a>
+</section>
+
+<section class="stat-panjara" aria-label="Umumiy statistika">
+  <a *ngFor="let k of kartalar; trackBy: trackByKalit"
+     class="stat-karta"
+     [routerLink]="[k.yol]"
+     [style.--aksent]="k.rang"
+     [attr.aria-label]="k.nom + ': ' + (k.soni ?? 'yuklanmoqda')">
+    <span class="stat-ikon" [style.background]="k.fon" [style.color]="k.rang">
+      <mat-icon>{{ k.ikon }}</mat-icon>
+    </span>
+    <span class="stat-matn">
+      <span class="stat-nom">{{ k.nom }}</span>
+      <span class="stat-son" *ngIf="k.soni !== undefined; else skelet">
+        {{ k.soni | number }}
+        <mat-icon *ngIf="k.xato" class="stat-xato" matTooltip="Ma'lumot yuklanmadi">error_outline</mat-icon>
+      </span>
+      <ng-template #skelet><span class="skelet"></span></ng-template>
+    </span>
+    <mat-icon class="stat-strelka">chevron_right</mat-icon>
+  </a>
+</section>
+
+<section class="ikki-ustun">
+  <mat-card class="panel">
+    <div class="panel-sarlavha">
+      <div>
+        <h2>So'nggi qo'shilgan talabalar</h2>
+        <p>Eng oxirgi 6 ta yozuv</p>
+      </div>
+      <a mat-stroked-button color="primary" [routerLink]="['/admin/talaba']">Barchasi</a>
+    </div>
+
+    <div *ngIf="songgiYuklanmoqda" class="holat">
+      <mat-spinner diameter="28"></mat-spinner>
+      <span>Yuklanmoqda…</span>
+    </div>
+
+    <div *ngIf="!songgiYuklanmoqda && songgiXato" class="holat xato">
+      <mat-icon>cloud_off</mat-icon>
+      <span>Ma'lumotni yuklab bo'lmadi. Server uyg'onayotgan bo'lishi mumkin — sahifani biroz kutib yangilang.</span>
+    </div>
+
+    <div *ngIf="!songgiYuklanmoqda && !songgiXato && songgiTalabalar.length === 0" class="holat bosh">
+      <mat-icon>person_off</mat-icon>
+      <span>Hozircha talabalar yo'q.</span>
+      <a mat-button color="primary" [routerLink]="['/admin/talaba']">Birinchisini qo'shish</a>
+    </div>
+
+    <ul *ngIf="songgiTalabalar.length" class="talaba-royxat">
+      <li *ngFor="let t of songgiTalabalar; trackBy: trackById">
+        <img class="talaba-rasm" [src]="rasm(t.rasm)" alt="" loading="lazy">
+        <div class="talaba-matn">
+          <span class="talaba-ism">{{ t.familya }} {{ t.ism }} <span class="talaba-sharif">{{ t.sharif }}</span></span>
+          <span class="talaba-izoh">
+            <ng-container *ngIf="t.guruh?.nom">{{ t.guruh?.nom }}</ng-container>
+            <ng-container *ngIf="t.guruh?.yunalish?.nom"> · {{ t.guruh?.yunalish?.nom }}</ng-container>
+            <ng-container *ngIf="t.kurs"> · {{ t.kurs }}-kurs</ng-container>
+          </span>
+        </div>
+        <span *ngIf="t.ball !== null && t.ball !== undefined" class="talaba-ball" matTooltip="Ball">
+          {{ t.ball }}
+        </span>
+      </li>
+    </ul>
+  </mat-card>
+
+  <div class="ustun">
+    <mat-card class="panel">
+      <div class="panel-sarlavha">
+        <div>
+          <h2>Tez amallar</h2>
+          <p>Ko'p ishlatiladigan bo'limlar</p>
+        </div>
+      </div>
+      <div class="amallar">
+        <a *ngFor="let a of tezAmallar" class="amal" [routerLink]="[a.yol]">
+          <mat-icon>{{ a.ikon }}</mat-icon>
+          <span>{{ a.nom }}</span>
+        </a>
+      </div>
+    </mat-card>
+
+    <mat-card class="panel tizim">
+      <div class="panel-sarlavha">
+        <div>
+          <h2>Tizim</h2>
+          <p>Joriy sessiya</p>
+        </div>
+      </div>
+      <dl class="tizim-royxat">
+        <div>
+          <dt>Foydalanuvchi</dt>
+          <dd>{{ user?.login || '—' }}</dd>
+        </div>
+        <div>
+          <dt>Rol</dt>
+          <dd><span class="rol">{{ user?.role || 'ADMIN' }}</span></dd>
+        </div>
+        <div>
+          <dt>Sana</dt>
+          <dd>{{ bugun | date:'dd.MM.yyyy HH:mm' }}</dd>
+        </div>
+      </dl>
+    </mat-card>
+  </div>
+</section>

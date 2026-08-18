@@ -2,11 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { FaylService } from 'src/app/service/fayl.service';
-import { GuruhService } from 'src/app/service/guruh.service';
 import { StudentService } from 'src/app/service/student.service';
-import { YunalishService } from 'src/app/service/yunalish.service';
 import { environment } from 'src/environments/environment';
-import { RASM_YOQ } from 'src/app/shared/rasm.util';
+import { RASM_YOQ, rasmManzili } from 'src/app/shared/rasm.util';
 
 @Component({
   selector: 'app-student',
@@ -21,21 +19,16 @@ export class StudentComponent implements OnInit {
   formOchiq = false;
   rasmManzil?: string;
   readonly rasmYoq = RASM_YOQ;
-  rasm: any; 
-  guruhlar: any;
-  yunalishlar: any;
-
-  displayedColumns: string[] = ['id', 'ism', 'familya', 'sharif' ,'hudud','yosh','ishlashJoyi','yunalish','oqishgaKirYil', 'guruh' , 'oquvShakl' ,'oqishTugYil','info','amal'];
+  /** Jadvaldagi rasm manzili */
+  readonly rasmUrl = rasmManzili;
+  rasm: any;
 
   length = 100;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private fb: FormBuilder,
     private studentService: StudentService,
-    private faylService: FaylService,
-    private guruhService: GuruhService,
-    private yonalishService: YunalishService
-
+    private faylService: FaylService
   ) { }
 
   
@@ -56,17 +49,8 @@ export class StudentComponent implements OnInit {
       oqishgaKirYil: [],
       oquvShakl: ['', Validators.required],
       oqishTugYil: [''],
-      guruh: ['',Validators.required],
-      yunalish: ['',Validators.required],
       info: ['']
     });
-   
-    this.guruhService.getAll('').subscribe(data=>{
-      this.guruhlar = data.content;
-    })
-    this.yonalishService.getAll('').subscribe(data=>{
-      this.yunalishlar = data.content;
-    })
   }
 
   rasmManzilOzgar() {
@@ -147,7 +131,7 @@ export class StudentComponent implements OnInit {
 
   tahrirlash(student: any) {
     this.tahrirRejim = true;
-    this.studentForm.reset({ ...student, guruh: student.guruh?.id ?? '', yunalish: student.yunalish?.id ?? '' });
+    this.studentForm.reset({ ...student });
     this.rasm = student.rasm;
     this.rasmManzilOzgar();
     this.formOchiq = true;

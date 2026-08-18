@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm!: FormGroup;
   surovBajarilmoqda = false;
+  parolKorinsin = false;
 
   constructor(
     private fb: FormBuilder,
@@ -24,7 +25,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       ism: ['', Validators.required],
       familiya: ['', Validators.required],
-      login: ['', Validators.required],
+      login: ['', [Validators.required, Validators.minLength(6)]],
       parol: ['', [Validators.required, Validators.minLength(4)]],
       shartlar: [false, Validators.requiredTrue]
     });

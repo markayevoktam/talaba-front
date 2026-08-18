@@ -15,6 +15,7 @@ export class UserComponent implements OnInit {
   tahrirRejim = false;
   surovBajarilmoqda = false;
   formOchiq = false;
+  parolKorinsin = false;
 
   displayedColumns: string[] = [
     'id',
@@ -41,8 +42,6 @@ export class UserComponent implements OnInit {
       familiya: ['', Validators.required],
       login: ['', Validators.required],
       parol: ['', Validators.required],
-      regVaqt: [],
-      oxirgiTashrif: [],
       role: ['USER', Validators.required],
     });
     this.load();
@@ -84,9 +83,13 @@ export class UserComponent implements OnInit {
     );
   }
   tahrir(user: User) {
-    this.userForm.reset(user);
+    this.userForm.reset({ ...user, parol: '' });
+    // Tahrirda parol ixtiyoriy: bo'sh qolsa serverda eskisi saqlanadi
+    this.userForm.get('parol')?.clearValidators();
+    this.userForm.get('parol')?.updateValueAndValidity();
     this.tahrirRejim = true;
     this.formOchiq = true;
+    this.parolKorinsin = false;
   }
   ochirish(user: User) {
     this.dialog
@@ -101,8 +104,11 @@ export class UserComponent implements OnInit {
       });
   }
   tozalash() {
-    this.userForm.reset({});
+    this.userForm.reset({ role: 'USER' });
+    this.userForm.get('parol')?.setValidators(Validators.required);
+    this.userForm.get('parol')?.updateValueAndValidity();
     this.tahrirRejim = false;
     this.formOchiq = false;
+    this.parolKorinsin = false;
   }
 }

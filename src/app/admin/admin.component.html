@@ -1,104 +1,50 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="topbar">
+  <button mat-icon-button (click)="drawer.toggle()" matTooltip="Menyu" aria-label="Menyuni ochish/yopish">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <a class="brand" [routerLink]="['dashboard']">
+    <mat-icon class="brand-icon">school</mat-icon>
+    <span class="brand-text">Talaba <span class="brand-sub">admin</span></span>
+  </a>
 
-    <mat-toolbar-row>
-        <span>Talaba</span>
-        <button type="button" mat-button (click)="drawer.toggle()">
-      <mat-icon class="mat-18">view_list</mat-icon>
-    </button>
-        <span class="example-spacer"></span>
-        <span *ngIf="user" class="foydalanuvchi">{{ user.ism }} {{ user.familiya }}</span>
-        <a mat-icon-button [routerLink]="['/']" matTooltip="Sayt" aria-label="Saytga o'tish">
-      <mat-icon>home</mat-icon>
-    </a>
-        <button mat-icon-button (click)="chiqish()" matTooltip="Chiqish" aria-label="Tizimdan chiqish">
-      <mat-icon>logout</mat-icon>
-    </button>
+  <span class="spacer"></span>
 
-    </mat-toolbar-row>
+  <div *ngIf="user" class="foydalanuvchi" matTooltip="{{ user.login }}">
+    <span class="avatar">{{ boshHarflar }}</span>
+    <span class="foydalanuvchi-ism">{{ user.ism }} {{ user.familiya }}</span>
+  </div>
+  <a mat-icon-button [routerLink]="['/']" matTooltip="Saytga o'tish" aria-label="Saytga o'tish">
+    <mat-icon>public</mat-icon>
+  </a>
+  <button mat-icon-button (click)="chiqish()" matTooltip="Chiqish" aria-label="Tizimdan chiqish">
+    <mat-icon>logout</mat-icon>
+  </button>
 </mat-toolbar>
 
+<mat-sidenav-container class="shell">
+  <mat-sidenav #drawer class="sidenav" [mode]="sidenavMode" [opened]="sidenavOchiq" [fixedInViewport]="false">
+    <nav class="menyu">
+      <ng-container *ngFor="let bolim of menyu">
+        <div class="menyu-sarlavha">{{ bolim.sarlavha }}</div>
+        <a *ngFor="let b of bolim.bandlar"
+           class="menyu-band"
+           routerLinkActive="faol"
+           [routerLink]="[b.yol]"
+           (click)="mobilYop()">
+          <mat-icon class="menyu-ikon">{{ b.ikon }}</mat-icon>
+          <span>{{ b.nom }}</span>
+        </a>
+      </ng-container>
+    </nav>
+    <div class="sidenav-past">
+      <mat-icon>cloud_done</mat-icon>
+      <span>talaba-frontend.pages.dev</span>
+    </div>
+  </mat-sidenav>
 
-<mat-sidenav-container class="example-container">
-    <mat-sidenav #drawer mode="side" opened="">
-        <mat-nav-list>
-
-            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['dashboard']">
-                <mat-icon class="sidenav-icon">dashboard</mat-icon>
-                Bosh sahifa
-            </a>
-            <mat-divider></mat-divider>
-            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['guruh']">
-                <mat-icon>group</mat-icon>  
-                Guruhlar
-            </a>
-            <mat-divider></mat-divider>
-
-            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['yunalish']">
-                <mat-icon class="sidenav-icon">query_builder</mat-icon>
-                Yo'nalishlar
-            </a>
-            <mat-divider></mat-divider>
-
-            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['yutuq']">
-                <mat-icon class="sidenav-icon">verified_user</mat-icon>
-                Yutuqlar
-            </a>
-            <mat-divider></mat-divider>
-
-            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['xarakter']">
-                <mat-icon>face</mat-icon>
-                Xarakterlar
-            </a>
-            <mat-divider></mat-divider>
-
-            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['talaba']">
-                <mat-icon>how_to_reg</mat-icon>
-                Talabalar
-            </a>
-            <mat-divider></mat-divider>
-
-            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['student']">
-                <mat-icon>how_to_reg</mat-icon>
-                Studentlar
-            </a>
-            <mat-divider></mat-divider>
-
-<!-- 
-
-    Loyihalar 
- -->
-            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['loyiha']">
-                <mat-icon>desktop_windows</mat-icon>
-                Loyihalar
-            </a>
-            <mat-divider></mat-divider>
-
-            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['fakultet']">
-                <mat-icon>view_carousel</mat-icon>
-                Fakultetlar
-            </a>
-            <mat-divider></mat-divider>
-
-            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['user']">
-                <mat-icon>manage_accounts</mat-icon>
-                Foydalanuvchilar
-            </a>
-            <mat-divider></mat-divider>
-
-
-
-
-
-        </mat-nav-list>
-
-
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <div class="main">
-            <router-outlet></router-outlet>
-        </div>
-
-
-
-    </mat-sidenav-content>
+  <mat-sidenav-content class="kontent">
+    <div class="main">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
 </mat-sidenav-container>

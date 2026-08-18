@@ -1,56 +1,58 @@
-<div class="container d-flex justify-content-center align-items-center">
-    <div class="card">
-        <div class="row">
-            <div class="col-md-6">
-                <form class="form" [formGroup]="registerForm" (ngSubmit)="royxatdanOtish()">
-                    <h2>Ro'yxatdan o'tish</h2>
-                    <div class="row">
-                        <div class="col">
-                            <div class="inputbox mt-3">
-                                <span>Ismingiz</span>
-                                <input type="text" placeholder="Ism" formControlName="ism" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="inputbox mt-3">
-                                <span>Familiyangiz</span>
-                                <input type="text" placeholder="Familiya" formControlName="familiya" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="inputbox mt-3">
-                                <span>Login</span>
-                                <input type="text" placeholder="Login" formControlName="login" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="inputbox mt-3">
-                                <span>Parol</span>
-                                <input type="password" placeholder="Parol" formControlName="parol" class="form-control">
-                            </div>
-                        </div>
-                    </div>
+<div class="kirish-sahifa">
+  <div class="kirish-karta keng">
+    <a class="kirish-logo" [routerLink]="['/']">
+      <img src="assets/img/logo.jpg" alt="TATU logotipi" width="64" height="64">
+    </a>
+    <h1>Ro'yxatdan o'tish</h1>
+    <p class="kirish-izoh">Hisob yarating — keyin tizimga kirasiz</p>
 
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <div class="text-right">
-                            <button type="submit" class="btn btn-success register btn-block"
-                                [disabled]="surovBajarilmoqda">Ro'yxatdan o'tish</button>
-                        </div>
-                        <a [routerLink]="['/login']" class="login">Kirish</a>
-                    </div>
-                    <div class="form-check mt-2">
-                        <input class="form-check-input" type="checkbox" id="flexCheckChecked" formControlName="shartlar">
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Maxfiylik siyosati shartlariga roziman
-                        </label>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-6">
-                <div class="text-center mt-5"> <img src="https://i.imgur.com/98GXnDD.png" width="400"> </div>
-            </div>
-        </div>
+    <form [formGroup]="registerForm" (ngSubmit)="royxatdanOtish()" novalidate>
+      <div class="ikki-ustun">
+        <mat-form-field appearance="outline">
+          <mat-label>Ism</mat-label>
+          <input matInput formControlName="ism" autocomplete="given-name" required>
+          <mat-error>Ism kiriting</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Familiya</mat-label>
+          <input matInput formControlName="familiya" autocomplete="family-name" required>
+          <mat-error>Familiya kiriting</mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Login</mat-label>
+        <mat-icon matPrefix>person</mat-icon>
+        <input matInput formControlName="login" autocomplete="username" minlength="6" maxlength="30" required>
+        <mat-hint>Kamida 6 ta belgi</mat-hint>
+        <mat-error>Login kamida 6 ta belgidan iborat bo'lsin</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Parol</mat-label>
+        <mat-icon matPrefix>lock</mat-icon>
+        <input matInput [type]="parolKorinsin ? 'text' : 'password'" formControlName="parol" autocomplete="new-password" required>
+        <button mat-icon-button matSuffix type="button" (click)="parolKorinsin = !parolKorinsin" [attr.aria-label]="parolKorinsin ? 'Parolni yashirish' : 'Parolni ko\'rsatish'">
+          <mat-icon>{{ parolKorinsin ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error>Parol kamida 4 ta belgidan iborat bo'lsin</mat-error>
+      </mat-form-field>
+
+      <mat-checkbox formControlName="shartlar" color="primary" class="kirish-eslab">
+        Maxfiylik siyosati shartlariga roziman
+      </mat-checkbox>
+
+      <button mat-flat-button color="primary" class="kirish-tugma" type="submit" [disabled]="surovBajarilmoqda">
+        <mat-spinner *ngIf="surovBajarilmoqda" diameter="18"></mat-spinner>
+        <ng-container *ngIf="!surovBajarilmoqda">Ro'yxatdan o'tish</ng-container>
+      </button>
+    </form>
+
+    <div class="kirish-havolalar">
+      <span>Hisobingiz bormi?</span>
+      <a [routerLink]="['/login']">Kirish</a>
+      <span>·</span>
+      <a [routerLink]="['/']">Bosh sahifa</a>
     </div>
+  </div>
 </div>

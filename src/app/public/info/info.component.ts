@@ -12,6 +12,7 @@ import { rasmManzili } from 'src/app/shared/rasm.util';
 export class InfoComponent implements OnInit {
 
   talaba?: Talaba;
+  readonly yil = new Date().getFullYear();
 
   constructor(private activatedRouter: ActivatedRoute, private publicService: PublicService) { }
 

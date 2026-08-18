@@ -1,65 +1,63 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<nav class="navbar navbar-expand-sm navbar-dark  ">
-    <div class="container">
-        <div class="box">
-            <div>
-                <img src="https://static10.tgstat.ru/channels/_0/0c/0c8cceaffdb83ce07230e847feb482d2.jpg" width="50"
-                    height="50" class="d-inline-block align-top rounded-circle" alt="">
+<div class="pub-sahifa">
+  <app-pub-nav></app-pub-nav>
 
-            </div>
-            <div>
-                <a class="navbar-brand ml-2" style="color: rgb(0, 0, 0); font-size: 25px;" href="#" data-abc="true">TATU
-                    Qarshi filiali</a>
-                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span> 
-      </button> -->
-            </div>
-        </div>
+  <main class="pub-ich">
+    <section class="pub-hero">
+      <span class="pub-hero-yorliq"><mat-icon>workspace_premium</mat-icon> Bizning faxrimiz</span>
+      <h1>Bitiruvchilarimiz</h1>
+      <p>Filialimizni tamomlab, turli sohalarda muvaffaqiyatli faoliyat yuritayotgan bitiruvchilar.</p>
+    </section>
 
-        <div class="box_icon">
-            <!-- <a [routerLink]="['/']" class="boshqism"> Bosh sahifa</a> -->
-            <button mat-button color="dark" [routerLink]="['/']" class="boshqism">Bosh sahifa</button>
-            <div>
-                <button mat-button color="dark" [routerLink]="['/student']" class="boshqism">Bizning faxrimiz</button>
-                <button mat-button color="dark" [routerLink]="['/talentd']" class="boshqism">Iqtidorli
-                    talabalar</button>
-            </div>
-            <a [routerLink]="['/login']" class="icon">
-                <button mat-button color="dark">Kirish</button>
-            </a>
+    <section class="pub-filtr" aria-label="Qidiruv">
+      <mat-form-field appearance="outline" class="qidiruv">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput [(ngModel)]="key" (input)="qidir()" placeholder="Ism, familiya bo'yicha qidirish…" autocomplete="off">
+        <button *ngIf="key" mat-icon-button matSuffix type="button" (click)="key = ''; load()" aria-label="Tozalash">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </section>
 
-        </div>
+    <div class="pub-natija">
+      <span>Jami: <strong>{{ length }}</strong> ta bitiruvchi</span>
     </div>
-</nav>
-<div class="container">
 
-    <article *ngFor="let s of studentlar" class="postcard light yellow">
-        <div class="col">
-            <img class="postcard__img" [src]="getRasm(s?.rasm)" alt="...">
+    <section class="pub-panjara" *ngIf="studentlar.length; else boshHolat">
+      <article *ngFor="let s of studentlar; trackBy: trackById" class="pub-karta">
+        <div class="pub-karta-rasm">
+          <img [src]="getRasm(s?.rasm)" [alt]="s.ism + ' ' + s.familya" loading="lazy">
         </div>
-        <div class="postcard__text t-dark">
-            <h1 class="postcard__title yellow" style="cursor: pointer;">{{s?.ism}}</h1>
-            <h1 class="postcard__title yellow" style="cursor: pointer;">{{s?.familya}}</h1>
-            <h1 class="postcard__title yellow" style="cursor: pointer;">{{s?.sharif}}</h1>
-            
-            <div class="postcard__subtitle small">
-                <time style="font-size: 15px;">
-                    {{s?.ishlashJoyi}}
-                </time>
-            </div>
-            <div class="postcard__bar" style="background-color: rgba(46, 46, 235, 0.671);"></div>
-            <div class="postcard__preview-txt">{{s?.oqishgaKirYil}}</div>
-            <ul class="postcard__tagbox">
-                <li class="tag__item">{{s?.hudud}}</li>
-                <li class="tag__item">{{s?.oquvShakl}}</li>
-                <li class="tag__item">{{s?.yosh}}</li>
-                <!-- <li class="tag__item">
-                    {{s?.oqishTugYil}}
-                </li> -->
-            </ul>
+        <div class="pub-karta-matn">
+          <span class="pub-karta-ism">{{ s.familya }} {{ s.ism }}</span>
+          <span class="pub-karta-sharif">{{ s.sharif }}</span>
+          <span class="pub-karta-qator" *ngIf="s.ishlashJoyi">
+            <mat-icon>work_outline</mat-icon><span>{{ s.ishlashJoyi }}</span>
+          </span>
+          <span class="pub-karta-qator" *ngIf="s.hudud">
+            <mat-icon>place</mat-icon><span>{{ s.hudud }}</span>
+          </span>
+          <div class="pub-karta-past">
+            <span *ngIf="s.oqishgaKirYil || s.oqishTugYil" class="pub-belgi kurs">
+              {{ s.oqishgaKirYil ? (s.oqishgaKirYil | date:'yyyy') : '…' }}–{{ s.oqishTugYil ? (s.oqishTugYil | date:'yyyy') : '…' }}
+            </span>
+            <span *ngIf="s.oquvShakl === 'GRAND'" class="pub-belgi grant">Grant</span>
+            <span *ngIf="s.oquvShakl === 'SHARTNOMA'" class="pub-belgi shartnoma">Shartnoma</span>
+          </div>
         </div>
+      </article>
+    </section>
 
-    </article>
+    <ng-template #boshHolat>
+      <div class="pub-holat" *ngIf="!yuklanmoqda">
+        <mat-icon>workspace_premium</mat-icon>
+        <strong>Bitiruvchilar topilmadi</strong>
+      </div>
+      <div class="pub-holat" *ngIf="yuklanmoqda">
+        <mat-spinner diameter="32"></mat-spinner>
+        <span>Yuklanmoqda…</span>
+      </div>
+    </ng-template>
+  </main>
 
-
+  <footer class="pub-footer">© {{ yil }} TATU Qarshi filiali</footer>
 </div>

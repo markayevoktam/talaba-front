@@ -1,11 +1,9 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Talaba } from 'src/app/model/talaba';
 import { FakultetService } from 'src/app/service/fakultet.service';
 import { GuruhService } from 'src/app/service/guruh.service';
 import { PublicService } from 'src/app/service/public.service';
-import { StudentService } from 'src/app/service/student.service';
-import { TalabaService } from 'src/app/service/talaba.service';
 import { YunalishService } from 'src/app/service/yunalish.service';
 import { rasmManzili } from 'src/app/shared/rasm.util';
 
@@ -17,123 +15,120 @@ import { rasmManzili } from 'src/app/shared/rasm.util';
 export class HomeComponent implements OnInit, AfterViewInit {
 
   talabalar: Talaba[] = [];
-  key: any;
-  fakultetlar: any;
-  studentlar: any;
-  yunalishlar: any;
-  guruhlar: any;
+  key = '';
+  fakultetlar: any[] = [];
+  yunalishlar: any[] = [];
+  guruhlar: any[] = [];
 
-
-  length = 100;
+  length = 0;
+  yuklanmoqda = true;
+  readonly yil = new Date().getFullYear();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  tanlanganFakultet: any;
-  tanlanganYunalish: any;
-  tanlanganGuruh: any;
 
+  tanlanganFakultet: any = null;
+  tanlanganYunalish: any = null;
+  tanlanganGuruh: any = null;
+
+  private qidiruvTaymer?: any;
 
   constructor(private publicService: PublicService,
-    private talabaService: TalabaService,
     private fakultetService: FakultetService,
     private yunalishService: YunalishService,
     private guruhService: GuruhService,
-    private studentService: StudentService,
-
-
+    private cdr: ChangeDetectorRef,
   ) { }
-  ngAfterViewInit(): void {
-    this.load();
-    this.fakultetService.getAll('').subscribe(data => {
-      this.fakultetlar = data.content;
-    })
-    this.yunalishService.getAll('').subscribe(data => {
-      this.yunalishlar = data.content;
-    })
-    this.guruhService.getAll('').subscribe(data => {
-      this.guruhlar = data.content;
-      
-      
-    })
-    this.studentService.getAll('').subscribe(data=> {
-      this.studentlar = data.content;
-    })
-
-  }
 
   ngOnInit(): void {
-
-
-
+    const hamma = { page: 0, size: 500, sort: 'nom' };
+    this.fakultetService.getAll(hamma).subscribe(data => this.fakultetlar = data.content ?? []);
+    this.yunalishService.getAll(hamma).subscribe(data => this.yunalishlar = data.content ?? []);
+    this.guruhService.getAll(hamma).subscribe(data => this.guruhlar = data.content ?? []);
   }
 
-  load(key?: any) {
-    if (!key) {
-      key = '';
-    } else {
-      if (typeof (key) == 'object') {
-        key = key.value;
-      }
-    }
+  ngAfterViewInit(): void {
+    this.load();
+    this.cdr.detectChanges();
+  }
 
-    this.talabalar = [];
-    let params: any = {
-      key: key,
+  /** Tanlangan fakultetga tegishli yo'nalishlar (tanlanmagan bo'lsa hammasi) */
+  get korinadiganYunalishlar(): any[] {
+    if (!this.tanlanganFakultet) return this.yunalishlar;
+    return this.yunalishlar.filter(y => y?.fakultet?.id === this.tanlanganFakultet.id);
+  }
 
-      page: this.paginator.pageIndex,
-      size: this.paginator.pageSize,
-      sort: 'id'
+  /** Tanlangan yo'nalish/fakultetga tegishli guruhlar */
+  get korinadiganGuruhlar(): any[] {
+    if (this.tanlanganYunalish) return this.guruhlar.filter(g => g?.yunalish?.id === this.tanlanganYunalish.id);
+    if (this.tanlanganFakultet) return this.guruhlar.filter(g => g?.yunalish?.fakultet?.id === this.tanlanganFakultet.id);
+    return this.guruhlar;
+  }
+
+  get filtrBormi(): boolean {
+    return !!(this.tanlanganFakultet || this.tanlanganYunalish || this.tanlanganGuruh || this.key);
+  }
+
+  load(): void {
+    const params: any = {
+      key: this.key ?? '',
+      page: this.paginator?.pageIndex ?? 0,
+      size: this.paginator?.pageSize ?? 12,
+      sort: 'id,desc'
     };
+    if (this.tanlanganGuruh) params.guruh = this.tanlanganGuruh.id;
+    if (this.tanlanganFakultet) params.fakultet = this.tanlanganFakultet.id;
+    if (this.tanlanganYunalish) params.yunalish = this.tanlanganYunalish.id;
 
-    if (this.tanlanganGuruh) {
-      params.guruh = this.tanlanganGuruh.id;
-    }
-    if (this.tanlanganFakultet) {
-      params.fakultet = this.tanlanganFakultet.id;
-    }
-    if (this.tanlanganYunalish) {
-      params.yunalish = this.tanlanganYunalish.id;
-    }
-
-
-
-    this.publicService.getAll(params).subscribe(royxat => {
-      this.talabalar = royxat.content;
-      this.length = royxat.totalElements;
+    this.yuklanmoqda = true;
+    this.publicService.getAll(params).subscribe({
+      next: royxat => {
+        this.talabalar = royxat.content ?? [];
+        this.length = royxat.totalElements ?? 0;
+        this.yuklanmoqda = false;
+      },
+      error: () => { this.talabalar = []; this.length = 0; this.yuklanmoqda = false; }
     });
-
   }
 
+  /** Yozib bo'lgach 300 ms kutib qidiradi */
+  qidir(): void {
+    clearTimeout(this.qidiruvTaymer);
+    this.qidiruvTaymer = setTimeout(() => this.birinchiSahifa(), 300);
+  }
 
-
-  fakultetTanlash(event: any) {
-
+  fakultetTanlash(event: any): void {
     this.tanlanganFakultet = event.value;
     this.tanlanganYunalish = null;
     this.tanlanganGuruh = null;
-    this.paginator.pageIndex = 0;
-    this.load();
-
+    this.birinchiSahifa();
   }
 
-  yunalishTanlash(event: any) {
+  yunalishTanlash(event: any): void {
     this.tanlanganYunalish = event.value;
     this.tanlanganGuruh = null;
-    this.paginator.pageIndex = 0;
-    this.load();
-
-
+    this.birinchiSahifa();
   }
 
-
-
-  guruhTanlash(event: any) {
+  guruhTanlash(event: any): void {
     this.tanlanganGuruh = event.value;
-    this.paginator.pageIndex = 0;
+    this.birinchiSahifa();
+  }
+
+  tozalash(): void {
+    this.tanlanganFakultet = null;
+    this.tanlanganYunalish = null;
+    this.tanlanganGuruh = null;
+    this.key = '';
+    this.birinchiSahifa();
+  }
+
+  private birinchiSahifa(): void {
+    if (this.paginator) this.paginator.pageIndex = 0;
     this.load();
   }
 
-  getRasm(file: any) {
+  getRasm(file: any): string {
     return rasmManzili(file);
   }
 
+  trackById(_: number, t: Talaba): number { return t.id; }
 }
-

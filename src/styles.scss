@@ -1,4 +1,11 @@
 
+/* Shriftlar loyihaning o'zida (Google CDN'ga bog'liq emas) */
+@import '~@fontsource/roboto/300.css';
+@import '~@fontsource/roboto/400.css';
+@import '~@fontsource/roboto/500.css';
+@import '~@fontsource/roboto/700.css';
+@import '~material-icons/iconfont/filled.css';
+
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -6,4 +13,9 @@ body {
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
-@import url("assets/css/style.css");
+
+/* Admin panel umumiy uslubi */
+@import 'admin-theme';
+
+/* Ochiq sayt umumiy uslubi */
+@import 'public-theme';

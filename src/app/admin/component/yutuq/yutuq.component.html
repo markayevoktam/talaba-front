@@ -1,91 +1,101 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>Yutuqlar</mat-card-title>
-        <mat-card-subtitle>Yutuqlar bilan ishlash bo'limi </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
+<div class="sahifa">
+  <header class="sahifa-sarlavha">
+    <div>
+      <h1><mat-icon>emoji_events</mat-icon> Yutuqlar</h1>
+      <p>Talabalar yutuqlari turlari</p>
+    </div>
+    <div class="sarlavha-amallar">
+      <button mat-flat-button color="primary" type="button" (click)="formOchiq ? tozalash() : (formOchiq = true)">
+        <mat-icon>{{ formOchiq ? 'close' : 'add' }}</mat-icon>
+        {{ formOchiq ? 'Yopish' : 'Yangi yutuq' }}
+      </button>
+    </div>
+  </header>
 
-<mat-accordion displayMode="default" [multi]="true"
-               [hideToggle]="false">
-    <mat-expansion-panel [hideToggle]="false">
-        <mat-expansion-panel-header>Yangi yutuq nomini qo'shish
+  <section class="panel forma-panel" *ngIf="formOchiq">
+    <div class="panel-sarlavha">
+      <div>
+        <h2>{{ tahrirRejim ? "Yutuqni tahrirlash" : "Yangi yutuq qo'shish" }}</h2>
+        <p>Majburiy maydonlar * bilan belgilangan</p>
+      </div>
+      <span *ngIf="tahrirRejim" class="tahrir-belgisi"><mat-icon>edit</mat-icon> ID: {{ yutuqForm.get('id')?.value }}</span>
+    </div>
 
-            <mat-icon class="mat-18">
-                add
-            </mat-icon>
-        </mat-expansion-panel-header>
-           
-        <form [formGroup]="yutuqForm" (ngSubmit)="saqlash()">
-            <mat-form-field *ngIf='tahrirRejim' appearance="outline">
-                <mat-label>Id</mat-label>
-                <input formControlName='id'  matInput placeholder="Id">
-                <mat-hint>Id</mat-hint>
-              </mat-form-field>
+    <form [formGroup]="yutuqForm" (ngSubmit)="saqlash()">
+      <div class="forma-panjara">
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input formControlName="nom" matInput placeholder="Nomi" autocomplete="off" required>
+          <mat-error>Nom kiritilishi shart</mat-error>
+        </mat-form-field>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Nom</mat-label>
-                <input   formControlName='nom'  matInput placeholder="nom">
-                <mat-hint>Nom</mat-hint>
-              </mat-form-field>
+        <mat-form-field appearance="outline" class="toliq">
+          <mat-label>Izoh</mat-label>
+          <textarea formControlName="info" matInput rows="2" placeholder="Qo'shimcha ma'lumot"></textarea>
+        </mat-form-field>
+      </div>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Info</mat-label>
-                <input formControlName='info'  matInput placeholder="Info">
-                <mat-hint>Info</mat-hint>
-              </mat-form-field>
+      <div class="forma-amallar">
+        <button [disabled]="yutuqForm.invalid || surovBajarilmoqda" mat-flat-button color="primary" type="submit">
+          <mat-spinner *ngIf="surovBajarilmoqda" diameter="18"></mat-spinner>
+          {{ tahrirRejim ? 'Saqlash' : "Qo'shish" }}
+        </button>
+        <button mat-stroked-button type="button" (click)="tozalash()">Bekor qilish</button>
+      </div>
+    </form>
+  </section>
 
-              <button [disabled]="surovBajarilmoqda"  mat-raised-button color="primary" type='submit'>
-                <mat-spinner *ngIf="surovBajarilmoqda " diameter="20" color="accent"></mat-spinner>  
-                Saqlash</button>
-              <button mat-raised-button color="accent" type='reset'>Bekor qilish</button>
+  <section class="panel">
+    <div class="jadval-bosh">
+      <mat-form-field appearance="outline" class="qidiruv">
+        <mat-icon matPrefix>search</mat-icon>
+        <input (input)="load($event.target)" matInput placeholder="Qidirish…" autocomplete="off">
+      </mat-form-field>
+      <span class="jadval-soni">Jami: <strong>{{ length }}</strong></span>
+    </div>
 
-        </form>
-        
-    </mat-expansion-panel>
-</mat-accordion>
-
-
-<mat-form-field appearance="outline">
-  <mat-label>Filter</mat-label>
-  <input (input)="load($event.target)" matInput placeholder="Filter . . ." autocomplete="off">
-  <mat-hint>Kalit so'zni kiriting</mat-hint>
-</mat-form-field>
-
-
-<div class="royxat"  >
-  <h2>Yutuqlar Ro'yxati</h2>
-  <table>
-      <thead>
+    <div class="jadval-orash">
+      <table class="jadval">
+        <thead>
           <tr>
-              <th>ID</th>
-              <th>Nom</th>
-              <th>Info</th>
-              <th>Amal</th>
-              
+            <th class="ustun-id">ID</th>
+            <th>Nom</th>
+
+            <th>Izoh</th>
+            <th class="ustun-amal">Amallar</th>
           </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
           <tr *ngFor="let x of yutuqlar">
-              <td>{{x?.id}}</td>
-              <td>{{x?.nom}}</td>
-              <td>{{x?.info}}</td>
-              <td>
-                  <button mat-button color="primary" (click)="tahrirlash(x)">
-                      <mat-icon diametr=5>edit</mat-icon>
-                  </button>
-                  <button mat-button color="warn" (click)="ochirish(x)">
-                      <mat-icon diametr=5>delete</mat-icon>
-                  </button>
-              </td>
+            <td class="ustun-id">{{ x?.id }}</td>
+            <td class="asosiy">{{ x?.nom }}</td>
+
+            <td class="qisqa ikkilamchi" [matTooltip]="x?.info || ''">{{ x?.info || '—' }}</td>
+            <td class="ustun-amal">
+              <span class="amal-tugmalar">
+                <button mat-icon-button class="tahrir" matTooltip="Tahrirlash" (click)="tahrirlash(x)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button class="ochir" matTooltip="O'chirish" (click)="ochirish(x)">
+                  <mat-icon>delete_outline</mat-icon>
+                </button>
+              </span>
+            </td>
           </tr>
-      </tbody>
-  </table>
+          <tr *ngIf="!yutuqlar?.length">
+            <td [attr.colspan]="4">
+              <div class="bosh-holat">
+                <mat-icon>emoji_events</mat-icon>
+                <span>Hozircha ma'lumot yo'q</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <mat-paginator class="jadval-paginator" (page)="load()" #paginator [length]="length" [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons aria-label="Sahifalar">
+    </mat-paginator>
+  </section>
 </div>
-
-
-
-<mat-paginator (page)="load()" #paginator  [length]="length" [pageSize]="5" [pageSizeOptions]="[5, 7, 10, 12]" aria-label="Select page">
-</mat-paginator>
-
-    </mat-card-content>  
-</mat-card>

@@ -1,0 +1,28 @@
+<header class="pub-nav">
+  <div class="pub-nav-ich">
+    <a class="pub-brend" [routerLink]="['/']" (click)="yop()">
+      <img src="assets/img/logo.jpg" alt="TATU logotipi" width="42" height="42">
+      <span class="pub-brend-matn">
+        <strong>TATU Qarshi filiali</strong>
+        <small>Talabalar portali</small>
+      </span>
+    </a>
+
+    <nav class="pub-menyu" [class.ochiq]="ochiq" aria-label="Asosiy menyu">
+      <a *ngFor="let b of bandlar" class="pub-band" [routerLink]="[b.yol]"
+         routerLinkActive="faol" [routerLinkActiveOptions]="{ exact: b.exact }" (click)="yop()">
+        <mat-icon>{{ b.ikon }}</mat-icon>{{ b.nom }}
+      </a>
+      <a *ngIf="!kirgan" class="pub-band pub-kirish" [routerLink]="['/login']" (click)="yop()">
+        <mat-icon>login</mat-icon>Kirish
+      </a>
+      <a *ngIf="kirgan" class="pub-band pub-kirish" [routerLink]="['/admin']" (click)="yop()">
+        <mat-icon>admin_panel_settings</mat-icon>Admin panel
+      </a>
+    </nav>
+
+    <button mat-icon-button class="pub-burger" type="button" (click)="ochiq = !ochiq" aria-label="Menyu">
+      <mat-icon>{{ ochiq ? 'close' : 'menu' }}</mat-icon>
+    </button>
+  </div>
+</header>

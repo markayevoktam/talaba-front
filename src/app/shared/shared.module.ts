@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { material_imports } from "./material-import";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { PubNavComponent } from "./pub-nav/pub-nav.component";
 
 /**
  * Ham public, ham admin modullarda kerak bo'ladigan umumiy narsalar:
@@ -17,13 +18,14 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
     ReactiveFormsModule,
     ...material_imports
   ],
-  declarations: [PageNotFoundComponent],
+  declarations: [PageNotFoundComponent, PubNavComponent],
   exports: [
     CommonModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
     PageNotFoundComponent,
+    PubNavComponent,
     ...material_imports
   ]
 })

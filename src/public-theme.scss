@@ -1,0 +1,184 @@
+/* =========================================================
+   Ochiq sayt umumiy uslubi (bosh sahifa, bitiruvchilar,
+   iqtidorli talabalar, talaba sahifasi)
+   ========================================================= */
+$ink-1: #1f2544; $ink-2: #3a4160; $ink-3: #7c84a3; $ink-4: #9aa0b8;
+$chiziq: #e6e9f2; $primary: #3f51b5; $primary-toq: #303f9f; $primary-och: #e8ebfa;
+
+.pub-sahifa {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  background: #f4f6fb;
+  color: $ink-2;
+}
+.pub-ich { flex: 1 0 auto; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px 48px; box-sizing: border-box; }
+
+/* ---------- Hero ---------- */
+.pub-hero {
+  padding: 36px 0 22px;
+  text-align: center;
+
+  .pub-hero-yorliq {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 999px;
+    background: $primary-och; color: $primary-toq;
+    font-size: 12px; font-weight: 600; letter-spacing: .6px; text-transform: uppercase;
+    mat-icon { font-size: 16px; width: 16px; height: 16px; }
+  }
+  h1 {
+    margin: 12px auto 6px; max-width: 900px;
+    font-size: clamp(22px, 3vw, 32px); font-weight: 700; color: $ink-1; letter-spacing: -.3px; line-height: 1.25;
+  }
+  p { margin: 0 auto; max-width: 640px; color: $ink-3; font-size: 15px; }
+}
+
+/* ---------- Filtr paneli ---------- */
+.pub-filtr {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0 12px;
+  align-items: start;
+  padding: 14px 16px 0;
+  margin-bottom: 20px;
+  background: #fff;
+  border: 1px solid $chiziq;
+  border-radius: 14px;
+
+  mat-form-field { width: 100%; }
+  .qidiruv { grid-column: span 2; }
+  .mat-form-field-wrapper { padding-bottom: 12px; }
+  .filtr-tugmalar { display: flex; align-items: center; gap: 8px; padding-bottom: 12px; min-height: 56px; }
+}
+@media (max-width: 640px) { .pub-filtr .qidiruv { grid-column: auto; } }
+
+.pub-natija {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin: 0 4px 12px; color: $ink-3; font-size: 14px;
+  strong { color: $ink-1; }
+  .pub-chiplar { display: flex; flex-wrap: wrap; gap: 6px; }
+}
+
+/* ---------- Karta panjara ---------- */
+.pub-panjara {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.pub-karta {
+  position: relative;
+  display: flex; flex-direction: column;
+  background: #fff;
+  border: 1px solid $chiziq;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none; color: inherit;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+
+  &:hover, &:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(31, 37, 68, .12);
+    border-color: #d5dbf3;
+    .pub-karta-rasm img { transform: scale(1.04); }
+  }
+
+  .pub-karta-rasm {
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #eef0f6;
+    img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+  }
+  .pub-karta-yulduz {
+    position: absolute; top: 10px; left: 10px;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 9px; border-radius: 999px;
+    background: rgba(255, 255, 255, .95); color: #b26a00;
+    font-size: 11.5px; font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+    mat-icon { font-size: 15px; width: 15px; height: 15px; color: #eda100; }
+  }
+  .pub-karta-matn { padding: 14px 14px 14px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .pub-karta-ism { font-size: 15.5px; font-weight: 700; color: $ink-1; line-height: 1.25; }
+  .pub-karta-sharif { font-size: 12.5px; color: $ink-4; }
+  .pub-karta-qator { font-size: 13px; color: $ink-2; display: flex; align-items: center; gap: 6px; margin-top: 4px;
+    mat-icon { font-size: 16px; width: 16px; height: 16px; color: $ink-4; flex: 0 0 auto; }
+    span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  }
+  .pub-karta-past { margin-top: auto; padding-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+}
+
+/* Belgilar */
+.pub-belgi {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 9px; border-radius: 999px;
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+  background: #eef0f6; color: $ink-2;
+  mat-icon { font-size: 14px; width: 14px; height: 14px; }
+  &.grant     { background: #e0f5ec; color: #0e7a52; }
+  &.shartnoma { background: #fdf3dc; color: #8a5a00; }
+  &.kurs      { background: $primary-och; color: $primary-toq; }
+  &.och       { background: #f5f6fb; color: $ink-3; font-weight: 500; }
+}
+
+/* Bo'sh / yuklanish holati */
+.pub-holat {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 56px 16px; text-align: center; color: $ink-3;
+  background: #fff; border: 1px dashed #d5dbf3; border-radius: 16px;
+  mat-icon { font-size: 44px; width: 44px; height: 44px; color: #c3c8dc; }
+}
+
+.pub-paginator { margin-top: 18px; .mat-paginator { background: transparent; } }
+
+/* ---------- Bo'lim sarlavhasi (ro'yxat sahifalarida) ---------- */
+.pub-bolim-sarlavha {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  margin: 8px 4px 14px;
+  h2 { margin: 0; font-size: 20px; font-weight: 700; color: $ink-1; }
+  p  { margin: 2px 0 0; color: $ink-3; font-size: 14px; }
+}
+
+/* ---------- Talaba sahifasi (info) ---------- */
+.pub-profil {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+  align-items: start;
+}
+.pub-profil-rasm {
+  background: #fff; border: 1px solid $chiziq; border-radius: 18px; overflow: hidden;
+  img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #eef0f6; }
+}
+.pub-profil-asosiy {
+  background: #fff; border: 1px solid $chiziq; border-radius: 18px; padding: 24px 26px;
+  h1 { margin: 0; font-size: 26px; font-weight: 700; color: $ink-1; letter-spacing: -.3px; }
+  .pub-profil-sharif { color: $ink-3; font-size: 15px; margin-top: 2px; }
+  .pub-profil-chiplar { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 20px; }
+}
+.pub-profil-panjara {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px;
+  .pub-malumot {
+    padding: 12px 14px; border-radius: 12px; background: #f7f8fc; border: 1px solid $chiziq;
+    display: flex; gap: 10px; align-items: flex-start;
+    mat-icon { color: $primary; font-size: 20px; width: 20px; height: 20px; margin-top: 1px; }
+    dt { font-size: 12px; color: $ink-4; font-weight: 500; }
+    dd { margin: 2px 0 0; font-size: 14.5px; font-weight: 600; color: $ink-1; }
+  }
+}
+.pub-profil-izoh {
+  margin-top: 16px; padding: 14px 16px; border-radius: 12px;
+  background: #fbfbfe; border-left: 3px solid $primary; color: $ink-2; font-size: 14px; line-height: 1.55;
+}
+.pub-orqaga { display: inline-flex; align-items: center; gap: 6px; margin-top: 22px; color: $ink-3; text-decoration: none; font-size: 14px;
+  &:hover { color: $primary-toq; } mat-icon { font-size: 18px; width: 18px; height: 18px; } }
+@media (max-width: 800px) {
+  .pub-profil { grid-template-columns: 1fr; }
+  .pub-profil-rasm { max-width: 320px; margin: 0 auto; }
+}
+
+/* ---------- Footer ---------- */
+.pub-footer {
+  border-top: 1px solid $chiziq; padding: 22px 20px; text-align: center; color: $ink-4; font-size: 13px;
+  a { color: $ink-3; text-decoration: none; &:hover { color: $primary-toq; } }
+}

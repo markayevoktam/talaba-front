@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   surovBajarilmoqda = false;
+  parolKorinsin = false;
 
   constructor(
     private fb: FormBuilder,

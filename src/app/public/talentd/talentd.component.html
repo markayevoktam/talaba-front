@@ -1,57 +1,52 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="pub-sahifa">
+  <app-pub-nav></app-pub-nav>
 
-<nav class="navbar navbar-expand-sm navbar-dark">
-    <div class="container">
-        <div class="box">
-            <div>
-                <img src="https://static10.tgstat.ru/channels/_0/0c/0c8cceaffdb83ce07230e847feb482d2.jpg" width="50"
-                    height="50" class="d-inline-block align-top rounded-circle" alt="">
+  <main class="pub-ich">
+    <section class="pub-hero">
+      <span class="pub-hero-yorliq"><mat-icon>star</mat-icon> Iqtidorli talabalar</span>
+      <h1>Iqtidorli talabalarimiz</h1>
+      <p>Olimpiadalar, tanlovlar va ilmiy loyihalarda o'zini ko'rsatgan, yuqori reytingga ega talabalar.</p>
+    </section>
 
-            </div>
-            <div>
-                <a class="navbar-brand ml-2" style="color: rgb(0, 0, 0); font-size: 25px;" href="#" data-abc="true">TATU
-                    Qarshi filiali</a>
-            </div>
-        </div>
-        <div class="box_icon">
-            <div>
-                <button mat-button color="dark" [routerLink]="['/']" class="boshqism">Bosh sahifa</button>
-                <!-- <button mat-button color="dark"  [routerLink]="['talentd']" class="boshqism">Iqtidorli talabalar</button> -->
-            </div>
-
-
-            <div>
-                <button mat-button color="dark" [routerLink]="['/student']" class="boshqism">Bizning faxrimiz</button>
-                <button mat-button color="dark" [routerLink]="['talentd']" class="boshqism">Iqtidorli talabalar</button>
-            </div>
-            <a [routerLink]="['/login']" class="icon">
-                <button mat-button color="dark">Kirish</button>
-            </a>
-        </div>
-
+    <div class="pub-natija">
+      <span>Jami: <strong>{{ length }}</strong> ta iqtidorli talaba</span>
     </div>
-</nav>
 
-<div class="container">
-
-    <article *ngFor="let s of talabalar" class="postcard light yellow">
-        <div class="col">
-            <img class="postcard__img" [src]="getRasm(s?.rasm)" alt="...">
+    <section class="pub-panjara" *ngIf="talabalar.length; else boshHolat">
+      <a *ngFor="let t of talabalar; trackBy: trackById" class="pub-karta" [routerLink]="['/info', t.id]">
+        <div class="pub-karta-rasm">
+          <img [src]="getRasm(t?.rasm)" [alt]="t.ism + ' ' + t.familya" loading="lazy">
         </div>
-        <div class="postcard__text t-dark">
-            <h1 class="postcard__title yellow" style="cursor: pointer;">{{s?.ism}}</h1>
-            <h1 class="postcard__title yellow" style="cursor: pointer;">{{s?.familya}}</h1>
-            <h1 class="postcard__title yellow" style="cursor: pointer;">{{s?.sharif}}</h1>
-            <div class="postcard__bar" style="background-color: rgba(46, 46, 235, 0.671);"></div>
-            <div class="postcard__preview-txt">{{s?.guruh?.nom}}</div>
-            <div class="postcard__preview-txt">{{s?.guruh?.yunalish?.nom}}</div>
-            <div class="postcard__preview-txt">{{s?.guruh?.yunalish?.fakultet?.nom}}</div>
-            <ul class="postcard__tagbox">
-
-            </ul>
+        <span class="pub-karta-yulduz"><mat-icon>star</mat-icon> Iqtidorli</span>
+        <div class="pub-karta-matn">
+          <span class="pub-karta-ism">{{ t.familya }} {{ t.ism }}</span>
+          <span class="pub-karta-sharif">{{ t.sharif }}</span>
+          <span class="pub-karta-qator" *ngIf="t?.guruh?.yunalish?.nom">
+            <mat-icon>alt_route</mat-icon><span>{{ t.guruh.yunalish.nom }}</span>
+          </span>
+          <span class="pub-karta-qator" *ngIf="t?.yutuq?.nom">
+            <mat-icon>emoji_events</mat-icon><span>{{ t.yutuq.nom }}</span>
+          </span>
+          <div class="pub-karta-past">
+            <span *ngIf="t?.guruh?.nom" class="pub-belgi kurs">{{ t.guruh.nom }}</span>
+            <span *ngIf="t.kurs" class="pub-belgi och">{{ t.kurs }}-kurs</span>
+            <span *ngIf="t.ball !== null && t.ball !== undefined" class="pub-belgi grant">{{ t.ball }} ball</span>
+          </div>
         </div>
+      </a>
+    </section>
 
-    </article>
+    <ng-template #boshHolat>
+      <div class="pub-holat" *ngIf="!yuklanmoqda">
+        <mat-icon>star_outline</mat-icon>
+        <strong>Hozircha iqtidorli talabalar kiritilmagan</strong>
+      </div>
+      <div class="pub-holat" *ngIf="yuklanmoqda">
+        <mat-spinner diameter="32"></mat-spinner>
+        <span>Yuklanmoqda…</span>
+      </div>
+    </ng-template>
+  </main>
 
-
+  <footer class="pub-footer">© {{ yil }} TATU Qarshi filiali</footer>
 </div>

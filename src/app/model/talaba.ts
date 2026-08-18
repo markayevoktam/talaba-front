@@ -20,4 +20,5 @@ export interface Talaba{
     rasm:any
     yutuq:Yutuq
     kurs:string
+    talented?: boolean
 }

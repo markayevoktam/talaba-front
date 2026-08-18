@@ -1,129 +1,105 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<nav class="navbar navbar-expand-sm navbar-dark">
-    <div class="container">
-        <div class="box">
-            <div>
-                <img src="https://static10.tgstat.ru/channels/_0/0c/0c8cceaffdb83ce07230e847feb482d2.jpg" width="50"
-                    height="50" class="d-inline-block align-top rounded-circle" alt="">
+<div class="pub-sahifa">
+  <app-pub-nav></app-pub-nav>
 
-            </div>
-            <div>
-                <a class="navbar-brand ml-2" style="color: rgb(0, 0, 0); font-size: 25px;" href="#" data-abc="true">TATU
-                    Qarshi filiali</a>
-            </div>
-        </div>
+  <main class="pub-ich">
+    <section class="pub-hero">
+      <span class="pub-hero-yorliq"><mat-icon>school</mat-icon> Talabalar portali</span>
+      <h1>Muhammad al-Xorazmiy nomidagi Toshkent axborot texnologiyalari universiteti Qarshi filiali</h1>
+      <p>Talabalar, ularning guruhlari, yo'nalishlari va yutuqlari haqida ma'lumot. Fakultet, yo'nalish yoki guruh bo'yicha qidiring.</p>
+    </section>
 
-        <div class="box_icon">
+    <section class="pub-filtr" aria-label="Filtrlar">
+      <mat-form-field appearance="outline">
+        <mat-label>Fakultet</mat-label>
+        <mat-select [value]="tanlanganFakultet" (selectionChange)="fakultetTanlash($event)" disableRipple>
+          <mat-option [value]="null">Barchasi</mat-option>
+          <mat-option *ngFor="let f of fakultetlar" [value]="f">{{ f.nom }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
+      <mat-form-field appearance="outline">
+        <mat-label>Yo'nalish</mat-label>
+        <mat-select [value]="tanlanganYunalish" (selectionChange)="yunalishTanlash($event)" disableRipple>
+          <mat-option [value]="null">Barchasi</mat-option>
+          <mat-option *ngFor="let y of korinadiganYunalishlar" [value]="y">{{ y.nom }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-            <div>
-                <button mat-button color="dark" [routerLink]="['student']" class="boshqism">Bizning faxrimiz</button>
-                <button mat-button color="dark" [routerLink]="['talentd']" class="boshqism">Iqtidorli talabalar</button>
-            </div>
-            <a [routerLink]="['/login']" class="icon">
-                <button mat-button color="dark">Kirish</button>
-            </a>
+      <mat-form-field appearance="outline">
+        <mat-label>Guruh</mat-label>
+        <mat-select [value]="tanlanganGuruh" (selectionChange)="guruhTanlash($event)" disableRipple>
+          <mat-option [value]="null">Barchasi</mat-option>
+          <mat-option *ngFor="let g of korinadiganGuruhlar" [value]="g">{{ g.nom }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-        </div>
+      <mat-form-field appearance="outline" class="qidiruv">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput [(ngModel)]="key" (input)="qidir()" placeholder="Ism, familiya yoki hudud bo'yicha qidirish…" autocomplete="off">
+        <button *ngIf="key" mat-icon-button matSuffix type="button" (click)="key = ''; qidir()" aria-label="Tozalash">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div class="filtr-tugmalar" *ngIf="filtrBormi">
+        <button mat-stroked-button type="button" (click)="tozalash()">
+          <mat-icon>filter_alt_off</mat-icon> Tozalash
+        </button>
+      </div>
+    </section>
+
+    <div class="pub-natija">
+      <span>Topildi: <strong>{{ length }}</strong> ta talaba</span>
+      <span class="pub-chiplar">
+        <span *ngIf="tanlanganFakultet" class="pub-belgi och">{{ tanlanganFakultet.nom }}</span>
+        <span *ngIf="tanlanganYunalish" class="pub-belgi och">{{ tanlanganYunalish.nom }}</span>
+        <span *ngIf="tanlanganGuruh" class="pub-belgi kurs">{{ tanlanganGuruh.nom }}</span>
+      </span>
     </div>
-</nav>
-<!-- Main Body -->
-<div class="container">
-    <div class="row" style="margin-top: 2%;">
-        <h2
-            style="text-align: center; font-size: 25px; text-transform: uppercase; font-weight: 900; font-family: 'Times New Roman', Times, serif;">
-            Muhammad al-Xorazmiy nomidagi Toshkent axborot texnologiyalari universiteti
-            <h2
-                style="text-align: center; font-size: 25px;  text-transform: uppercase; font-weight: 900; font-family: 'Times New Roman', Times, serif;">
-                Qarshi filiali</h2>
-        </h2>
-    </div>
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-12 pb-4">
-            <div>
-                <div class="d-flex ">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Fakultetni tanlang</mat-label>
-                        <mat-select (selectionChange)="fakultetTanlash($event)" disableRipple>
-                            <mat-option *ngFor="let f of fakultetlar" [value]="f">{{f.nom}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
 
-
-                    <mat-form-field appearance="fill">
-                        <mat-label>Yo'nalishni tanlang</mat-label>
-                        <mat-select (selectionChange)="yunalishTanlash($event)" disableRipple>
-                            <mat-option *ngFor="let y of yunalishlar" [value]="y">{{y.nom}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-
-
-                    <mat-form-field appearance="fill">
-                        <mat-label>Guruhni tanlang</mat-label>
-                        <mat-select (selectionChange)="guruhTanlash($event)" disableRipple>
-                            <mat-option *ngFor="let g of guruhlar" [value]="g">{{g.nom}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-
-                </div>
-
-
-
-
-            </div>
-
-            <div class="form-group">
-                <input (input)="load($event.target)" type="text" class="form-control" name="key" id="key"
-                    aria-describedby="key" placeholder="Qidirish"
-                    style="background-color: white; border-radius: 8px; border: none; box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.612) 0px 1px 2px; padding: 10px;">
-                <small id="key" class="form-text text-muted">Qidirish uchun yozing</small>
-            </div>
-
-
-
-
-
-            <!-- <div *ngFor="let t of talabalar" id="main123"
-                style="background-color: white; color: black; cursor: pointer; margin-bottom: 10px;"
-                [routerLink]="['info', t.id]" class="col-sm-12">
-
-                <div class="card    " style="max-width: 100%; ">
-                    <div class="row no-gutters">
-                      <div class="col-md-3 col-sm-12 " style="height: 250px;">
-                        <img [src]="getRasm(t?.rasm)" class="card-img" alt="...">
-                      </div>
-                      <div class="col-md-9 ">
-                        <div class="card-body">
-                          <h2 class="card-title">{{t.ism}} {{t.familya}}</h2>
-                          <p class="card-text">{{t?.guruh?.yunalish?.fakultet?.nom}}</p>
-                          <p class="card-text"><small class="text-muted">{{t?.guruh?.yunalish?.nom}}</small></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-            </div> -->
-
-            <!-- test cards -->
-            <div id="container" *ngFor="let t of talabalar" [routerLink]="['info', t.id]">
-                <div class="product-image">
-                    <img [src]="getRasm(t?.rasm)" class="card-img" alt="...">
-                </div>
-                <div class="product-details">
-
-                    <h1 class="card-title">{{t.ism}} {{t.familya}}</h1>
-                 <div class="card-body">
-
-                        <p class="card-text" style="font-size: 20px;">{{t?.guruh?.yunalish?.fakultet?.nom}}</p>
-                        <p class="card-text" class="text-muted" style="font-size: 25px;">{{t?.guruh?.yunalish?.nom}}</p>
-                    </div>
-
-                    
-                </div>
-            </div>
+    <section class="pub-panjara" *ngIf="talabalar.length; else boshHolat">
+      <a *ngFor="let t of talabalar; trackBy: trackById" class="pub-karta" [routerLink]="['/info', t.id]">
+        <div class="pub-karta-rasm">
+          <img [src]="getRasm(t?.rasm)" [alt]="t.ism + ' ' + t.familya" loading="lazy">
         </div>
-        <mat-paginator (page)="load()" #paginator [length]="length" [pageSize]="5" [pageSizeOptions]="[5, 7, 10, 12]"
-            aria-label="Select page">
-        </mat-paginator>
-    </div>
+        <span *ngIf="t.talented" class="pub-karta-yulduz"><mat-icon>star</mat-icon> Iqtidorli</span>
+        <div class="pub-karta-matn">
+          <span class="pub-karta-ism">{{ t.familya }} {{ t.ism }}</span>
+          <span class="pub-karta-sharif">{{ t.sharif }}</span>
+          <span class="pub-karta-qator" *ngIf="t?.guruh?.yunalish?.fakultet?.nom">
+            <mat-icon>account_balance</mat-icon><span>{{ t.guruh.yunalish.fakultet.nom }}</span>
+          </span>
+          <span class="pub-karta-qator" *ngIf="t?.guruh?.yunalish?.nom">
+            <mat-icon>alt_route</mat-icon><span>{{ t.guruh.yunalish.nom }}</span>
+          </span>
+          <div class="pub-karta-past">
+            <span *ngIf="t?.guruh?.nom" class="pub-belgi kurs">{{ t.guruh.nom }}</span>
+            <span *ngIf="t.kurs" class="pub-belgi och">{{ t.kurs }}-kurs</span>
+            <span *ngIf="t.oquvShakl === 'GRAND'" class="pub-belgi grant">Grant</span>
+            <span *ngIf="t.oquvShakl === 'SHARTNOMA'" class="pub-belgi shartnoma">Shartnoma</span>
+          </div>
+        </div>
+      </a>
+    </section>
+
+    <ng-template #boshHolat>
+      <div class="pub-holat" *ngIf="!yuklanmoqda">
+        <mat-icon>person_search</mat-icon>
+        <strong>Talabalar topilmadi</strong>
+        <span>Qidiruv so'zini yoki filtrlarni o'zgartirib ko'ring.</span>
+      </div>
+      <div class="pub-holat" *ngIf="yuklanmoqda">
+        <mat-spinner diameter="32"></mat-spinner>
+        <span>Yuklanmoqda…</span>
+      </div>
+    </ng-template>
+
+    <mat-paginator class="pub-paginator" (page)="load()" #paginator [length]="length" [pageSize]="12"
+      [pageSizeOptions]="[12, 24, 48]" showFirstLastButtons aria-label="Sahifalar">
+    </mat-paginator>
+  </main>
+
+  <footer class="pub-footer">
+    © {{ yil }} TATU Qarshi filiali · <a [routerLink]="['/login']">Kirish</a>
+  </footer>
 </div>
